@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第三章 操作符Java 操作符是建立在C++基础上的。 3.1 更简单的打印语句1import static net.mindview.util.Print.*;  导入jar包后 可以使用更简单的写法  printr()  3.2 使用Java 操作符1+ - * / = == !=  3.3 优先级先乘除后加减 括号内优先执行。类型转换 操作符后面的按前面的转换。 3.4 赋值右值赋给左值，a">
+<meta name="keywords" content="Java Php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinking in Java 第三章">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Thinking-in-Java-第三章/index.html">
+<meta property="og:site_name" content="190会健身打球的coder">
+<meta property="og:description" content="第三章 操作符Java 操作符是建立在C++基础上的。 3.1 更简单的打印语句1import static net.mindview.util.Print.*;  导入jar包后 可以使用更简单的写法  printr()  3.2 使用Java 操作符1+ - * / = == !=  3.3 优先级先乘除后加减 括号内优先执行。类型转换 操作符后面的按前面的转换。 3.4 赋值右值赋给左值，a">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2019-07-16T14:18:29.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinking in Java 第三章">
+<meta name="twitter:description" content="第三章 操作符Java 操作符是建立在C++基础上的。 3.1 更简单的打印语句1import static net.mindview.util.Print.*;  导入jar包后 可以使用更简单的写法  printr()  3.2 使用Java 操作符1+ - * / = == !=  3.3 优先级先乘除后加减 括号内优先执行。类型转换 操作符后面的按前面的转换。 3.4 赋值右值赋给左值，a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第三章/">
+
+
+
+
+
+  <title>Thinking in Java 第三章 | 190会健身打球的coder</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190会健身打球的coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第三章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190会健身打球的coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第三章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T22:15:13+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第三章-操作符"><a href="#第三章-操作符" class="headerlink" title="第三章 操作符"></a>第三章 操作符</h1><p>Java 操作符是建立在C++基础上的。</p>
+<h2 id="3-1-更简单的打印语句"><a href="#3-1-更简单的打印语句" class="headerlink" title="3.1 更简单的打印语句"></a>3.1 更简单的打印语句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import static net.mindview.util.Print.*;</span><br></pre></td></tr></table></figure>
+
+<p>导入jar包后 可以使用更简单的写法  printr() </p>
+<h2 id="3-2-使用Java-操作符"><a href="#3-2-使用Java-操作符" class="headerlink" title="3.2 使用Java 操作符"></a>3.2 使用Java 操作符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ - * / = == !=</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-优先级"><a href="#3-3-优先级" class="headerlink" title="3.3 优先级"></a>3.3 优先级</h2><p>先乘除后加减 括号内优先执行。<br>类型转换 操作符后面的按前面的转换。</p>
+<h2 id="3-4-赋值"><a href="#3-4-赋值" class="headerlink" title="3.4 赋值"></a>3.4 赋值</h2><p>右值赋给左值，a=b 则 b 值复制一份给a。但是如果是将一个对象赋值给另一个对象 其实就是<strong>引用</strong>。<br>例如 d 是个对象 把 d 赋值给对象c 那么 c 和 d 都指向原来d 对象所在的内存地址 。 现在改变 c 同时也会 改变 d 对象 。<br>这种现象被称作 java <strong>别名现象</strong> 。</p>
+<h4 id="3-4-1-方法中调用的别名问题"><a href="#3-4-1-方法中调用的别名问题" class="headerlink" title="3.4.1 方法中调用的别名问题"></a>3.4.1 方法中调用的别名问题</h4><p>方法调用 对象 改变其中的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Letter &#123;</span><br><span class="line">	char c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PassObject &#123;</span><br><span class="line">	static void f(Letter y) &#123;</span><br><span class="line">		y.c = &apos;z&apos;;</span><br><span class="line">		System.out.println(y.c);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Letter x = new Letter();</span><br><span class="line">		x.c = &apos;a&apos;;</span><br><span class="line">		System.out.println(x.c);</span><br><span class="line">		f(x);</span><br><span class="line">		System.out.println(x.c);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-5-算术操作符"><a href="#3-5-算术操作符" class="headerlink" title="3.5 算术操作符"></a>3.5 算术操作符</h2><p>简化运算符的功能如要将x加4之后再赋值给x，则可以写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x+=4;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-5-1-一元加减操作符"><a href="#3-5-1-一元加减操作符" class="headerlink" title="3.5.1 一元加减操作符"></a>3.5.1 一元加减操作符</h4><p>一元减号（-）和一元加号（+）与二元加号和减号都是相同的运算符。根据表达式的书写形式，编译器会自动判断使用哪一种。例如下述语句：</p>
+<p>x = -a;<br>它的含义是显然的。编译器能正确识别下述语句：</p>
+<p>x = a * -b;<br>但读者会被搞糊涂，所以最好更明确地写成：</p>
+<p>x = a * (-b); 一元减号得到的运算对象的负值。一元加号的含义与一元减号相反，虽然它实际并不做任何事情。</p>
+<h2 id="3-6-自动递增和递减"><a href="#3-6-自动递增和递减" class="headerlink" title="3.6 自动递增和递减"></a>3.6 自动递增和递减</h2><p>++a 会先执行运算，再生成值。<br>a++ 先生成值在运算。</p>
+<h2 id="3-7-关系操作符"><a href="#3-7-关系操作符" class="headerlink" title="3.7 关系操作符"></a>3.7 关系操作符</h2><p>关系操作符生成的是一个boolean（布尔）结果。关系为真则结果为true，如果关系为假则结果为false。关系操作符号包括小于（＜）、大于（＞）、小于等于（＜=）、大于等于（＞＝）、等于（==）以及不等于（！=）。<br>操作符“==”和“！=”同样适用于操作对象，但是与基本操作类型相比有一些不同。<br><strong>bool类型不能比较大小，因为本身就是bool类型 比大小没意义</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.chenxyt.java.practice;</span><br><span class="line">public class OperationTest&#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Integer itg1 = new Integer(22);</span><br><span class="line">		Integer itg2 = new Integer(22);</span><br><span class="line">		System.out.println(itg1==itg2);</span><br><span class="line">		System.out.println(itg1!=itg2);</span><br><span class="line">		int int1 = 22;</span><br><span class="line">		int int2 = 22;</span><br><span class="line">		System.out.println(int1==int2);</span><br><span class="line">		System.out.println(int1!=int2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重点是，两个对象是“！=”，因为对于对象来说，“==”和“！=”比较的是对象的引用，虽然这两个对象的值相同，但是他们对象的引用并不是一个，也就是他们在内存中有两个不同的存储位置，所以不相同。所以要想比较对象的值是否相同，我们可以使用对象的equals（）方法来进行比较，它是Object类的一个通用方法，第一章中说到过所有类的父类都是Object，因此任何类的对象都可以调用这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package com.chenxyt.java.practice;</span><br><span class="line">public class OperationTest&#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Integer itg1 = new Integer(22);</span><br><span class="line">		Integer itg2 = new Integer(22);</span><br><span class="line">		System.out.println(itg1.equals(itg2));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-8-逻辑操作符"><a href="#3-8-逻辑操作符" class="headerlink" title="3.8 逻辑操作符"></a>3.8 逻辑操作符</h2><p>Java中的逻辑操作符与其它语言基本类似，包括与（&amp;&amp;）、或（||）、非（！）</p>
+<h4 id="3-8-1-短路"><a href="#3-8-1-短路" class="headerlink" title="3.8.1 短路"></a>3.8.1 短路</h4><p>即当两个算式做逻辑与运算时，如果左边第一个算式为假，则显然这个逻辑表达式最后的结果一定为假，那么就没有必要进行下边的表达式计算，直接结束运算，这个过程称作短路。</p>
+<h2 id="3-9-直接常量"><a href="#3-9-直接常量" class="headerlink" title="3.9 直接常量"></a>3.9 直接常量</h2><p>直接常量 例如 π e   编译器可以准确知道要生成什么类型 但是有时候还是模糊， 需要加一些字符来添加额外信息 指导编译器。  例如 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char c = 0xffff;</span><br><span class="line">print(Interger.toBinaryString(c)); //char 需要转换2进制</span><br></pre></td></tr></table></figure>
+
+<p>常量后面可以标志类型。 L 代表 long F 代表 float D 代表 double 例如 int x = 1234567L;<br>16进制 前缀0X  8进制前缀0后续0～7的数字表示。</p>
+<h4 id="3-9-1-指数记数法"><a href="#3-9-1-指数记数法" class="headerlink" title="3.9.1 指数记数法"></a>3.9.1 指数记数法</h4><p>Java 中 1.39e-43 其实 就是1.39*10-43</p>
+<h2 id="3-10-按位操作符"><a href="#3-10-按位操作符" class="headerlink" title="3.10 按位操作符"></a>3.10 按位操作符</h2><p> Java中的按位操作符与其他语言基本相似，有按位与（&amp;）、按位或（|）、按位异或（^）和按位非（<del>）操作符。它们针对基本数据类型的一个比特位（bit）进行运算。运算规则如下，&amp;操作符必须同时为1才为1，|操作符只有同时为0时才为0，^操作符只要有一个为1就为1，</del>是单目运算符，取反，若值为1则结果为0，反之为1。按位操作符除了~还可以与“=”合起来使用，如&amp;=或者|=、^=。<br>对于布尔值，同样可以进行按位与、按位或和按位异或运算，但是不能进行按位非运算，并且他们不会被短路，不管第一个表达式结果是什么，都会继续运算下去。</p>
+<h2 id="3-11-移位操作符"><a href="#3-11-移位操作符" class="headerlink" title="3.11 移位操作符"></a>3.11 移位操作符</h2><p> 移位操作符操作的也是二进制的“位”，移位操作符只能用来处理整数类型。移位操作也是二元操作符，一共有三种，左移操作符（&lt;&lt;），右移操作符（&gt;&gt;），无符号右移操作符（&gt;&gt;&gt;）<br>左移操作符是操作符左边的数向左移动操作符右边指定的位数，低位补0，右移操作符是操作符左边的数向右移动操作符右边指定的位数，其中正数高位补0，负数高位补1。无符号右移操作符是Java独有的一种，即不管正数还是负数，右移之后高位都补0。</p>
+<h2 id="3-12-三元操作符-if-else"><a href="#3-12-三元操作符-if-else" class="headerlink" title="3.12 三元操作符 if-else"></a>3.12 三元操作符 if-else</h2><p>boolean-exp？value1：value2；</p>
+<h2 id="3-1-3-字符串操作符-和"><a href="#3-1-3-字符串操作符-和" class="headerlink" title="3.1.3 字符串操作符 + 和 +="></a>3.1.3 字符串操作符 + 和 +=</h2><p>Java中可以使用+和+=连接String类型，并且当操作符左边你的数为String时，Java会试图将操作符右边的类型转换成String。</p>
+<h2 id="3-14-使用操作符时常犯的的错误"><a href="#3-14-使用操作符时常犯的的错误" class="headerlink" title="3.14 使用操作符时常犯的的错误"></a>3.14 使用操作符时常犯的的错误</h2><p> 注意“=”和“==”的区别，以及逻辑运算符如（&amp;&amp;）和位运算符（&amp;）的区别和前自增“++i”和后自增“i++”的区别。注意“==”和“equals（）”的使用，注意别名现象。</p>
+<h2 id="3-15-类型转换操作符"><a href="#3-15-类型转换操作符" class="headerlink" title="3.15 类型转换操作符"></a>3.15 类型转换操作符</h2><p>在c 和 c++ 类型转型非常容易溢出出错。但是在Java中是非常安全的。Java可以让我们把基本数据类型转换成别的基本数据类型。bool 除外。</p>
+<h4 id="3-15-1-截尾和舍入"><a href="#3-15-1-截尾和舍入" class="headerlink" title="3.15.1 截尾和舍入"></a>3.15.1 截尾和舍入</h4><p>round() 对 double float 类型截取 round() 属于java.lang 的一部分 因此不需要额外的倒入。</p>
+<h4 id="3-15-2-提升"><a href="#3-15-2-提升" class="headerlink" title="3.15.2 提升"></a>3.15.2 提升</h4><p>例如 : float 和 double 相乘 则结果提升尾 double 类型。</p>
+<h2 id="3-16-java-没有sizeof"><a href="#3-16-java-没有sizeof" class="headerlink" title="3.16 java 没有sizeof"></a>3.16 java 没有sizeof</h2><p>C 和 C++ sizeof() 主要是为了移植 不同数据在不同机器位数不一样。所以必须要熟悉 一个字节占多少位。 Java 并不需要。 因为说有的数据类型在所有机器上是统一的。 <strong>它已经被设计在程序语言中了</strong>。</p>
+<h2 id="3-17-操作符小结"><a href="#3-17-操作符小结" class="headerlink" title="3.17 操作符小结"></a>3.17 操作符小结</h2><p>java 遇到 int 最大值做乘法也会溢出 但是编译器并不会报错。<br><strong>当类型转换成较小的类型时候 必须要留意‘窄化转换’ 否则会丢失信息。</strong></p>
+<h2 id="3-18-总结"><a href="#3-18-总结" class="headerlink" title="3.18 总结"></a>3.18 总结</h2><p>如果有c基础 学习Java语法并不难。Java语法类C。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/Thinking-in-Java-第二章/" rel="next" title="Thinking in Java 第二章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第二章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/16/Thinking-in-Java-第四章/" rel="prev" title="Thinking in Java 第四章">
+                Thinking in Java 第四章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">打铁还需自身硬</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-操作符"><span class="nav-number">1.</span> <span class="nav-text">第三章 操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-更简单的打印语句"><span class="nav-number">1.1.</span> <span class="nav-text">3.1 更简单的打印语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-使用Java-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 使用Java 操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-优先级"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-赋值"><span class="nav-number">1.4.</span> <span class="nav-text">3.4 赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-方法中调用的别名问题"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">3.4.1 方法中调用的别名问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-算术操作符"><span class="nav-number">1.5.</span> <span class="nav-text">3.5 算术操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-1-一元加减操作符"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">3.5.1 一元加减操作符</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-自动递增和递减"><span class="nav-number">1.6.</span> <span class="nav-text">3.6 自动递增和递减</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-关系操作符"><span class="nav-number">1.7.</span> <span class="nav-text">3.7 关系操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-逻辑操作符"><span class="nav-number">1.8.</span> <span class="nav-text">3.8 逻辑操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-1-短路"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">3.8.1 短路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-9-直接常量"><span class="nav-number">1.9.</span> <span class="nav-text">3.9 直接常量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-1-指数记数法"><span class="nav-number">1.9.0.1.</span> <span class="nav-text">3.9.1 指数记数法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-10-按位操作符"><span class="nav-number">1.10.</span> <span class="nav-text">3.10 按位操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-11-移位操作符"><span class="nav-number">1.11.</span> <span class="nav-text">3.11 移位操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-12-三元操作符-if-else"><span class="nav-number">1.12.</span> <span class="nav-text">3.12 三元操作符 if-else</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-3-字符串操作符-和"><span class="nav-number">1.13.</span> <span class="nav-text">3.1.3 字符串操作符 + 和 +=</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-14-使用操作符时常犯的的错误"><span class="nav-number">1.14.</span> <span class="nav-text">3.14 使用操作符时常犯的的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-15-类型转换操作符"><span class="nav-number">1.15.</span> <span class="nav-text">3.15 类型转换操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-15-1-截尾和舍入"><span class="nav-number">1.15.0.1.</span> <span class="nav-text">3.15.1 截尾和舍入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-15-2-提升"><span class="nav-number">1.15.0.2.</span> <span class="nav-text">3.15.2 提升</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-16-java-没有sizeof"><span class="nav-number">1.16.</span> <span class="nav-text">3.16 java 没有sizeof</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-17-操作符小结"><span class="nav-number">1.17.</span> <span class="nav-text">3.17 操作符小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-18-总结"><span class="nav-number">1.18.</span> <span class="nav-text">3.18 总结</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
