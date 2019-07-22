@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第二章. 一切都是对象2.1 用引用操作对象String s; 只是创建引用并初始化。String s = “asdf”; 这个代码只是把s初始化。引用到 “asdf” 的内存地址。类似于c的引用指针，只不过把对象抽象成内存地址。 2.2 必须由你创建的所有对象（这标题一看就是翻译过来的） 只看标题一脸蒙蔽……String s = new String(“asdf”); 创建好对象了。 2.2.1">
+<meta name="keywords" content="Java Php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinking in Java 第二章">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Thinking-in-Java-第二章/index.html">
+<meta property="og:site_name" content="190会健身打球的coder">
+<meta property="og:description" content="第二章. 一切都是对象2.1 用引用操作对象String s; 只是创建引用并初始化。String s = “asdf”; 这个代码只是把s初始化。引用到 “asdf” 的内存地址。类似于c的引用指针，只不过把对象抽象成内存地址。 2.2 必须由你创建的所有对象（这标题一看就是翻译过来的） 只看标题一脸蒙蔽……String s = new String(“asdf”); 创建好对象了。 2.2.1">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2019-07-16T14:23:40.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinking in Java 第二章">
+<meta name="twitter:description" content="第二章. 一切都是对象2.1 用引用操作对象String s; 只是创建引用并初始化。String s = “asdf”; 这个代码只是把s初始化。引用到 “asdf” 的内存地址。类似于c的引用指针，只不过把对象抽象成内存地址。 2.2 必须由你创建的所有对象（这标题一看就是翻译过来的） 只看标题一脸蒙蔽……String s = new String(“asdf”); 创建好对象了。 2.2.1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第二章/">
+
+
+
+
+
+  <title>Thinking in Java 第二章 | 190会健身打球的coder</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190会健身打球的coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第二章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190会健身打球的coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第二章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T22:15:05+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第二章-一切都是对象"><a href="#第二章-一切都是对象" class="headerlink" title="第二章. 一切都是对象"></a>第二章. 一切都是对象</h1><h2 id="2-1-用引用操作对象"><a href="#2-1-用引用操作对象" class="headerlink" title="2.1 用引用操作对象"></a>2.1 用引用操作对象</h2><p>String s; 只是创建引用并初始化。String s = “asdf”; 这个代码只是把s初始化。引用到 “asdf” 的内存地址。类似于c的引用指针，只不过把对象抽象成内存地址。</p>
+<h2 id="2-2-必须由你创建的所有对象"><a href="#2-2-必须由你创建的所有对象" class="headerlink" title="2.2 必须由你创建的所有对象"></a>2.2 必须由你创建的所有对象</h2><p>（这标题一看就是翻译过来的） 只看标题一脸蒙蔽……<br>String s = new String(“asdf”); 创建好对象了。</p>
+<h4 id="2-2-1-储存到什么地方"><a href="#2-2-1-储存到什么地方" class="headerlink" title="2.2.1 储存到什么地方"></a>2.2.1 储存到什么地方</h4><p>有五种不同的地方可以存储数据：</p>
+<ol>
+<li>寄存器，这是最快的存储，在处理器内部</li>
+<li>栈，这是存在随机访问内存，但是有处理器通过 栈指针 的直接支持 （一般存放确定好的静态变量，通过指针分配内存）</li>
+<li>堆，这是通用的存储区域，所有 Java 对象都存储在这</li>
+<li>常量存储，常量值一般都直接放置于程序代码内</li>
+<li>非随机访问内存存储，完全存储在程序外的数据，和该程序是否在运行无关，且不受该程序控制<h4 id="2-2-2-基本类型"><a href="#2-2-2-基本类型" class="headerlink" title="2.2.2 基本类型"></a>2.2.2 基本类型</h4>介绍基本的数据类型以及占用的空间大小。<h4 id="2-2-3-Java重的数组"><a href="#2-2-3-Java重的数组" class="headerlink" title="2.2.3 Java重的数组"></a>2.2.3 Java重的数组</h4>Java 数组一定会被初始化并且无法访问其区间之外的部分，位置索引在运行时会被确认是否有效。（Java 看到null 就知道这个指针还没有指到某个对象。程序会报错。所以常规的数组错误在Java可以避免。）</li>
+</ol>
+<h2 id="2-3-永远不要销毁对象"><a href="#2-3-永远不要销毁对象" class="headerlink" title="2.3 永远不要销毁对象"></a>2.3 永远不要销毁对象</h2><p>Java 会自动帮我们销毁对象。</p>
+<h4 id="2-3-1-作用域"><a href="#2-3-1-作用域" class="headerlink" title="2.3.1 作用域"></a>2.3.1 作用域</h4><p>作用域是由花括号 {} 的位置决定。作用域之内定义的变量在花括号结束前都可以被访问。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    int x = 12;</span><br><span class="line">    &#123;</span><br><span class="line">        int x = 96; // Illegal</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译器报错（x已经定义过了）。白话就是<strong>外面东西里面能用，里面的东西外边用不了</strong></p>
+<h4 id="2-3-2-对象的作用域"><a href="#2-3-2-对象的作用域" class="headerlink" title="2.3.2 对象的作用域"></a>2.3.2 对象的作用域</h4><p>new 一个Java 对象 他可以存活在作用域之外。Java 有 垃圾回收 机制，它观察所有使用 new 创建的对象，判断哪些对象不再被引用，并释放那些不再被引用的对象。你可以只管创建对象，当你不使用他们时，他们会自行被释放。</p>
+<h2 id="2-4-创建新的数据类型：-类"><a href="#2-4-创建新的数据类型：-类" class="headerlink" title="2.4 创建新的数据类型： 类"></a>2.4 创建新的数据类型： 类</h2><p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class ATypeName &#123; /* This is Class body */ &#125;</span><br><span class="line"></span><br><span class="line">ATypeName a = new ATypeName();</span><br></pre></td></tr></table></figure>
+
+<p>类创建好了！ 就是这样！</p>
+<h4 id="2-4-1-字段和方法"><a href="#2-4-1-字段和方法" class="headerlink" title="2.4.1 字段和方法"></a>2.4.1 字段和方法</h4><p>对象内可以创建字段和方法，但是普通字段不能在对象间共享</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class DataOnly &#123;</span><br><span class="line">    int i;</span><br><span class="line">    double d;</span><br><span class="line">    boolean b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想要给对象里字段赋值 先引用一个对象 然后对其字段进行赋值操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DataOnly data = new DataOnly();</span><br><span class="line"></span><br><span class="line">data.i = 47;</span><br><span class="line">data.d = 1.1;</span><br><span class="line">data.b = false;</span><br></pre></td></tr></table></figure>
+
+<p>类中的某个成员是基本数据类型 即使没有初始化，Java也会给一个默认值。防止程序错误产生。</p>
+<p>基本数据类型    默认值<br></p>
+<p>boolean    false <br><br>char    ‘\u0000’ (null)<br><br>byte    (byte)0<br><br>short    (short)0<br><br>int    0<br><br>long    0L<br><br>float    0.0f<br><br>double    0.0d<br><br>但是上面说的不适用于 局部变量，局部作用域中不初始化会报错。</p>
+<h2 id="2-5-方法、参数和返回值"><a href="#2-5-方法、参数和返回值" class="headerlink" title="2.5 方法、参数和返回值"></a>2.5 方法、参数和返回值</h2><p>介绍了方法的组成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReturnType methodName (/* Argument list */)&#123;</span><br><span class="line">    /* Method body */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5-1-参数列表"><a href="#2-5-1-参数列表" class="headerlink" title="2.5.1 参数列表"></a>2.5.1 参数列表</h4><p>方法的参数有强类型控制 如果是String 类型 则必须传String 对象 否则报错。</p>
+<h2 id="2-6-构建一个Java程序"><a href="#2-6-构建一个Java程序" class="headerlink" title="2.6 构建一个Java程序"></a>2.6 构建一个Java程序</h2><h4 id="2-6-1-名字可见性"><a href="#2-6-1-名字可见性" class="headerlink" title="2.6.1 名字可见性"></a>2.6.1 名字可见性</h4><p>Java 为了保证命名唯一，采用了反转域名的规范建立包名，例如 net.mindview<br>.my.project.</p>
+<h4 id="2-6-2-运用其他构件"><a href="#2-6-2-运用其他构件" class="headerlink" title="2.6.2 运用其他构件"></a>2.6.2 运用其他构件</h4><p>引用包写法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-3-static-关键字"><a href="#2-6-3-static-关键字" class="headerlink" title="2.6.3 static 关键字"></a>2.6.3 static 关键字</h4><ol>
+<li>static 修饰的变量是共享内存的</li>
+<li>static 字段对每个类来说都只有一份存储空间，而非static对象则是每个对象都有一个存储空间。</li>
+<li>static 好处是不创建任何对象就能调用它，这一点对定义main()入口文件很重要。</li>
+</ol>
+<h2 id="2-7-你的第一个Java程序"><a href="#2-7-你的第一个Java程序" class="headerlink" title="2.7 你的第一个Java程序"></a>2.7 你的第一个Java程序</h2><p>在每个程序文件的开头，都必须放置一个import语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line">public class HelloDate &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;Hello, it&apos;s: &quot;);</span><br><span class="line">        System.out.println(new Date());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>main()的形式是固定的，如上</p>
+<p>虽然并为用到 args，但是Java编译器必须要这样做，因为 args 要用来存储命令行参数<br>（Java 最强大的优势之一就是它具有庞大的标准类库集）</p>
+<h4 id="2-7-1-编译和运行"><a href="#2-7-1-编译和运行" class="headerlink" title="2.7.1 编译和运行"></a>2.7.1 编译和运行</h4><p>javac HelloDate.java <br><br>java HelloDate<br><br>注 ：<strong>JDK11以后 不需要用javac 编译 直接java 编译+运行 （Java也在像轻量改变）</strong> </p>
+<h2 id="2-8-注释和嵌入式文档"><a href="#2-8-注释和嵌入式文档" class="headerlink" title="2.8 注释和嵌入式文档"></a>2.8 注释和嵌入式文档</h2><p>Java里提供两种注释风格。</p>
+<p>第一种风格，注释以“/<em>”开始，随后是注释内容，并可跨越多行，最后以“</em>/”结束。<br><br>第二种风格，单行注释，以“//”开头，直到句末。</p>
+<h4 id="2-8-1-注释文档"><a href="#2-8-1-注释文档" class="headerlink" title="2.8.1 注释文档"></a>2.8.1 注释文档</h4><p>javadoc 将文件同文档链接起来。将注释提取出来放在一个文件内。javadoc输出的是一个HTML文件，可以用Web浏览器查看。</p>
+<h4 id="2-8-2-语法"><a href="#2-8-2-语法" class="headerlink" title="2.8.2 语法"></a>2.8.2 语法</h4><p>独立文档标签是一些以“@”字符开头的命令，且要置于注释行的最前面。<br>所有的javadoc命令都只能在“/<em>*”注释中出现，注释结束于“</em>/”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/** A class comment */</span><br><span class="line">public class Documentation1 &#123;</span><br><span class="line">    /** A field comment */</span><br><span class="line">    public int i;</span><br><span class="line">    /** A method comment */</span><br><span class="line">    public void f() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>javadoc只能为public和protected成员进行文档注释。private和包内可访问成员的注释会被忽略掉。可以使用-private进行标记，可以将private成员的注释也包括在内。</strong></p>
+<h4 id="2-8-3-嵌入式HTML"><a href="#2-8-3-嵌入式HTML" class="headerlink" title="2.8.3 嵌入式HTML"></a>2.8.3 嵌入式HTML</h4><p>所有类型的注释文档都支持嵌入式HTML。</p>
+<h4 id="2-8-4-一些标签示例"><a href="#2-8-4-一些标签示例" class="headerlink" title="2.8.4 一些标签示例"></a>2.8.4 一些标签示例</h4><ol>
+<li><p>@see：引用其他类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @see classname</span><br><span class="line"> * @see fully-qualified-classname</span><br><span class="line"> * @see fully-qualified-classname#method-name</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>{@link package.class#member label} 该标签与@see极其相似，只是它用于行内，并且用“label”作为超链接文本。</p>
+</li>
+<li><p>{@docRoot} 该标签产生到文档根目录的相对路径，用于文档树页面的显式超链接。</p>
+</li>
+<li><p>{@inheritDoc}<br>该标签从当前这个类的最直接的基类中继承相关文档到当前的文档注释中。</p>
+</li>
+<li><p>@version 代码版本的相关信息</p>
+</li>
+<li><p>@author 作者</p>
+</li>
+<li><p>@since 指定程序最早使用的版本</p>
+</li>
+<li><p>@param 参数</p>
+</li>
+<li><p>@return 返回值</p>
+</li>
+<li><p>@throws 产生异常的相关信息。</p>
+</li>
+<li><p>@deprecated 新特性改进。</p>
+<h4 id="2-8-5-文档示例"><a href="#2-8-5-文档示例" class="headerlink" title="2.8.5 文档示例"></a>2.8.5 文档示例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//:first/HelloDate.java</span><br><span class="line">import java.util.Date;</span><br><span class="line">/**</span><br><span class="line"> *  The first Thinking in Java example program.</span><br><span class="line"> *  Displays a string and today&apos;s date.</span><br><span class="line"> * @author xjd</span><br><span class="line"> * @author www.xxx.com.cn</span><br><span class="line"> * @version 4.0</span><br><span class="line"> */</span><br><span class="line">public class HelloDate &#123;</span><br><span class="line">    /**</span><br><span class="line">     *  Entry point to class &amp; application</span><br><span class="line">     * @param args array of string arguments</span><br><span class="line">     * @throws exceptions No exceptions thrown</span><br><span class="line">     */</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;Hello, it&apos;s: &quot;);</span><br><span class="line">        System.out.println(new Date());</span><br><span class="line">    &#125;/* Output:(55% match)</span><br><span class="line">    Hello,it&apos;s:</span><br><span class="line">    Thu Jun 28 17:56:45 CST 2018</span><br><span class="line">    *///:~</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>第一行 用一个“:”作为特殊几号说明这是包含原文件名的注释行。</p>
+<p>“///:~”标志源代码清单的结束。</p>
+<p>/*Output标签表示输出的开始部分将由这个文件生成，通过这种形式，它会自动地测试以验证其准确性。</p>
+<p>(55% match)在向测试系统说明程序的当前运行和醒一次运行的输出存在这很大差异，55%是两次输出与其的相关性程度。</p>
+<h2 id="2-9-编码风格"><a href="#2-9-编码风格" class="headerlink" title="2.9 编码风格"></a>2.9 编码风格</h2><p>类名 首字母大写的<strong>驼峰风格</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class AllTheColorsOfTheRainbow&#123;</span><br><span class="line">    int anIntegerRepresentingColors;</span><br><span class="line">    void changeTheHueOfTheColor(int newHue) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-10-总结"><a href="#2-10-总结" class="headerlink" title="2.10 总结"></a>2.10 总结</h2><p>大家了解如何编写一个简单程序的Java编程知识，对Java语言及它的一些基本思想也有了一个总体认识。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/Thinking-in-Java-第一章/" rel="next" title="Thinking in Java 第一章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第一章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/16/Thinking-in-Java-第三章/" rel="prev" title="Thinking in Java 第三章">
+                Thinking in Java 第三章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">打铁还需自身硬</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-一切都是对象"><span class="nav-number">1.</span> <span class="nav-text">第二章. 一切都是对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-用引用操作对象"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 用引用操作对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-必须由你创建的所有对象"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 必须由你创建的所有对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-储存到什么地方"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">2.2.1 储存到什么地方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-基本类型"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">2.2.2 基本类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-Java重的数组"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">2.2.3 Java重的数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-永远不要销毁对象"><span class="nav-number">1.3.</span> <span class="nav-text">2.3 永远不要销毁对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-作用域"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">2.3.1 作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-对象的作用域"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2.3.2 对象的作用域</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-创建新的数据类型：-类"><span class="nav-number">1.4.</span> <span class="nav-text">2.4 创建新的数据类型： 类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-字段和方法"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">2.4.1 字段和方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-方法、参数和返回值"><span class="nav-number">1.5.</span> <span class="nav-text">2.5 方法、参数和返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1-参数列表"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">2.5.1 参数列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-构建一个Java程序"><span class="nav-number">1.6.</span> <span class="nav-text">2.6 构建一个Java程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1-名字可见性"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">2.6.1 名字可见性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2-运用其他构件"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">2.6.2 运用其他构件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-3-static-关键字"><span class="nav-number">1.6.0.3.</span> <span class="nav-text">2.6.3 static 关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-你的第一个Java程序"><span class="nav-number">1.7.</span> <span class="nav-text">2.7 你的第一个Java程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1-编译和运行"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">2.7.1 编译和运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-注释和嵌入式文档"><span class="nav-number">1.8.</span> <span class="nav-text">2.8 注释和嵌入式文档</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-1-注释文档"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">2.8.1 注释文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-2-语法"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">2.8.2 语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-3-嵌入式HTML"><span class="nav-number">1.8.0.3.</span> <span class="nav-text">2.8.3 嵌入式HTML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-4-一些标签示例"><span class="nav-number">1.8.0.4.</span> <span class="nav-text">2.8.4 一些标签示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-5-文档示例"><span class="nav-number">1.8.0.5.</span> <span class="nav-text">2.8.5 文档示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-编码风格"><span class="nav-number">1.9.</span> <span class="nav-text">2.9 编码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-10-总结"><span class="nav-number">1.10.</span> <span class="nav-text">2.10 总结</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

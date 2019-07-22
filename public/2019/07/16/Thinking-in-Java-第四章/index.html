@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+<meta name="keywords" content="Java Php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinking in Java 第四章">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/index.html">
+<meta property="og:site_name" content="190会健身打球的coder">
+<meta property="og:description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2019-07-16T14:23:40.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinking in Java 第四章">
+<meta name="twitter:description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/">
+
+
+
+
+
+  <title>Thinking in Java 第四章 | 190会健身打球的coder</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190会健身打球的coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190会健身打球的coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第四章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T22:15:20+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第4章-控制执行流程"><a href="#第4章-控制执行流程" class="headerlink" title="第4章 控制执行流程"></a>第4章 控制执行流程</h1><p>if-else while do-while for return break</p>
+<h2 id="4-1-ture-和-flase"><a href="#4-1-ture-和-flase" class="headerlink" title="4.1 ture 和 flase"></a>4.1 ture 和 flase</h2><p>关系操作符构造的条件语句如“==”的返回值是true和false，<strong>Java中不允许将一个数字作为布尔值使用。</strong></p>
+<h2 id="4-2-if-else"><a href="#4-2-if-else" class="headerlink" title="4.2 if-else"></a>4.2 if-else</h2><p>if else语句与其它语言的相同，其中else是可选的。</p>
+<h2 id="4-3-迭代"><a href="#4-3-迭代" class="headerlink" title="4.3 迭代"></a>4.3 迭代</h2><p> while、do-while、for用来控制循环，有时候将他们称为迭代语句。语句会重复执行，直到起控制作用的布尔值得到“假”的结果时停止。</p>
+<h4 id="4-3-1-do-while"><a href="#4-3-1-do-while" class="headerlink" title="4.3.1 do-while"></a>4.3.1 do-while</h4><p>do-while 至少会执行一次。while 更常用一些。</p>
+<h4 id="4-3-2-for"><a href="#4-3-2-for" class="headerlink" title="4.3.2 for"></a>4.3.2 for</h4><p>最常用的 迭代形式。适合计数。（练习4 最棒）</p>
+<h4 id="4-3-3-逗号操作符"><a href="#4-3-3-逗号操作符" class="headerlink" title="4.3.3 逗号操作符"></a>4.3.3 逗号操作符</h4><p>可以在 for 语句定义多个变量。其他迭代不适用。无论是初始化 还是步进部分 语句都是顺序执行。</p>
+<h2 id="4-4-foreach"><a href="#4-4-foreach" class="headerlink" title="4.4 foreach"></a>4.4 foreach</h2><p>更加简洁的for语法 用于数组和容器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// f是要被访问的循环体 i是一个变量</span><br><span class="line">for(int x:f)&#123;</span><br><span class="line">    System.out.pringln(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>顺带讲解了一下<strong>重载：相同方法可以具有不同参数</strong> 。<br><br>range() 配上 foreach 效率低 可读性高。<br><br>printnb（）方法不会换行。<br><br>foreach 更加易读。</p>
+<h2 id="4-5-return"><a href="#4-5-return" class="headerlink" title="4.5 return"></a>4.5 return</h2><p> return关键字有两个用途，一方面指定一个void方法返回什么值，另一方面它会强制结束当前void方法，并返回那个值。</p>
+<h2 id="4-6-break-和-continue"><a href="#4-6-break-和-continue" class="headerlink" title="4.6 break 和 continue"></a>4.6 break 和 continue</h2><p>break用于强制退出循环，不执行循环剩余的语句<br><br>continue是停止当前的迭代，退到循环开始执行下一次迭代</p>
+<h2 id="4-7-臭名昭著的goto"><a href="#4-7-臭名昭著的goto" class="headerlink" title="4.7 臭名昭著的goto"></a>4.7 臭名昭著的goto</h2><p>goto 起源于汇编。Java编译器会生成自己的“汇编代码”，但是是运行在Java虚拟机上的。而不是直接运行在cpu硬件上。它是在源码级上的跳转。 导致可读性差，Java 没有goto。<br>Java 有 标签 可以 替换goto 使用。</p>
+<h2 id="4-8-switch"><a href="#4-8-switch" class="headerlink" title="4.8 switch"></a>4.8 switch</h2><p>switch也被划为一种选择语句，根据整数表达式的值，从一系列语句中选择一组执行。</p>
+<h2 id="4-9-总结"><a href="#4-9-总结" class="headerlink" title="4.9 总结"></a>4.9 总结</h2><p>介绍了大多数编程语言都具有基本特性：运算 操作符 优先级 类型转换以及选择和循环等等。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/Thinking-in-Java-第三章/" rel="next" title="Thinking in Java 第三章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第三章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/21/Thinking-in-Java-第五章/" rel="prev" title="Thinking in Java 第五章">
+                Thinking in Java 第五章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">打铁还需自身硬</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第4章-控制执行流程"><span class="nav-number">1.</span> <span class="nav-text">第4章 控制执行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-ture-和-flase"><span class="nav-number">1.1.</span> <span class="nav-text">4.1 ture 和 flase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-if-else"><span class="nav-number">1.2.</span> <span class="nav-text">4.2 if-else</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-迭代"><span class="nav-number">1.3.</span> <span class="nav-text">4.3 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-do-while"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">4.3.1 do-while</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-for"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">4.3.2 for</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-逗号操作符"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">4.3.3 逗号操作符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-foreach"><span class="nav-number">1.4.</span> <span class="nav-text">4.4 foreach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-return"><span class="nav-number">1.5.</span> <span class="nav-text">4.5 return</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-break-和-continue"><span class="nav-number">1.6.</span> <span class="nav-text">4.6 break 和 continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7-臭名昭著的goto"><span class="nav-number">1.7.</span> <span class="nav-text">4.7 臭名昭著的goto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-switch"><span class="nav-number">1.8.</span> <span class="nav-text">4.8 switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-9-总结"><span class="nav-number">1.9.</span> <span class="nav-text">4.9 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
