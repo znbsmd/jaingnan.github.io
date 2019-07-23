@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+<meta name="description" content="由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。第六章 访问权限控制为了让自己的程序变得更加易用、可读和完善的。在重构修改的过程中，避免他们对自己类库内部的程序进行改动。Java中提供了访问权限控制的概念，提供了三种不同级别的访问控制，访问开放程度由高到低依次为“public”、“protected”“private”，这样就能区分哪些内容是可用的，哪些内容是不可">
 <meta name="keywords" content="Java Php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Thinking in Java 第四章">
-<meta property="og:url" content="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/index.html">
+<meta property="og:title" content="Thinking in Java 第六章">
+<meta property="og:url" content="http://yoursite.com/2019/07/23/Thinking-in-Java-第六章/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+<meta property="og:description" content="由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。第六章 访问权限控制为了让自己的程序变得更加易用、可读和完善的。在重构修改的过程中，避免他们对自己类库内部的程序进行改动。Java中提供了访问权限控制的概念，提供了三种不同级别的访问控制，访问开放程度由高到低依次为“public”、“protected”“private”，这样就能区分哪些内容是可用的，哪些内容是不可">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2019-07-16T14:23:40.992Z">
+<meta property="og:updated_time" content="2019-07-23T14:47:17.031Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thinking in Java 第四章">
-<meta name="twitter:description" content="第4章 控制执行流程if-else while do-while for return break 4.1 ture 和 flase关系操作符构造的条件语句如“==”的返回值是true和false，Java中不允许将一个数字作为布尔值使用。 4.2 if-elseif else语句与其它语言的相同，其中else是可选的。 4.3 迭代 while、do-while、for用来控制循环，有时候将他们">
+<meta name="twitter:title" content="Thinking in Java 第六章">
+<meta name="twitter:description" content="由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。第六章 访问权限控制为了让自己的程序变得更加易用、可读和完善的。在重构修改的过程中，避免他们对自己类库内部的程序进行改动。Java中提供了访问权限控制的概念，提供了三种不同级别的访问控制，访问开放程度由高到低依次为“public”、“protected”“private”，这样就能区分哪些内容是可用的，哪些内容是不可">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/23/Thinking-in-Java-第六章/">
 
 
 
 
 
-  <title>Thinking in Java 第四章 | 190 muscle coder</title>
+  <title>Thinking in Java 第六章 | 190 muscle coder</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Thinking-in-Java-第四章/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/Thinking-in-Java-第六章/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="190coder">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Thinking in Java 第四章</h1>
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第六章</h1>
         
 
         <div class="post-meta">
@@ -272,8 +272,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T22:15:20+08:00">
-                2019-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-23T22:45:55+08:00">
+                2019-07-23
               </time>
             
 
@@ -332,22 +332,22 @@
       
 
       
-        <h1 id="第4章-控制执行流程"><a href="#第4章-控制执行流程" class="headerlink" title="第4章 控制执行流程"></a>第4章 控制执行流程</h1><p>if-else while do-while for return break</p>
-<h2 id="4-1-ture-和-flase"><a href="#4-1-ture-和-flase" class="headerlink" title="4.1 ture 和 flase"></a>4.1 ture 和 flase</h2><p>关系操作符构造的条件语句如“==”的返回值是true和false，<strong>Java中不允许将一个数字作为布尔值使用。</strong></p>
-<h2 id="4-2-if-else"><a href="#4-2-if-else" class="headerlink" title="4.2 if-else"></a>4.2 if-else</h2><p>if else语句与其它语言的相同，其中else是可选的。</p>
-<h2 id="4-3-迭代"><a href="#4-3-迭代" class="headerlink" title="4.3 迭代"></a>4.3 迭代</h2><p> while、do-while、for用来控制循环，有时候将他们称为迭代语句。语句会重复执行，直到起控制作用的布尔值得到“假”的结果时停止。</p>
-<h4 id="4-3-1-do-while"><a href="#4-3-1-do-while" class="headerlink" title="4.3.1 do-while"></a>4.3.1 do-while</h4><p>do-while 至少会执行一次。while 更常用一些。</p>
-<h4 id="4-3-2-for"><a href="#4-3-2-for" class="headerlink" title="4.3.2 for"></a>4.3.2 for</h4><p>最常用的 迭代形式。适合计数。（练习4 最棒）</p>
-<h4 id="4-3-3-逗号操作符"><a href="#4-3-3-逗号操作符" class="headerlink" title="4.3.3 逗号操作符"></a>4.3.3 逗号操作符</h4><p>可以在 for 语句定义多个变量。其他迭代不适用。无论是初始化 还是步进部分 语句都是顺序执行。</p>
-<h2 id="4-4-foreach"><a href="#4-4-foreach" class="headerlink" title="4.4 foreach"></a>4.4 foreach</h2><p>更加简洁的for语法 用于数组和容器。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// f是要被访问的循环体 i是一个变量</span><br><span class="line">for(int x:f)&#123;</span><br><span class="line">    System.out.pringln(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="由于此书讲的太细，一小节都总结太细-太影响效率，故从此章节改为大体总结，不扣细节。"><a href="#由于此书讲的太细，一小节都总结太细-太影响效率，故从此章节改为大体总结，不扣细节。" class="headerlink" title="由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。"></a><strong>由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。</strong></h3><h1 id="第六章-访问权限控制"><a href="#第六章-访问权限控制" class="headerlink" title="第六章 访问权限控制"></a>第六章 访问权限控制</h1><p>为了让自己的程序变得更加易用、可读和完善的。在重构修改的过程中，避免他们对自己类库内部的程序进行改动。Java中提供了访问权限控制的概念，提供了三种不同级别的访问控制，访问开放程度由高到低依次为“public”、“protected”“private”，这样就能区分哪些内容是可用的，哪些内容是不可用的，从而将变动的事物与不变的事物区分开来。此外，Java提供了package加以控制，而访问权限控制的作用会因为类库是否在一个相同的package还是不同的package受到影响。</p>
+<h2 id="6-1-包-库-单元"><a href="#6-1-包-库-单元" class="headerlink" title="6.1 包: 库 单元"></a>6.1 包: 库 单元</h2><h4 id="6-1-1-～-6-1-5"><a href="#6-1-1-～-6-1-5" class="headerlink" title="6.1.1  ～ 6.1.5"></a>6.1.1  ～ 6.1.5</h4><p> 包内包含一组类，它们在单一的名字空间下被组织在了一起。声明一个类所属的包使用package关键字，同时在另一个包中的类要访问其它包中的类使用import关键字导入要使用的包。这种方式可以在一定程度上避免重名的问题，因为包的名字要避免重名，而不同包内的类是可以根据具体的需求命相同的名字。包有效的将不同类的内容进行了隔离，同时也可以相互联系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">* // access/mypackage/MyPackagedClass.java</span><br><span class="line">*</span><br><span class="line">* package access.mypackage;</span><br><span class="line">*</span><br><span class="line">* public class MyPackagedClass &#123;</span><br><span class="line">*	public MyPackagedClass() &#123;System.out.println(&quot;MyPackagedClass()&quot;);&#125;</span><br><span class="line">* &#125;	</span><br><span class="line">*/</span><br><span class="line">// 以上是 新建package 里java</span><br><span class="line"></span><br><span class="line">public class UnpackagedMyClass &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		access.mypackage.MyPackagedClass m = new access.mypackage.MyPackagedClass();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>顺带讲解了一下<strong>重载：相同方法可以具有不同参数</strong> 。<br><br>range() 配上 foreach 效率低 可读性高。<br><br>printnb（）方法不会换行。<br><br>foreach 更加易读。</p>
-<h2 id="4-5-return"><a href="#4-5-return" class="headerlink" title="4.5 return"></a>4.5 return</h2><p> return关键字有两个用途，一方面指定一个void方法返回什么值，另一方面它会强制结束当前void方法，并返回那个值。</p>
-<h2 id="4-6-break-和-continue"><a href="#4-6-break-和-continue" class="headerlink" title="4.6 break 和 continue"></a>4.6 break 和 continue</h2><p>break用于强制退出循环，不执行循环剩余的语句<br><br>continue是停止当前的迭代，退到循环开始执行下一次迭代</p>
-<h2 id="4-7-臭名昭著的goto"><a href="#4-7-臭名昭著的goto" class="headerlink" title="4.7 臭名昭著的goto"></a>4.7 臭名昭著的goto</h2><p>goto 起源于汇编。Java编译器会生成自己的“汇编代码”，但是是运行在Java虚拟机上的。而不是直接运行在cpu硬件上。它是在源码级上的跳转。 导致可读性差，Java 没有goto。<br>Java 有 标签 可以 替换goto 使用。</p>
-<h2 id="4-8-switch"><a href="#4-8-switch" class="headerlink" title="4.8 switch"></a>4.8 switch</h2><p>switch也被划为一种选择语句，根据整数表达式的值，从一系列语句中选择一组执行。</p>
-<h2 id="4-9-总结"><a href="#4-9-总结" class="headerlink" title="4.9 总结"></a>4.9 总结</h2><p>介绍了大多数编程语言都具有基本特性：运算 操作符 优先级 类型转换以及选择和循环等等。</p>
+<h2 id="6-2-Java-访问权限修饰词"><a href="#6-2-Java-访问权限修饰词" class="headerlink" title="6.2 Java 访问权限修饰词"></a>6.2 Java 访问权限修饰词</h2><ol>
+<li><p>public：所有可见，被public修饰的内容在同一个包中的所有类都可见。同时Java提供默认的访问权限，即不被任何修饰符修饰的内容默认为public权限。</p>
+</li>
+<li><p>private：私有可见，只有该类可见，该类的对象都不可见。如果一个类的构造函数被声明为private，那么就不能通过这个类的构造函数来进行初始化对象。</p>
+</li>
+<li><p>protected:受保护的可见，与private不同，除了只有自己的类可见之外，该类的继承者也可见被修饰的域。<strong>除此之外还可以被当前包的类访问，但是其它包的类不可以访问，即便是使用了import的关键字</strong></p>
+</li>
+</ol>
+<p>访问权限控制对程序结构控制的重要手段。</p>
+<h2 id="6-3-接口和实现"><a href="#6-3-接口和实现" class="headerlink" title="6.3 接口和实现"></a>6.3 接口和实现</h2><p>为了方便他人使用，会在具体方法实现外部建立一层接口，只提供接口给外部开发人员调用，而不提供具体实现的方法。</p>
+<h2 id="6-4-类的访问权限"><a href="#6-4-类的访问权限" class="headerlink" title="6.4 类的访问权限"></a>6.4 类的访问权限</h2><p>在Java中，访问权限控制也可以确定包中的哪些类可以被访问，也就是说可以用来修饰类，一个文件中最多只能有一个使用public修饰的类。如果希望客户端程序员使用该类，并可以创建对象，那么就可以将该类修饰为public。并且被修饰为public的类必须要与该文件的名字完全相同</p>
+<h2 id="6-5-总结"><a href="#6-5-总结" class="headerlink" title="6.5 总结"></a>6.5 总结</h2><p>讲述了public、private和protected 三种类型的概念和应用场景。</p>
 
       
     </div>
@@ -372,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/16/Thinking-in-Java-第三章/" rel="next" title="Thinking in Java 第三章">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 第三章
+              <a href="/2019/07/21/Thinking-in-Java-第五章/" rel="next" title="Thinking in Java 第五章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第五章
               </a>
             
           </div>
@@ -381,10 +381,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/21/Thinking-in-Java-第五章/" rel="prev" title="Thinking in Java 第五章">
-                Thinking in Java 第五章 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -509,7 +505,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第4章-控制执行流程"><span class="nav-number">1.</span> <span class="nav-text">第4章 控制执行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-ture-和-flase"><span class="nav-number">1.1.</span> <span class="nav-text">4.1 ture 和 flase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-if-else"><span class="nav-number">1.2.</span> <span class="nav-text">4.2 if-else</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-迭代"><span class="nav-number">1.3.</span> <span class="nav-text">4.3 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-do-while"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">4.3.1 do-while</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-for"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">4.3.2 for</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-逗号操作符"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">4.3.3 逗号操作符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-foreach"><span class="nav-number">1.4.</span> <span class="nav-text">4.4 foreach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-return"><span class="nav-number">1.5.</span> <span class="nav-text">4.5 return</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-break-和-continue"><span class="nav-number">1.6.</span> <span class="nav-text">4.6 break 和 continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7-臭名昭著的goto"><span class="nav-number">1.7.</span> <span class="nav-text">4.7 臭名昭著的goto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-switch"><span class="nav-number">1.8.</span> <span class="nav-text">4.8 switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-9-总结"><span class="nav-number">1.9.</span> <span class="nav-text">4.9 总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#由于此书讲的太细，一小节都总结太细-太影响效率，故从此章节改为大体总结，不扣细节。"><span class="nav-number">1.</span> <span class="nav-text">由于此书讲的太细，一小节都总结太细 太影响效率，故从此章节改为大体总结，不扣细节。</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-访问权限控制"><span class="nav-number"></span> <span class="nav-text">第六章 访问权限控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-包-库-单元"><span class="nav-number"></span> <span class="nav-text">6.1 包: 库 单元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-1-～-6-1-5"><span class="nav-number">0.1.</span> <span class="nav-text">6.1.1  ～ 6.1.5</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-Java-访问权限修饰词"><span class="nav-number"></span> <span class="nav-text">6.2 Java 访问权限修饰词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-接口和实现"><span class="nav-number"></span> <span class="nav-text">6.3 接口和实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-类的访问权限"><span class="nav-number"></span> <span class="nav-text">6.4 类的访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-总结"><span class="nav-number"></span> <span class="nav-text">6.5 总结</span></a></li></div>
             
 
           </div>
