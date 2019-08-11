@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何阿兹编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派">
+<meta name="description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何在编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派生">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thinking in Java 第十四章">
 <meta property="og:url" content="http://yoursite.com/2019/08/10/Thinking-in-Java-第十四章/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何阿兹编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派">
+<meta property="og:description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何在编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派生">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2019-08-11T13:19:59.229Z">
+<meta property="og:updated_time" content="2019-08-11T13:21:58.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thinking in Java 第十四章">
-<meta name="twitter:description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何阿兹编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派">
+<meta name="twitter:description" content="第十四章 类型信息&amp;emsp;&amp;emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何在编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。 15.1 为什么需要RTTI&amp;emsp;&amp;emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派生">
 
 
 
@@ -332,7 +332,7 @@
       
 
       
-        <h1 id="第十四章-类型信息"><a href="#第十四章-类型信息" class="headerlink" title="第十四章 类型信息"></a>第十四章 类型信息</h1><p>&emsp;&emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何阿兹编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。</p>
+        <h1 id="第十四章-类型信息"><a href="#第十四章-类型信息" class="headerlink" title="第十四章 类型信息"></a>第十四章 类型信息</h1><p>&emsp;&emsp;RTTI（Run-Time-Type-Information），运行时类型信息。本章讲解Java 如何在编译时期识别对象和类的信息。另一种是“反射”机制，它允许在运行时候发现和使用类的信息。</p>
 <h2 id="15-1-为什么需要RTTI"><a href="#15-1-为什么需要RTTI" class="headerlink" title="15.1 为什么需要RTTI"></a>15.1 为什么需要RTTI</h2><p>&emsp;&emsp;在多态的过程中，基类的派生类使用基类提供的方法时，动态绑定以及向上转型相关，在最后阶段运行过程中找到自己对应的派生类。也正是有了RTTI，编译器才能正确的找到对应的派生类。上述思想是Java中多态思想的体现，多态也是Java中设计的关键思想，尽量使代码尽可能少的了解其具体的类型，而只与通用的类（基类）打交道。这种设计使代码逻辑更加简单、易于理解。</p>
 <h2 id="15-2-Class对象"><a href="#15-2-Class对象" class="headerlink" title="15.2 Class对象"></a>15.2 Class对象</h2><p>&emsp;&emsp;要理解RTTI在Java中的工作原理，首先要知道类型信息在运行时是如何表示的。这项工作是由称为Class对象的一种特殊的对象表示的。面向对象思想告诉我们，万事万物都是对象，Java中除了基本的数据类型，其它的都是对象。那么如果我们有如下代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student s = new Student();</span><br></pre></td></tr></table></figure>
