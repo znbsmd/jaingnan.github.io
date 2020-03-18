@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第二十章 注解注解（元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便地使用这些数据。  @Override，表示当前的方法定义将覆盖超类中的方法。 @Deprecated（废弃的），如果程序员使用了注解为它的元素，那么编译器会发出警告信息。 @SuppressWarnings，关闭不当的编译器警告信息。  20.1 基本语法注解的方法与其他方法没有区别，例如p">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinking in Java 第二十章">
+<meta property="og:url" content="http://yoursite.com/2020/03/01/Thinking-in-Java-第二十章/index.html">
+<meta property="og:site_name" content="190 muscle coder">
+<meta property="og:description" content="第二十章 注解注解（元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便地使用这些数据。  @Override，表示当前的方法定义将覆盖超类中的方法。 @Deprecated（废弃的），如果程序员使用了注解为它的元素，那么编译器会发出警告信息。 @SuppressWarnings，关闭不当的编译器警告信息。  20.1 基本语法注解的方法与其他方法没有区别，例如p">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2020-03-02T12:36:43.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinking in Java 第二十章">
+<meta name="twitter:description" content="第二十章 注解注解（元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便地使用这些数据。  @Override，表示当前的方法定义将覆盖超类中的方法。 @Deprecated（废弃的），如果程序员使用了注解为它的元素，那么编译器会发出警告信息。 @SuppressWarnings，关闭不当的编译器警告信息。  20.1 基本语法注解的方法与其他方法没有区别，例如p">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/01/Thinking-in-Java-第二十章/">
+
+
+
+
+
+  <title>Thinking in Java 第二十章 | 190 muscle coder</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190 muscle coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/Thinking-in-Java-第二十章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190 muscle coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第二十章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-01T13:38:07+08:00">
+                2020-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第二十章-注解"><a href="#第二十章-注解" class="headerlink" title="第二十章 注解"></a>第二十章 注解</h1><p>注解（元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便地使用这些数据。</p>
+<ul>
+<li>@Override，表示当前的方法定义将覆盖超类中的方法。</li>
+<li>@Deprecated（废弃的），如果程序员使用了注解为它的元素，那么编译器会发出警告信息。</li>
+<li>@SuppressWarnings，关闭不当的编译器警告信息。</li>
+</ul>
+<h2 id="20-1-基本语法"><a href="#20-1-基本语法" class="headerlink" title="20.1 基本语法"></a>20.1 基本语法</h2><p>注解的方法与其他方法没有区别，例如public、static、void 从语法的角度来看，注解的使用方式几乎与修饰符的使用一模一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Test void testExecute();</span><br></pre></td></tr></table></figure>
+
+<h4 id="20-1-1-定义注解"><a href="#20-1-1-定义注解" class="headerlink" title="20.1.1 定义注解"></a>20.1.1 定义注解</h4><p>与其他任何Java接口一样，注解也将会编译成class文件。</p>
+<h4 id="20-1-2-元注解"><a href="#20-1-2-元注解" class="headerlink" title="20.1.2 元注解"></a>20.1.2 元注解</h4><p>元注解专职负责注解其他的注解：</p>
+<table>
+<thead>
+<tr>
+<th>元注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code><a href="https://github.com/Target" title="@Target" class="at-link" target="_blank">@Target</a></code></td>
+<td>表示该注解可以用于什么地方。可能的<code>ElementType</code>包括：<br><code>CONSTRUCTOR</code>: 构造器的声明<br><code>FIELD</code>: 域声明（包括<code>enum</code>实例）<br><code>LOCAL_VARIABLE</code>: 局部变量声明<br><code>METHOD</code>: 方法声明<br><code>PACKAGE</code>: 包声明 <br><code>PARAMETER</code>: 参数声明 <br><code>TYPE</code>: 类、接口（）包括注解类型) 或<code>enum</code>声明</td>
+</tr>
+<tr>
+<td><code><a href="https://github.com/Retention" title="@Retention" class="at-link" target="_blank">@Retention</a></code></td>
+<td>表示需要在什么级别保存该注解信息。可选的<code>RetentionPolicy</code>参数包括：<br><code>SOURCE</code>: 注解将被编译器丢弃<br><code>CLASS</code>: 注解在<code>class</code>文件中可用，但会被虚拟机丢弃。<br><code>RUNTIME</code>: 虚拟机将在运行期也保留注解，因此可以通过反射机制读取注解的信息。</td>
+</tr>
+<tr>
+<td><code><a href="https://github.com/Documented" title="@Documented" class="at-link" target="_blank">@Documented</a></code></td>
+<td>将此注解包含在Javadoc中。</td>
+</tr>
+<tr>
+<td><code><a href="https://github.com/Inherited" title="@Inherited" class="at-link" target="_blank">@Inherited</a></code></td>
+<td>允许子类继承父类的注解。</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="20-2-编写注解处理器"><a href="#20-2-编写注解处理器" class="headerlink" title="20.2 编写注解处理器"></a>20.2 编写注解处理器</h2><h4 id="20-2-1-注解元素"><a href="#20-2-1-注解元素" class="headerlink" title="20.2.1 注解元素"></a>20.2.1 注解元素</h4><p>注解元素可用的类型：</p>
+<ol>
+<li>所有基本数据类型（int, float, boolean 等）</li>
+<li>String</li>
+<li>Class</li>
+<li>enum</li>
+<li>Annotation</li>
+<li>以上类型的数组</li>
+</ol>
+<p>使用其他类型编译器就会报错，也不允许使用任何包装类型。<br>注解也可以作为元素的类型，也就是说注解可以嵌套。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collections;</span><br><span class="line">import java.util.List;</span><br><span class="line">public class Annotation &#123;</span><br><span class="line">    public static void trackUseCases(List&lt;Integer&gt; useCases, Class&lt;?&gt; cl) &#123;</span><br><span class="line">        for (Method m : cl.getDeclaredMethods()) &#123;</span><br><span class="line">            UseCase uc = m.getAnnotation(UseCase.class);</span><br><span class="line">            if (uc != null) &#123;</span><br><span class="line">                System.out.println(&quot;Found Use Case:&quot; + uc.id() + &quot; &quot; + uc.description());</span><br><span class="line">                useCases.remove(new Integer(uc.id()));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i : useCases) &#123;</span><br><span class="line">            System.out.println(&quot;Warning: Missing use case-&quot; + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;Integer&gt; useCases = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        Collections.addAll(useCases, 47, 48, 49, 50);</span><br><span class="line">        trackUseCases(useCases, PasswordUtils.class);</span><br><span class="line">      PasswordUtils util=new PasswordUtils();</span><br><span class="line">        try &#123;</span><br><span class="line">            Method m=util.getClass().getMethod(&quot;validatePassword&quot;, String.class);</span><br><span class="line">            if(!((boolean)m.invoke(util, &quot;test&quot;)))&#123;</span><br><span class="line">                UseCase uc=m.getAnnotation(UseCase.class);</span><br><span class="line">                System.out.println(uc.description());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class PasswordUtils &#123;</span><br><span class="line">    @UseCase(id = 47, description = &quot;Passwords must contain at least one numeric&quot;)</span><br><span class="line">    public boolean validatePassword(String password) &#123;</span><br><span class="line">        return (password.matches(&quot;\\w*\\d\\w*&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">    @UseCase(id = 48)</span><br><span class="line">    public String encryptPassword(String password) &#123;</span><br><span class="line">        return new StringBuilder(password).reverse().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    @UseCase(id = 49, description = &quot;New passwords can’t equal previously used ones&quot;)</span><br><span class="line">    public boolean checkForNewPassword(List&lt;String&gt; prevPasswords,</span><br><span class="line">            String password) &#123;</span><br><span class="line">        return !prevPasswords.contains(password);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.*;</span><br><span class="line">import java.lang.annotation.Target;</span><br><span class="line">@Target(ElementType.METHOD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface UseCase &#123;</span><br><span class="line">    public int id() default -1;</span><br><span class="line">    public String description() default &quot;default description&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="20-2-2-默认值限制"><a href="#20-2-2-默认值限制" class="headerlink" title="20.2.2 默认值限制"></a>20.2.2 默认值限制</h4><p>元素必须要么具有默认值，要么使用注解时提供的值。</p>
+<p>对于非基本类型的元素，无论是在源代码中声明时，或是在注解接口中定义默认值，都不能以null作为其值。</p>
+<p>注解快捷方式：如果注解元素声明为value()，则在使用注解时如果只声明value，可以只写值，不必写名值对。例如可写为@Test(10)</p>
+<h4 id="20-2-3-生成外部文件"><a href="#20-2-3-生成外部文件" class="headerlink" title="20.2.3 生成外部文件"></a>20.2.3 生成外部文件</h4><p>变通之道<br>同时使用两个注解类型来注解一个域。 </p>
+<h4 id="20-2-4-注解不支持继承"><a href="#20-2-4-注解不支持继承" class="headerlink" title="20.2.4 注解不支持继承"></a>20.2.4 注解不支持继承</h4><p>不能使用extends来继承某个@interface。算是遗憾，可以嵌套解决。</p>
+<h4 id="20-2-5-实现处理器"><a href="#20-2-5-实现处理器" class="headerlink" title="20.2.5 实现处理器"></a>20.2.5 实现处理器</h4><p>在编译时通过注解获取相关数据，然后处理操作。</p>
+<h2 id="20-3-使用apt处理注解"><a href="#20-3-使用apt处理注解" class="headerlink" title="20.3 使用apt处理注解"></a>20.3 使用apt处理注解</h2><p>自定义的每个注解都需要自己的处理器，而apt工具能很容易地将多个注解处理器组合在一起。<br>（java提供了一个名为AbstractProcessor.java的抽象类，我们只要继承该类，就实现自己的注解处理器，来处理自定义的注解，书中是自己实现了一个apt）</p>
+<h2 id="20-4-将观察者模式用于apt"><a href="#20-4-将观察者模式用于apt" class="headerlink" title="20.4 将观察者模式用于apt"></a>20.4 将观察者模式用于apt</h2><p>用观察者模式 一对多处理多个注解。</p>
+<h2 id="20-5-基于注解的单元测试"><a href="#20-5-基于注解的单元测试" class="headerlink" title="20.5 基于注解的单元测试"></a>20.5 基于注解的单元测试</h2><p>有了注解，可以直接在要验证的类里面编写测试,方便快捷。</p>
+<h4 id="20-5-1-将-Unit用于泛型"><a href="#20-5-1-将-Unit用于泛型" class="headerlink" title="20.5.1 将@Unit用于泛型"></a>20.5.1 将@Unit用于泛型</h4><p>测试类继承自泛型，来测试堆栈里的数据和类型。唯一缺点是继承让我们无法访问private方法，要么修改他的访问权限修饰符。要么就在类中添加@TestProperty 由他来调用方法。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Ex8 &#123;</span><br><span class="line">	private String methodOne() &#123; return &quot;methodOne&quot;; &#125;</span><br><span class="line">	@TestProperty protected String methodOneCall() &#123;</span><br><span class="line">         return this.methodOne(); &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="20-5-2-不需要任何套件"><a href="#20-5-2-不需要任何套件" class="headerlink" title="20.5.2 不需要任何套件"></a>20.5.2 不需要任何套件</h4><p>@Uint 只是简单的搜索类文件，检查是否具有恰当的注解，然后运行@Test方法。<br>在@JUnit中，程序员必须告诉测试工具你打算测试什么，这就要求用套件来组织测试，以便JUnit能够找到它们，并运行包含的测试。</p>
+<h5 id="20-5-3-实现-Unit"><a href="#20-5-3-实现-Unit" class="headerlink" title="20.5.3 实现@Unit"></a>20.5.3 实现@Unit</h5><h5 id="20-5-4-移除测试代码"><a href="#20-5-4-移除测试代码" class="headerlink" title="20.5.4 移除测试代码"></a>20.5.4 移除测试代码</h5><p>开源Javassist工具库。</p>
+<h2 id="20-6-总结"><a href="#20-6-总结" class="headerlink" title="20.6 总结"></a>20.6 总结</h2><p>注解是Java引入的一项非常受欢迎的补充，从而似的程序员为代码加入元数据，不会导致代码杂乱。而Javadoc 中的@deprecated被@Deprecated注解取代的事实也说明，与注释文字相比，注解更适合买哦书类的相关信息。<br>有了apt工具可以简化构建过程，Javassist能操作字节码的工具。<br>不过现在的framework一定会将注解包含在其提供的工具集内，注解会将Java编程体验提升。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/28/Thinking-in-Java-第十九章/" rel="next" title="Thinking in Java 第十九章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第十九章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/03/Thinking-in-Java-第二十一章/" rel="prev" title="Thinking in Java 第二十一章">
+                Thinking in Java 第二十一章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">打铁还需自身硬</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第二十章-注解"><span class="nav-number">1.</span> <span class="nav-text">第二十章 注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#20-1-基本语法"><span class="nav-number">1.1.</span> <span class="nav-text">20.1 基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#20-1-1-定义注解"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">20.1.1 定义注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-1-2-元注解"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">20.1.2 元注解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-2-编写注解处理器"><span class="nav-number">1.2.</span> <span class="nav-text">20.2 编写注解处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#20-2-1-注解元素"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">20.2.1 注解元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-2-2-默认值限制"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">20.2.2 默认值限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-2-3-生成外部文件"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">20.2.3 生成外部文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-2-4-注解不支持继承"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">20.2.4 注解不支持继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-2-5-实现处理器"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">20.2.5 实现处理器</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#20-3-使用apt处理注解"><span class="nav-number">1.3.</span> <span class="nav-text">20.3 使用apt处理注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-4-将观察者模式用于apt"><span class="nav-number">1.4.</span> <span class="nav-text">20.4 将观察者模式用于apt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-5-基于注解的单元测试"><span class="nav-number">1.5.</span> <span class="nav-text">20.5 基于注解的单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#20-5-1-将-Unit用于泛型"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">20.5.1 将@Unit用于泛型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-5-2-不需要任何套件"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">20.5.2 不需要任何套件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#20-5-3-实现-Unit"><span class="nav-number">1.5.0.2.1.</span> <span class="nav-text">20.5.3 实现@Unit</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#20-5-4-移除测试代码"><span class="nav-number">1.5.0.2.2.</span> <span class="nav-text">20.5.4 移除测试代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-6-总结"><span class="nav-number">1.6.</span> <span class="nav-text">20.6 总结</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
