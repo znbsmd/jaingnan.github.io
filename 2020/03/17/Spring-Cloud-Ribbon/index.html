@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="190 muscle coder">
 <meta property="og:description" content="Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。 一、 客户端负载均衡不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔">
 <meta property="og:locale" content="chinese">
-<meta property="og:image" content="http://yoursite.com/2020/03/17/Spring-Cloud-Ribbon/ribbon_flow.png">
-<meta property="og:updated_time" content="2020-03-18T12:23:31.647Z">
+<meta property="og:image" content="http://yoursite.com/images/ribbon_flow.png">
+<meta property="og:updated_time" content="2020-03-19T01:12:46.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Ribbon">
 <meta name="twitter:description" content="Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。 一、 客户端负载均衡不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/17/Spring-Cloud-Ribbon/ribbon_flow.png">
+<meta name="twitter:image" content="http://yoursite.com/images/ribbon_flow.png">
 
 
 
@@ -357,7 +357,7 @@
 <h2 id="三、-源码分析"><a href="#三、-源码分析" class="headerlink" title="三、 源码分析"></a>三、 源码分析</h2><p>整个流程如下：</p>
 <p>通过LoadBalancerInterceptor 拦截器对RestTemplate的请求进行拦截，并利用Spring Cloud 的负载均衡器 LoadBalancerClient 将以逻辑服务名为host的URI转换称为具体的服务实例地址。用ribbon实现负载均衡器的时候，实际使用Ribbon定义的ILoadBalancer 接口的实现，BaseLoadBalancer类实现理基础的负载均衡，DynamicServerListLoadBalancer 和 ZoneAwareLoadBalancer 在负载均衡的策略上做了一些扩展功能。而RibbonClientConfiguration 配置类 默认采用ZoneAwareLoadBalancer 里面 chooseServer 获取了负载均衡策略分配到服务实例对象后，使用该对象调回通过LoadBalancerInterceptor拦截器的apply 像具体实例发起请求。</p>
 <p>流程图如下：</p>
-<p><img src="ribbon_flow.png" alt></p>
+<p><img src="/images/ribbon_flow.png" alt></p>
 <h4 id="1-负载均衡器"><a href="#1-负载均衡器" class="headerlink" title="1. 负载均衡器"></a>1. 负载均衡器</h4><p><strong>AbstractLoadBalancer</strong></p>
 <p> 是 ILoadBalancer 接口的抽象实现。里面定义了服务分组枚举类：</p>
 <ul>
@@ -454,6 +454,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/03/19/Spring-Cloud-Hystrix/" rel="prev" title="Spring Cloud Hystrix">
+                Spring Cloud Hystrix <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -531,7 +535,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
