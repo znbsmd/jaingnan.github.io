@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud Zuul 是Spring Cloud Netflix 子项目的核心组件之一，为了解决减轻维护路由规则和服务实例的而诞生的。可以作为微服务架构中的API网关使用，支持动态路由与过滤功能。 一、快速入门 构建网关   添加依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud Zuul">
+<meta property="og:url" content="http://yoursite.com/2020/03/19/Spring-Cloud-Zuul/index.html">
+<meta property="og:site_name" content="190 muscle coder">
+<meta property="og:description" content="Spring Cloud Zuul 是Spring Cloud Netflix 子项目的核心组件之一，为了解决减轻维护路由规则和服务实例的而诞生的。可以作为微服务架构中的API网关使用，支持动态路由与过滤功能。 一、快速入门 构建网关   添加依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2020-03-20T06:38:03.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Cloud Zuul">
+<meta name="twitter:description" content="Spring Cloud Zuul 是Spring Cloud Netflix 子项目的核心组件之一，为了解决减轻维护路由规则和服务实例的而诞生的。可以作为微服务架构中的API网关使用，支持动态路由与过滤功能。 一、快速入门 构建网关   添加依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/19/Spring-Cloud-Zuul/">
+
+
+
+
+
+  <title>Spring Cloud Zuul | 190 muscle coder</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190 muscle coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/Spring-Cloud-Zuul/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190 muscle coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Cloud Zuul</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-19T15:13:12+08:00">
+                2020-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring Cloud Zuul 是Spring Cloud Netflix 子项目的核心组件之一，为了解决减轻维护路由规则和服务实例的而诞生的。可以作为微服务架构中的API网关使用，支持动态路由与过滤功能。</p>
+<h2 id="一、快速入门"><a href="#一、快速入门" class="headerlink" title="一、快速入门"></a>一、快速入门</h2><ol>
+<li>构建网关</li>
+</ol>
+<ul>
+<li><p>添加依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-zuul&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在application.yml中进行配置</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8801</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: zuul-proxy</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    register-with-eureka: true</span><br><span class="line">    fetch-registry: true</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8001/eureka/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在启动类上添加@EnableZuulProxy注解来启用Zuul的API网关功能</li>
+</ul>
+<ol start="2">
+<li>请求路由</li>
+</ol>
+<ul>
+<li>传统路由方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zuul:</span><br><span class="line">  routes:  </span><br><span class="line">    api-a-url:</span><br><span class="line">      path: /api-a-url/**</span><br><span class="line">    url:</span><br><span class="line">      url: http://localhost:8080/</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>所有规则满足/api-a-url/ 都会打到<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> 。<br><strong>其中api-a-url 为路由名称，可自定义，一组path、url映射关系路由名要相同。</strong></p>
+<ul>
+<li>面向服务的路由</li>
+</ul>
+<p>与Erueka 相结合，将自己注册成服务，实现path映射，再从服务中挑选实例进行请求转发的完全路由机制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zuul:</span><br><span class="line">  routes:  </span><br><span class="line">    api-a-url:</span><br><span class="line">      path: /api-a-url/**</span><br><span class="line">    url:</span><br><span class="line">      serviceId: feign-consumer</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>请求过滤</li>
+</ol>
+<p>对服务提供者增加访问权限，继承ZuulFilter 重写如下4个方法，实现过滤器：</p>
+<ul>
+<li>filterType：过滤器类型，决定过滤器在哪个生命周期执行，默认pre，代表请求前执行。</li>
+<li>filterOrder：执行顺序，一个请求村爱多个过滤器，需要该方法返回值，0最大。</li>
+<li>shouldFilter： 是否执行该过滤器，默认true；</li>
+<li>run：具体过滤逻辑</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class PreLogFilter extends ZuulFilter &#123;</span><br><span class="line">    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 过滤器类型，有pre、routing、post、error四种。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public String filterType() &#123;</span><br><span class="line">        return &quot;pre&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 过滤器执行顺序，数值越小优先级越高。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public int filterOrder() &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 是否进行过滤，返回true会执行过滤。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public boolean shouldFilter() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 自定义的过滤器逻辑，当shouldFilter()返回true时会执行。</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public Object run() throws ZuulException &#123;</span><br><span class="line">        RequestContext requestContext = RequestContext.getCurrentContext();</span><br><span class="line">        HttpServletRequest request = requestContext.getRequest();</span><br><span class="line">        String host = request.getRemoteHost();</span><br><span class="line">        String method = request.getMethod();</span><br><span class="line">        String uri = request.getRequestURI();</span><br><span class="line">        LOGGER.info(&quot;Remote host:&#123;&#125;,method:&#123;&#125;,uri:&#123;&#125;&quot;, host, method, uri);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后在主方法加入如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@EnableZuulProxy</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class ApiGatewayApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(ApiGatewayApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    public PreLogFilter preLogFilter() &#123;</span><br><span class="line">        return new PreLogFilter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里，快速入门示例完成了。通过对Spring Cloud Zuul 两个核心功能介绍，总结如下：</p>
+<ul>
+<li>系统统一入口，屏蔽内部微服务细节</li>
+<li>与服务治理框架结合，实现自动化服务实例维护以及负载均衡的路由规则转发。</li>
+<li>实现接口权限和微服务业务解耦。</li>
+<li>通过网关中的过滤器，在各生命周期中去校验请求的内容，将原本在对外服务层做的校验前移，保证微服务无状态性。降低测试难度，让服务本身关注业务处理。</li>
+</ul>
+<h2 id="二、路由详解"><a href="#二、路由详解" class="headerlink" title="二、路由详解"></a>二、路由详解</h2><h4 id="1-传统路由配置"><a href="#1-传统路由配置" class="headerlink" title="1. 传统路由配置"></a>1. 传统路由配置</h4><ul>
+<li>单实例配置</li>
+<li>多实例配置：（需要实现负载均衡策略 Ribbon）</li>
+</ul>
+<h4 id="2-服务路由配置"><a href="#2-服务路由配置" class="headerlink" title="2. 服务路由配置"></a>2. 服务路由配置</h4><p>结合Eureka 面向服务路由，可以把API网关看作Eureka服务治理的普通微服务。将自己注册到服务中心，也会从中心获取所有实例。</p>
+<h4 id="3-服务路由默认规则"><a href="#3-服务路由默认规则" class="headerlink" title="3. 服务路由默认规则"></a>3. 服务路由默认规则</h4><p>默认 serviceId 配置，Eureka 上的服务会被Zuul 自动的创建映射关系来进行路由，会使得一些我们不希望对外开放的服务也可能被外部访问到。这时可以使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 4. 自定义路由映射规则</span><br><span class="line"></span><br><span class="line">对于兼容不同客户端，一般使用开闭原则进行设计开发。增加@Bean 书写正则匹配类PatternServiceRouteMapper ，没有匹配则使用默认路由映射规则。即采用完整服务名作为前缀表达式。</span><br><span class="line"></span><br><span class="line">#### 5.路径匹配</span><br><span class="line"></span><br><span class="line">根据历史配置文件中路由规则依次加入，规则由LinkedHashMap 保存，通过线性遍历匹配。</span><br><span class="line"></span><br><span class="line">#### 6. 路由前缀</span><br><span class="line"></span><br><span class="line">```zuul.prefix=/api</span><br></pre></td></tr></table></figure></p>
+<p><strong>在 Brixton.SR7 和 Camden.SR3 版本配置前缀并设置包含前缀路由规则会有bug</strong></p>
+<h4 id="7-本地跳转"><a href="#7-本地跳转" class="headerlink" title="7. 本地跳转"></a>7. 本地跳转</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 8. Cookie 与头信息</span><br><span class="line"></span><br><span class="line">默认，Zuul在请求路由时，会过滤掉HTTP请求头信息中的一些敏感信息，防止他们被产地到下游的外部服务器。默认敏感头信息通过```zuul.sensitiveHeaders```参数定义，包括Cookie、Set-Cookie、Authorization是不会传递的。</span><br><span class="line"></span><br><span class="line">不推荐使用```zuul.sensitiveHeaders =```全局覆盖默认值，破坏了默认设置的用意，以下有两种方法：</span><br></pre></td></tr></table></figure>
+
+<p>// 一、对指定路由开启自定义敏感头<br>zuul.routes.<router>.customSensitiveHeaders =true</router></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>// 二、将指定路由敏感头设置为空<br>zuul.routes.<router>.sensitiveHeaders =true</router></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">范围更小，不引起其他服务泄露。</span><br><span class="line"></span><br><span class="line">**重定向问题**</span><br><span class="line"></span><br><span class="line">增加```zuul.addHostHeader=true``` 配置，以标识最初的服务请求地址。防止暴露具体的web应用实例地址。</span><br><span class="line"></span><br><span class="line">#### 9.Hystrix 和 Ribbon 支持</span><br><span class="line"></span><br><span class="line">使用 serviceId 组合进行配置，可以保证API网关的健壮和稳定，也能够使用Ribbon和Hystrix。</span><br><span class="line"></span><br><span class="line">在使用Zuul 路由转发超时，只要超时时间小于Hystrix 会触发重试。通过</span><br></pre></td></tr></table></figure>
+
+<p>zuul.retrybale=false<br>zuul.routes.<route>.retryable =fales</route></p>
+<pre><code>
+关闭重试。
+
+## 三、过滤器详解
+
+#### 1. 过滤器
+
+#### 2. 核心过滤器
+
+- pre 过滤器
+- route 过滤器
+- post 过滤器
+
+![](/images/filter.jpg)
+
+#### 3.异常处理
+
+**errorFilter**
+
+用到error类型的过滤器，在请求周期饿pre、route、post 阶段有异常都会进入error阶段，创建error类来捕获，这些信息就可以被SendErrorFilter 捕获并组织成消息返回客户端。
+
+**不足与优化**
+
+**禁用过滤器**
+
+## 四、 动态加载
+
+从git 配置 config 让 api 路由规则 动态加载。
+
+过滤器也是同理。
+
+API的网关服务的动态过滤器功能可以帮助我们增强API网关的持续服务能力。另外动态过滤器无法直接注入容器使用。
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/19/Spring-Cloud-Feign/" rel="next" title="Spring Cloud Feign">
+                <i class="fa fa-chevron-left"></i> Spring Cloud Feign
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/20/Spring-Cloud-Config/" rel="prev" title="Spring Cloud Config">
+                Spring Cloud Config <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">打铁还需自身硬</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、快速入门"><span class="nav-number">1.</span> <span class="nav-text">一、快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、路由详解"><span class="nav-number">2.</span> <span class="nav-text">二、路由详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-传统路由配置"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 传统路由配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-服务路由配置"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 服务路由配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-服务路由默认规则"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 服务路由默认规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-本地跳转"><span class="nav-number">2.0.4.</span> <span class="nav-text">7. 本地跳转</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

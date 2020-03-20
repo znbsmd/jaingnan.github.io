@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="打铁还需自身硬">
+<meta name="description" content="类似熔断保险丝，当服务发生故障，向调用方返回一个错误响应，而不是长时间等待。 一、 快速入门 在 ribbon-consumer 引入  1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-cloud-starter-netfli">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud Hystrix">
 <meta property="og:url" content="http://yoursite.com/2020/03/19/Spring-Cloud-Hystrix/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="打铁还需自身硬">
+<meta property="og:description" content="类似熔断保险丝，当服务发生故障，向调用方返回一个错误响应，而不是长时间等待。 一、 快速入门 在 ribbon-consumer 引入  1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-cloud-starter-netfli">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-03-19T01:06:11.581Z">
+<meta property="og:updated_time" content="2020-03-19T03:07:07.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Hystrix">
-<meta name="twitter:description" content="打铁还需自身硬">
+<meta name="twitter:description" content="类似熔断保险丝，当服务发生故障，向调用方返回一个错误响应，而不是长时间等待。 一、 快速入门 在 ribbon-consumer 引入  1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-cloud-starter-netfli">
 
 
 
@@ -310,7 +310,28 @@
       
 
       
-        
+        <p>类似熔断保险丝，当服务发生故障，向调用方返回一个错误响应，而不是长时间等待。</p>
+<h2 id="一、-快速入门"><a href="#一、-快速入门" class="headerlink" title="一、 快速入门"></a>一、 快速入门</h2><ol>
+<li>在 ribbon-consumer 引入</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>主类 添加 @EnableCircuitBreaker</li>
+</ol>
+<p><strong>也可以使用 @SpringCloudApplication 该注解包含服务发现以及断路器。</strong></p>
+<ol start="3">
+<li><p>在Service中添加调用方法与服务降级方法，方法上需要添加@HystrixCommand注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@HystrixCommand(fallbackMethod = &quot;getDefaultUser&quot;)</span><br><span class="line">public CommonResult getUser(Long id) &#123;</span><br><span class="line">    return restTemplate.getForObject(userServiceUrl + &quot;/user/&#123;1&#125;&quot;, CommonResult.class, id);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public CommonResult getDefaultUser(@PathVariable Long id) &#123;</span><br><span class="line">    User defaultUser = new User(-1L, &quot;defaultUser&quot;, &quot;123456&quot;);</span><br><span class="line">    return new CommonResult&lt;&gt;(defaultUser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模拟服务提供方故障，触发熔断请求，则会 fallbackMethod。</p>
+</li>
+</ol>
+<h2 id="二、-原理分析"><a href="#二、-原理分析" class="headerlink" title="二、 原理分析"></a>二、 原理分析</h2><ol>
+<li>创建HystrixCommand 或 HystrixObservableCommand对象</li>
+<li>命令模式</li>
+</ol>
+
       
     </div>
     
@@ -398,8 +419,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -416,7 +446,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -452,6 +482,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-快速入门"><span class="nav-number">1.</span> <span class="nav-text">一、 快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-原理分析"><span class="nav-number">2.</span> <span class="nav-text">二、 原理分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="打铁还需自身硬">
+<meta name="description" content="Feign是声明式的服务调用工具，我们只需创建一个接口并用注解的方式来配置它，就可以实现对某个服务接口的调用，简化了直接使用RestTemplate来调用服务接口的开发量。Feign具备可插拔的注解支持，同时支持Feign注解、JAX-RS注解及SpringMvc注解。当使用Feign时，Spring Cloud集成了Ribbon和Eureka以提供负载均衡的服务调用及基于Hystrix的服务容错">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud Feign">
 <meta property="og:url" content="http://yoursite.com/2020/03/19/Spring-Cloud-Feign/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="打铁还需自身硬">
+<meta property="og:description" content="Feign是声明式的服务调用工具，我们只需创建一个接口并用注解的方式来配置它，就可以实现对某个服务接口的调用，简化了直接使用RestTemplate来调用服务接口的开发量。Feign具备可插拔的注解支持，同时支持Feign注解、JAX-RS注解及SpringMvc注解。当使用Feign时，Spring Cloud集成了Ribbon和Eureka以提供负载均衡的服务调用及基于Hystrix的服务容错">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-03-19T01:35:54.563Z">
+<meta property="og:updated_time" content="2020-03-19T07:02:10.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Feign">
-<meta name="twitter:description" content="打铁还需自身硬">
+<meta name="twitter:description" content="Feign是声明式的服务调用工具，我们只需创建一个接口并用注解的方式来配置它，就可以实现对某个服务接口的调用，简化了直接使用RestTemplate来调用服务接口的开发量。Feign具备可插拔的注解支持，同时支持Feign注解、JAX-RS注解及SpringMvc注解。当使用Feign时，Spring Cloud集成了Ribbon和Eureka以提供负载均衡的服务调用及基于Hystrix的服务容错">
 
 
 
@@ -283,6 +283,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -310,7 +332,45 @@
       
 
       
-        
+        <p>Feign是声明式的服务调用工具，我们只需创建一个接口并用注解的方式来配置它，就可以实现对某个服务接口的调用，简化了直接使用RestTemplate来调用服务接口的开发量。Feign具备可插拔的注解支持，同时支持Feign注解、JAX-RS注解及SpringMvc注解。当使用Feign时，Spring Cloud集成了Ribbon和Eureka以提供负载均衡的服务调用及基于Hystrix的服务容错保护功能。</p>
+<h2 id="一、-快速入门"><a href="#一、-快速入门" class="headerlink" title="一、 快速入门"></a>一、 快速入门</h2><ol>
+<li><p>在pom.xml中添加相关依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在启动类上添加@EnableFeignClients注解来启用Feign的客户端功能</p>
+</li>
+<li><p>定义 HelloServer接口，通过@FeignClient注解实现了一个Feign客户端，其中的value为user-service表示这是对user-service服务的接口调用客户端。然后使用Spring MVC 的注解 来绑定具体该服务提供的Rest接口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@FeignClient(value = &quot;hello-service&quot;)</span><br><span class="line">public interface UserService &#123;</span><br><span class="line">     </span><br><span class="line">    @GetMapping(&quot;/hello&quot;)</span><br><span class="line">    String hello();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>服务名不区分大小写。</strong></p>
+<ol start="4">
+<li>添加HelloController调用HelloService实现服务调用。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/hello&quot;)</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private HelloService helloService;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/feign-comsumer&quot;)</span><br><span class="line">    public String helloConsumer() &#123;</span><br><span class="line">        return helloService.hello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>在application.yml中进行配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 9001</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: feign-service</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    register-with-eureka: true</span><br><span class="line">    fetch-registry: true</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8001/eureka/</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、-参数绑定"><a href="#二、-参数绑定" class="headerlink" title="二、 参数绑定"></a>二、 参数绑定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">@FeignClient(value = &quot;hello-service&quot;)</span><br><span class="line">public interface UserService &#123;</span><br><span class="line">     </span><br><span class="line">    @RequestMapping(&quot;/hello&quot;)</span><br><span class="line">    String hello(@RequestParam String name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、-继承特性"><a href="#三、-继承特性" class="headerlink" title="三、 继承特性"></a>三、 继承特性</h2><p>通过继承可以将注解的接口 传递过来，不需要重复注解。<br> 缺点就是建立依赖，接口一变就对项目造成影响，所以尽可能在开发评审严格遵守开闭原则。</p>
+<h2 id="四、-Ribbon-配置"><a href="#四、-Ribbon-配置" class="headerlink" title="四、 Ribbon 配置"></a>四、 Ribbon 配置</h2><h2 id="五、-Hystrix-配置"><a href="#五、-Hystrix-配置" class="headerlink" title="五、 Hystrix 配置"></a>五、 Hystrix 配置</h2><p>开启Hystrix功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">feign:</span><br><span class="line">  hystrix:</span><br><span class="line">    enabled: true #在Feign中开启Hystrix</span><br></pre></td></tr></table></figure>
+
+<p>接口绑定@FeginClient 实现服务降级业务处理</p>
+<h2 id="六、-其他配置"><a href="#六、-其他配置" class="headerlink" title="六、 其他配置"></a>六、 其他配置</h2><p>请求压缩 ，支持对请求与响应进行GZIP 压缩，以减少性能损耗。</p>
+<h2 id="七、-日志配置"><a href="#七、-日志配置" class="headerlink" title="七、 日志配置"></a>七、 日志配置</h2><ol>
+<li><p>yml 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">logging:</span><br><span class="line">  level:</span><br><span class="line">    com.macro.cloud.service.UserService: debug</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于默认配置是 NONE。所以在应用主类中直接加入 Logger.Level 的Bean 创建也可以实现配置类。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">@Configuration</span><br><span class="line">public class FeignConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    Logger.Level feignLoggerLevel() &#123;</span><br><span class="line">        return Logger.Level.FULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -343,6 +403,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/19/Spring-Cloud-Zuul/" rel="prev" title="Spring Cloud Zuul">
+                Spring Cloud Zuul <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -394,8 +458,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -412,7 +485,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -448,6 +521,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-快速入门"><span class="nav-number">1.</span> <span class="nav-text">一、 快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-参数绑定"><span class="nav-number">2.</span> <span class="nav-text">二、 参数绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-继承特性"><span class="nav-number">3.</span> <span class="nav-text">三、 继承特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、-Ribbon-配置"><span class="nav-number">4.</span> <span class="nav-text">四、 Ribbon 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、-Hystrix-配置"><span class="nav-number">5.</span> <span class="nav-text">五、 Hystrix 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、-其他配置"><span class="nav-number">6.</span> <span class="nav-text">六、 其他配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、-日志配置"><span class="nav-number">7.</span> <span class="nav-text">七、 日志配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
