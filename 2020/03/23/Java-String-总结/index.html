@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="编程语言基础知识 编程语言 java php … 基本算法 网络知识 tcp/ip http/https 系统知识 基本设计模式   工具方面 系统 linux/unix (deepin ubuntu mac) 比较好用的本地开发环境  代码管理 git/svn 持续集成 （CI/CD） jenkins / gitlab （CI/CD） + yml脚本 实现自动部署 java项目管理工具 Mave">
+<meta name="description" content="1. Spring 是如何实现的以主流的 JDK 版本 1.8 来说，String 内部实际存储结构为 char 数组 2. Spring 有哪些重要的方法 多构造方法  12345678910111213141516171819// String 为参数的构造方法public String(String original) &amp;#123;    this.value = original.valu">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java &amp;&amp; php 知识梳理和简要自学路线 ">
-<meta property="og:url" content="http://yoursite.com/2019/07/24/java-php-知识梳理和简要自学路线/index.html">
+<meta property="og:title" content="Java String 总结">
+<meta property="og:url" content="http://yoursite.com/2020/03/23/Java-String-总结/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="编程语言基础知识 编程语言 java php … 基本算法 网络知识 tcp/ip http/https 系统知识 基本设计模式   工具方面 系统 linux/unix (deepin ubuntu mac) 比较好用的本地开发环境  代码管理 git/svn 持续集成 （CI/CD） jenkins / gitlab （CI/CD） + yml脚本 实现自动部署 java项目管理工具 Mave">
+<meta property="og:description" content="1. Spring 是如何实现的以主流的 JDK 版本 1.8 来说，String 内部实际存储结构为 char 数组 2. Spring 有哪些重要的方法 多构造方法  12345678910111213141516171819// String 为参数的构造方法public String(String original) &amp;#123;    this.value = original.valu">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2019-08-10T15:30:47.290Z">
+<meta property="og:image" content="http://yoursite.com/images/string.png">
+<meta property="og:image" content="http://yoursite.com/images/stringjvm.png">
+<meta property="og:updated_time" content="2020-03-23T08:22:55.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java &amp;&amp; php 知识梳理和简要自学路线 ">
-<meta name="twitter:description" content="编程语言基础知识 编程语言 java php … 基本算法 网络知识 tcp/ip http/https 系统知识 基本设计模式   工具方面 系统 linux/unix (deepin ubuntu mac) 比较好用的本地开发环境  代码管理 git/svn 持续集成 （CI/CD） jenkins / gitlab （CI/CD） + yml脚本 实现自动部署 java项目管理工具 Mave">
+<meta name="twitter:title" content="Java String 总结">
+<meta name="twitter:description" content="1. Spring 是如何实现的以主流的 JDK 版本 1.8 来说，String 内部实际存储结构为 char 数组 2. Spring 有哪些重要的方法 多构造方法  12345678910111213141516171819// String 为参数的构造方法public String(String original) &amp;#123;    this.value = original.valu">
+<meta name="twitter:image" content="http://yoursite.com/images/string.png">
 
 
 
@@ -120,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/24/java-php-知识梳理和简要自学路线/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/23/Java-String-总结/">
 
 
 
 
 
-  <title>java && php 知识梳理和简要自学路线  | 190 muscle coder</title>
+  <title>Java String 总结 | 190 muscle coder</title>
   
 
 
@@ -243,7 +246,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/java-php-知识梳理和简要自学路线/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/23/Java-String-总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="190coder">
@@ -260,7 +263,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java && php 知识梳理和简要自学路线 </h1>
+          <h1 class="post-title" itemprop="name headline">Java String 总结</h1>
         
 
         <div class="post-meta">
@@ -272,8 +275,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-24T23:42:34+08:00">
-                2019-07-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-23T12:09:17+08:00">
+                2020-03-23
               </time>
             
 
@@ -295,8 +298,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/learing-route/" itemprop="url" rel="index">
-                    <span itemprop="name">learing route</span>
+                  <a href="/categories/Java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 基础</span>
                   </a>
                 </span>
 
@@ -332,68 +335,52 @@
       
 
       
-        <h2 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h2><h4 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h4><ul>
-<li>编程语言 java php …</li>
-<li>基本算法</li>
-<li>网络知识 tcp/ip http/https</li>
-<li>系统知识</li>
-<li>基本设计模式</li>
+        <h2 id="1-Spring-是如何实现的"><a href="#1-Spring-是如何实现的" class="headerlink" title="1. Spring 是如何实现的"></a>1. Spring 是如何实现的</h2><p>以主流的 JDK 版本 1.8 来说，String 内部实际存储结构为 char 数组</p>
+<h2 id="2-Spring-有哪些重要的方法"><a href="#2-Spring-有哪些重要的方法" class="headerlink" title="2. Spring 有哪些重要的方法"></a>2. Spring 有哪些重要的方法</h2><ul>
+<li>多构造方法</li>
 </ul>
-<hr>
-<h2 id="工具方面"><a href="#工具方面" class="headerlink" title="工具方面"></a>工具方面</h2><ul>
-<li>系统 linux/unix (deepin ubuntu mac) 比较好用的本地开发环境 </li>
-<li>代码管理 git/svn</li>
-<li>持续集成 （CI/CD） jenkins / gitlab （CI/CD） + yml脚本 实现自动部署</li>
-<li>java项目管理工具 Maven/ Gradle</li>
-<li>php 依赖管理工具 composer </li>
-</ul>
-<hr>
-<h2 id="框架方面"><a href="#框架方面" class="headerlink" title="框架方面"></a>框架方面</h2><h4 id="应用层框架"><a href="#应用层框架" class="headerlink" title="应用层框架"></a>应用层框架</h4><h5 id="java"><a href="#java" class="headerlink" title="java"></a>java</h5><ul>
-<li>ssh spring + structs + hibernates (java 早期)</li>
-<li>ssm spring + springmvc + mybatis</li>
-<li>spring boot</li>
-</ul>
-<h5 id="php"><a href="#php" class="headerlink" title="php"></a>php</h5><ul>
-<li>thinkphp </li>
-<li>yii</li>
-<li>laravel</li>
-<li>phalcon （扩展级别 高性能）</li>
-<li>yar （rpc通信框架）</li>
-<li>swoole （解决php 并发 异步 socket 框架 扩展实现）</li>
-<li>workerman （ php实现 简单 易学 socket 框架）</li>
-</ul>
-<h4 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h4><ul>
-<li><p>MQ消息队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// String 为参数的构造方法</span><br><span class="line">public String(String original) &#123;</span><br><span class="line">    this.value = original.value;</span><br><span class="line">    this.hash = original.hash;</span><br><span class="line">&#125;</span><br><span class="line">// char[] 为参数构造方法</span><br><span class="line">public String(char value[]) &#123;</span><br><span class="line">    this.value = Arrays.copyOf(value, value.length);</span><br><span class="line">&#125;</span><br><span class="line">// StringBuffer 为参数的构造方法</span><br><span class="line">public String(StringBuffer buffer) &#123;</span><br><span class="line">    synchronized(buffer) &#123;</span><br><span class="line">        this.value = Arrays.copyOf(buffer.getValue(), buffer.length());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// StringBuilder 为参数的构造方法</span><br><span class="line">public String(StringBuilder builder) &#123;</span><br><span class="line">    this.value = Arrays.copyOf(builder.getValue(), builder.length());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过  StringBuffer 和 StringBuilder一般为单独使用</p>
+<ul>
+<li><p>equals() 比较两个字符串是否相等。<br>String类型重写了Object中的equals()方法，equals()方法需要传递一个Object类型的参数值，在比较时会先通过instanceof判断是否为String，之后循环比较char数组。返回 boolure。</p>
 </li>
-<li><p>RPC通信框架</p>
-<ol>
-<li>gRPC thrift dubbo springcloud （java）</li>
-<li>elasticsearch 数据库 搜索引擎</li>
-<li>yar swoole（php） </li>
-</ol>
+<li><p>compareTo() 比较两个字符串，返回 int 型。</p>
+</li>
+<li><p>其他重要方法：</p>
+<ul>
+<li>indexOf()：查询字符串首次出现的下标位置</li>
+<li>lastIndexOf()：查询字符串最后出现的下标位置</li>
+<li>contains()：查询字符串中是否包含另一个字符串</li>
+<li>toLowerCase()：把字符串全部转换成小写</li>
+<li>toUpperCase()：把字符串全部转换成大写</li>
+<li>length()：查询字符串的长度</li>
+<li>trim()：去掉字符串首尾空格</li>
+<li>replace() 替换掉字符串中的某些字符</li>
+<li>split()：把字符串分割并返回字符串数组 </li>
+<li>join()：把字符串数组转为字符串</li>
+</ul>
 </li>
 </ul>
-<h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><ul>
-<li>SQL : mysql</li>
-<li>NOSQL : redis  memcached mongodb elasticsearch</li>
+<h2 id="3-和-equals-的区别"><a href="#3-和-equals-的区别" class="headerlink" title="3. == 和 equals 的区别"></a>3. == 和 equals 的区别</h2><p>== 是引用的内存地址的比较，equals是值比较。Object equals 是直接比较引用地址。String 重写了equals 方法，先比较引用地址，然后比较类型是不是String，最后把2个字符串转换成Char 数组对比，循环每一个字符，其中有一个不想等就返回false，否则继续对比。</p>
+<h2 id="4-final修饰的好处"><a href="#4-final修饰的好处" class="headerlink" title="4. final修饰的好处"></a>4. final修饰的好处</h2><ul>
+<li>安全：如果有一些列校验后，如果是可变的，校验后他的内部值又被改变了，可能引起系统崩溃问题。</li>
+<li>效率高：能够缓存结果（常量池）如果是可变的话，则有可能重写拷贝一个新值进行传参，性能空间都有浪费。</li>
 </ul>
-<hr>
-<h2 id="架构方面"><a href="#架构方面" class="headerlink" title="架构方面"></a>架构方面</h2><h4 id="分布式-微服务"><a href="#分布式-微服务" class="headerlink" title="分布式/微服务"></a>分布式/微服务</h4><h5 id="rpc通信"><a href="#rpc通信" class="headerlink" title="rpc通信"></a>rpc通信</h5><ul>
-<li>spring cloud (java) </li>
-<li>yar (php)</li>
-<li>dubbo (java)</li>
+<p><img src="/images/string.png" alt></p>
+<p>如果 String 是可变的，那当 s1 的值修改之后，s2 的值也跟着改变了，这样就和我们预期的结果不相符了，因此也就没有办法实现字符串常量池的功能了。</p>
+<h2 id="5-String-和-StringBuilder、StringBuffer-的区别"><a href="#5-String-和-StringBuilder、StringBuffer-的区别" class="headerlink" title="5. String 和 StringBuilder、StringBuffer 的区别"></a>5. String 和 StringBuilder、StringBuffer 的区别</h2><ul>
+<li>String 类型不可变，所以拼接字符串性能会很低。</li>
+<li>StringBuffer synchronized 线程安全</li>
+<li>StringBuilder 线程不安全，但效率高。非并发都用StringBuilder。</li>
 </ul>
-<h4 id="虚拟化-容器化技术"><a href="#虚拟化-容器化技术" class="headerlink" title="虚拟化/容器化技术"></a>虚拟化/容器化技术</h4><ul>
-<li>Docker 容器化</li>
-<li>k8s</li>
-</ul>
-<hr>
-<h2 id="源码-性能"><a href="#源码-性能" class="headerlink" title="源码/性能"></a>源码/性能</h2><ul>
-<li>JDK 源码 部分设计思想</li>
-<li>Spring 源码</li>
-<li>JVM 细节与排错</li>
-<li>高并发/ 高可用</li>
-</ul>
+<h2 id="6-String-和-JVM"><a href="#6-String-和-JVM" class="headerlink" title="6. String 和 JVM"></a>6. String 和 JVM</h2><p>String常见的创建方式有两种，直接赋值的方式 “String s1 = “Java”;”和“String s2 = newString(“Java”);”的方式，但两者在JVM的存储区域却截不同，在JDK1.8之后，s1先在常量池中找字符串“java”，如果有相同的字符则直接返回常量句柄。s2直接在堆中创建，需要调用intern 方法才能把此字符串保存到常量池中。<br><img src="/images/stringjvm.png" alt></p>
+<p>DK 1.7 之后把永生代换成的元空间，把字符串常量池从方法区移到了 Java 堆上。</p>
+<p>除此之外编译器还会对 String 字符串做一些优化，例如以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s1 = &quot;Ja&quot; + &quot;va&quot;;</span><br><span class="line">String s2 = &quot;Java&quot;;</span><br><span class="line">System.out.println(s1 == s2);// true</span><br></pre></td></tr></table></figure>
+
+<p>从编译代码看，代码 “Ja”+”va” 被直接编译成了 “Java” ，因此 s1==s2 的结果才是 true，这就是编译器对字符串优化的结果。</p>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>String 构造方法，常用方法，重点是 equals() 、 CompareTo() ,final的好处，string在jvm执行的细节。</p>
 
       
     </div>
@@ -418,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/24/Thinking-in-Java-第七章/" rel="next" title="Thinking in Java 第七章">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 第七章
+              <a href="/2020/03/23/Spring-Cloud-Sleuth/" rel="next" title="Spring Cloud Sleuth">
+                <i class="fa fa-chevron-left"></i> Spring Cloud Sleuth
               </a>
             
           </div>
@@ -428,8 +415,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/27/Thinking-in-Java-第八章/" rel="prev" title="Thinking in Java 第八章">
-                Thinking in Java 第八章 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/03/23/Java-HashMap-总结/" rel="prev" title="Java HashMap 总结">
+                Java HashMap 总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -555,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言"><span class="nav-number">1.</span> <span class="nav-text">编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础知识"><span class="nav-number">1.0.1.</span> <span class="nav-text">基础知识</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#工具方面"><span class="nav-number">2.</span> <span class="nav-text">工具方面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架方面"><span class="nav-number">3.</span> <span class="nav-text">框架方面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用层框架"><span class="nav-number">3.0.1.</span> <span class="nav-text">应用层框架</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#java"><span class="nav-number">3.0.1.1.</span> <span class="nav-text">java</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#php"><span class="nav-number">3.0.1.2.</span> <span class="nav-text">php</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间件"><span class="nav-number">3.0.2.</span> <span class="nav-text">中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库"><span class="nav-number">3.0.3.</span> <span class="nav-text">数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构方面"><span class="nav-number">4.</span> <span class="nav-text">架构方面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式-微服务"><span class="nav-number">4.0.1.</span> <span class="nav-text">分布式/微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#rpc通信"><span class="nav-number">4.0.1.1.</span> <span class="nav-text">rpc通信</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟化-容器化技术"><span class="nav-number">4.0.2.</span> <span class="nav-text">虚拟化/容器化技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码-性能"><span class="nav-number">5.</span> <span class="nav-text">源码/性能</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Spring-是如何实现的"><span class="nav-number">1.</span> <span class="nav-text">1. Spring 是如何实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-有哪些重要的方法"><span class="nav-number">2.</span> <span class="nav-text">2. Spring 有哪些重要的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-和-equals-的区别"><span class="nav-number">3.</span> <span class="nav-text">3. == 和 equals 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-final修饰的好处"><span class="nav-number">4.</span> <span class="nav-text">4. final修饰的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-String-和-StringBuilder、StringBuffer-的区别"><span class="nav-number">5.</span> <span class="nav-text">5. String 和 StringBuilder、StringBuffer 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-String-和-JVM"><span class="nav-number">6.</span> <span class="nav-text">6. String 和 JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-总结"><span class="nav-number">7.</span> <span class="nav-text">7. 总结</span></a></li></ol></div>
             
 
           </div>
