@@ -89,7 +89,7 @@
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/bus.png">
 <meta property="og:image" content="http://yoursite.com/images/bus2.png">
-<meta property="og:updated_time" content="2020-03-22T06:32:26.338Z">
+<meta property="og:updated_time" content="2020-03-22T12:01:52.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Bus">
 <meta name="twitter:description" content="使用Bus，可以非常容易地搭建器消息总线，同时实现了一些消息总线中的常用功能，比如，配合Config 实现应用配置动态更新。 一、 消息代理消息代理（message broker）是一种消息验证，传输，路由的架构模式。消息代理是一个中间件产品，它的核心是一个消息的路由程序，用来实现接收和分发消息，并根据设定好的消息处理流来转发给正确的应用。常用场景：  将消息路由到一个或多个目的地。 消息转化为其">
@@ -459,7 +459,7 @@
 <p>Kafka中涉及的一些基本概念：</p>
 <ul>
 <li>Broker：Kafka集群包含一个或多个服务器，这些服务器被称为Broker。</li>
-<li>Topic：逻辑上同Rabbit的Queue队列相似，每条发布到Kafka集群的消息都必须有一个Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个Broker上，但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</li>
+<li>Topic：逻辑上同Rabbit的Exchange Queue队列相似，每条发布到Kafka集群的消息都必须有一个Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个Broker上，但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</li>
 <li>Partition：Partition是物理概念上的分区，为了提供系统吞吐率，在物理上每个Topic会分成一个或多个Partition，每个Partition对应一个文件夹（存储对应分区的消息内容和索引文件）。</li>
 <li>Producer：消息生产者，负责生产消息并发送到Kafka Broker。</li>
 <li>Consumer：消息消费者，向Kafka Broker读取消息并处理的客户端。</li>
@@ -559,6 +559,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/03/22/Spring-Cloud-Stream/" rel="prev" title="Spring Cloud Stream">
+                Spring Cloud Stream <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -636,7 +640,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
