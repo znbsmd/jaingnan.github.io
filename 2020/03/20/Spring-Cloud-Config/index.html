@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="190 muscle coder">
 <meta property="og:description" content="默认采用Git来储存配置信息，所以使用Spring Cloud Config 构建服务配置就天然支持版本管理。 一、 快速入门 服务端配置   在pom.xml中添加相关依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spri">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-03-20T12:22:08.464Z">
+<meta property="og:updated_time" content="2020-03-21T14:52:33.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Config">
 <meta name="twitter:description" content="默认采用Git来储存配置信息，所以使用Spring Cloud Config 构建服务配置就天然支持版本管理。 一、 快速入门 服务端配置   在pom.xml中添加相关依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spri">
@@ -348,7 +348,7 @@
 <ul>
 <li>在application.yml中进行配置</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8901</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: config-server</span><br><span class="line">  cloud:</span><br><span class="line">    config:</span><br><span class="line">      server:</span><br><span class="line">        git: #配置存储配置信息的Git仓库</span><br><span class="line">          uri: https://gitee.com/macrozheng/springcloud-config.git</span><br><span class="line">          username: macro</span><br><span class="line">          password: 123456</span><br><span class="line">          clone-on-start: true #开启启动时直接从git获取配置</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8001/eureka/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">port: 8901</span><br><span class="line">spring:</span><br><span class="line">application:</span><br><span class="line">    name: config-server</span><br><span class="line">cloud:</span><br><span class="line">    config:</span><br><span class="line">    server:</span><br><span class="line">        git: #配置存储配置信息的Git仓库</span><br><span class="line">        uri: https://gitee.com/macrozheng/springcloud-config.git</span><br><span class="line">        username: macro</span><br><span class="line">        password: 123456</span><br><span class="line">        clone-on-start: true #开启启动时直接从git获取配置</span><br><span class="line">eureka:</span><br><span class="line">client:</span><br><span class="line">    service-url:</span><br><span class="line">    defaultZone: http://localhost:8001/eureka/</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>配置规则详解</li>
@@ -363,11 +363,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-config&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>在yml中进行配置</p>
+<li>在yml中进行配置</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 9001</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: config-client</span><br><span class="line">  cloud:</span><br><span class="line">    config: #Config客户端配置</span><br><span class="line">      profile: dev #启用配置后缀名称</span><br><span class="line">      label: dev #分支名称</span><br><span class="line">      uri: http://localhost:8901 #配置中心地址</span><br><span class="line">      name: config #配置文件名称</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8001/eureka/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加ConfigClientController类用于获取配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class ConfigClientController &#123;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;config.info&#125;&quot;)</span><br><span class="line">    private String configInfo;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/configInfo&quot;)</span><br><span class="line">    public String getConfigInfo() &#123;</span><br><span class="line">        return configInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加ConfigClientController类用于获取配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class ConfigClientController &#123;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;config.info&#125;&quot;)</span><br><span class="line">    private String configInfo;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/configInfo&quot;)</span><br><span class="line">    public String getConfigInfo() &#123;</span><br><span class="line">        return configInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -389,13 +390,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.cloud.config.ussername =user</span><br><span class="line">spring.cloud.config.passward =123</span><br></pre></td></tr></table></figure>
 
 <h4 id="8-加密解密"><a href="#8-加密解密" class="headerlink" title="8.加密解密"></a>8.加密解密</h4><h4 id="9-高可用配置"><a href="#9-高可用配置" class="headerlink" title="9.高可用配置"></a>9.高可用配置</h4><ul>
-<li>传统模式：</li>
+<li><p>传统模式：配置都指向git。读取Config 地址</p>
+</li>
+<li><p>服务模式：纳入Erueka的服务治理体系，把配置当成服务，通过配置中心获取配置信息。实现了高可用和自维护。</p>
+</li>
 </ul>
-<p>配置都指向git。读取Config 地址</p>
-<ul>
-<li>服务模式：</li>
-</ul>
-<p>纳入Erueka的服务治理体系，把配置当成服务，通过配置中心获取配置信息。实现了高可用和自维护。</p>
 <h2 id="三、客户端详解"><a href="#三、客户端详解" class="headerlink" title="三、客户端详解"></a>三、客户端详解</h2><h4 id="1-URI-指定配置中心"><a href="#1-URI-指定配置中心" class="headerlink" title="1. URI 指定配置中心"></a>1. URI 指定配置中心</h4><h4 id="2-服务化配置中心"><a href="#2-服务化配置中心" class="headerlink" title="2. 服务化配置中心"></a>2. 服务化配置中心</h4><ul>
 <li><p>服务端配置</p>
 </li>
@@ -439,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/21/Spring-Cloud-Bus/" rel="prev" title="Spring Cloud Bus">
+                Spring Cloud Bus <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -517,7 +520,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
