@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="第十六章 数组&amp;emsp;&amp;emsp;时隔半年，又看回来了，在有点java基础知识和代码开发经验去面试发现基础细节还是不到位，于是需要继续巩固基础和细节……（任重而道远） &amp;emsp;&amp;emsp;数组这章讲的比较少，简单总结一下， 数组尺寸不能该改变。大多时候，更复杂的结构，容器会更加适合。 16.1 数组为什么特殊效率，效率，效率。没有泛型的容器是不可以持有基本类型的。 数组可以。 16.2 数">
+<meta name="description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Thinking in Java 第十六章">
-<meta property="og:url" content="http://yoursite.com/2020/02/23/Thinking-in-Java-第十六章/index.html">
+<meta property="og:title" content="数据结构与算法">
+<meta property="og:url" content="http://yoursite.com/2020/03/30/数据结构与算法/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="第十六章 数组&amp;emsp;&amp;emsp;时隔半年，又看回来了，在有点java基础知识和代码开发经验去面试发现基础细节还是不到位，于是需要继续巩固基础和细节……（任重而道远） &amp;emsp;&amp;emsp;数组这章讲的比较少，简单总结一下， 数组尺寸不能该改变。大多时候，更复杂的结构，容器会更加适合。 16.1 数组为什么特殊效率，效率，效率。没有泛型的容器是不可以持有基本类型的。 数组可以。 16.2 数">
+<meta property="og:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-02-23T11:01:26.917Z">
+<meta property="og:image" content="http://yoursite.com/images/data_structure.png">
+<meta property="og:image" content="http://yoursite.com/images/algorithm.png">
+<meta property="og:image" content="http://yoursite.com/images/two_tree.png">
+<meta property="og:image" content="http://yoursite.com/images/red_black_tree.png">
+<meta property="og:updated_time" content="2020-03-30T11:23:58.732Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thinking in Java 第十六章">
-<meta name="twitter:description" content="第十六章 数组&amp;emsp;&amp;emsp;时隔半年，又看回来了，在有点java基础知识和代码开发经验去面试发现基础细节还是不到位，于是需要继续巩固基础和细节……（任重而道远） &amp;emsp;&amp;emsp;数组这章讲的比较少，简单总结一下， 数组尺寸不能该改变。大多时候，更复杂的结构，容器会更加适合。 16.1 数组为什么特殊效率，效率，效率。没有泛型的容器是不可以持有基本类型的。 数组可以。 16.2 数">
+<meta name="twitter:title" content="数据结构与算法">
+<meta name="twitter:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
+<meta name="twitter:image" content="http://yoursite.com/images/data_structure.png">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/23/Thinking-in-Java-第十六章/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/30/数据结构与算法/">
 
 
 
 
 
-  <title>Thinking in Java 第十六章 | 190 muscle coder</title>
+  <title>数据结构与算法 | 190 muscle coder</title>
   
 
 
@@ -243,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/23/Thinking-in-Java-第十六章/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/30/数据结构与算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="190coder">
@@ -260,7 +265,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Thinking in Java 第十六章</h1>
+          <h1 class="post-title" itemprop="name headline">数据结构与算法</h1>
         
 
         <div class="post-meta">
@@ -272,8 +277,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-23T16:41:52+08:00">
-                2020-02-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-30T17:49:21+08:00">
+                2020-03-30
               </time>
             
 
@@ -295,8 +300,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -332,33 +337,54 @@
       
 
       
-        <h1 id="第十六章-数组"><a href="#第十六章-数组" class="headerlink" title="第十六章 数组"></a>第十六章 数组</h1><p>&emsp;&emsp;时隔半年，又看回来了，在有点java基础知识和代码开发经验去面试发现基础细节还是不到位，于是需要继续巩固基础和细节……（任重而道远）</p>
-<p>&emsp;&emsp;数组这章讲的比较少，简单总结一下， 数组尺寸不能该改变。大多时候，更复杂的结构，容器会更加适合。</p>
-<h2 id="16-1-数组为什么特殊"><a href="#16-1-数组为什么特殊" class="headerlink" title="16.1 数组为什么特殊"></a>16.1 数组为什么特殊</h2><p>效率，效率，效率。没有泛型的容器是不可以持有基本类型的。 数组可以。</p>
-<h2 id="16-2-数组是一级对象"><a href="#16-2-数组是一级对象" class="headerlink" title="16.2 数组是一级对象"></a>16.2 数组是一级对象</h2><p>[]语法是访问数组对象的唯一方式，可以隐式创建和显示的创建（new）。</p>
-<h2 id="16-3-返回一个数组"><a href="#16-3-返回一个数组" class="headerlink" title="16.3 返回一个数组"></a>16.3 返回一个数组</h2><p>相比 c/c++可以返回一整个数组，而不用为数组负责。使用完后，垃圾回收器会自动清理。</p>
-<h2 id="16-4-多维数组"><a href="#16-4-多维数组" class="headerlink" title="16.4 多维数组"></a>16.4 多维数组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int[][] a = &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="16-5-数组与泛型"><a href="#16-5-数组与泛型" class="headerlink" title="16.5 数组与泛型"></a>16.5 数组与泛型</h2><p>数组和泛型不能很好的结合，因为编译器会擦除参数化类型信息，（具体可以查看.class文件）而数组必须知道确切类型，保证类型安全。</p>
-<p>可以参数化数组本身类型 ，但是毫无意义。还可以创建一个非泛型数组，把泛型数据转型放入。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; ls;</span><br><span class="line">List[] la = new List[10];</span><br><span class="line">ls = (List&lt;string&gt;[]) la;</span><br></pre></td></tr></table></figure>
-
-<h2 id="16-6-创建测试数据"><a href="#16-6-创建测试数据" class="headerlink" title="16.6 创建测试数据"></a>16.6 创建测试数据</h2><p>Array.fill(); 填充数组。 Generator 数据生成器。</p>
-<h2 id="16-7-Array-实用功能"><a href="#16-7-Array-实用功能" class="headerlink" title="16.7 Array 实用功能"></a>16.7 Array 实用功能</h2><p>Arrays工具类有equals() sort() binarySearch() toString() hashCode() asList()</p>
-<p>复制数组 System.arraycopy() 注⚠️ System.arraycopy() 不会自动包装和自动拆包，两个数组必须有确切类型。</p>
-<p>Arrays重写了 equals() 比较数组。 数组相等的条件是元素个数必须相等，并且对应元素也相等。</p>
-<p>数组元素比较 java.lang.Comparable  与 java.util.Collects.Comparator。<br>Comparable 具有天生的比较 只有 compareTo() 方法。<br>Comparator 可以自定义 重写compare 和equal。</p>
-<p>数组排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(sa, String.CASE_INSENSITIVE_ORDER);</span><br><span class="line">// 忽略大小写，默认是大写在前</span><br></pre></td></tr></table></figure>
-
-<p>Java 标准类库中的排序算法针对正排序的特殊类型进行了优化 – 针对基本类型设计的 ”快速排序“（Quicksort），以及针对对象设计的 ”稳定归并排序“。</p>
-<p>如果数组已经排好序了，可以使用 Arrays.binarySearch() 执行快速查找。如果找到了目标，返回值大于等于 0，否则，它产生负返回值，表示若要保持数组的排序状态此目标元素所应该插入的位置。这个负值的计算公式是</p>
+        <p>程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：</p>
+<ol>
+<li><p>从搜索树到 B+ 树，讲解与树有关的数据结构；</p>
+</li>
+<li><p>字符串匹配相关的题目；</p>
+</li>
+<li><p>算法面试经常考察的 TopK 问题；</p>
+</li>
+<li><p>算法题的几种常用解题方法。</p>
+</li>
+</ol>
+<p><strong>数据结构知识点：</strong></p>
+<p><img src="/images/data_structure.png" alt></p>
+<ol>
+<li><p>队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。</p>
+</li>
+<li><p>表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，首尾相接的循环链表、以及散列表，也叫哈希表。 </p>
+</li>
+<li><p>图，在特定领域使用的比较多，例如路由算法中会经常使用到，图分为有向图、无向图及带权图，这部分需要掌握图的深度遍历和广度遍历算法，了解最短路径算法。</p>
+</li>
+<li><p>树的内容，树一般用作查找与排序的辅助结构，剩下两个部分都和树有关，一个是二叉树，一个是多叉树。</p>
 <ul>
-<li>(插入点) - 1<br>”插入点“ 是指，第一个大于查找对象的元素在数组中的位置。</li>
+<li>多叉树包括 B 树族，有 B 树、B+ 树、B* 树，比较适合用来做文件检索；另外一个是字典树，适合进行字符串的多模匹配。</li>
+<li>二叉树包括平衡二叉树、红黑树、哈夫曼树，以及堆，适合用于进行数据查找和排序。这部分需要了解二叉树的构建、插入、删除操作的实现，需要掌握二叉树的前序、中序、后序遍历。</li>
 </ul>
-<p>如果数组包含重复的元素，则无法保证找到的是这些副本中的哪一个。</p>
-<p>如果使用 Comparator 排序了某个对象数组（基本类型数组无法使用 Comparator 进行排序），在使用 binarySearch() 时必须提供同样的 Comparator（使用 binarySearch() 方法的重载版本）。</p>
-<h2 id="16-8-总结"><a href="#16-8-总结" class="headerlink" title="16.8 总结"></a>16.8 总结</h2><p>数组强调性能而不是灵活。 java的设计如果当时抛弃了设计基本类型低级数组。java也许会成为真正的纯面向对象语言。随着时间推移，容器基本上是更好的选择。</p>
+</li>
+</ol>
+<p><strong>算法知识点:</strong></p>
+<p><img src="/images/algorithm.png" alt></p>
+<ol>
+<li>算法题的常用算法解题方法。</li>
+<li>复杂度是衡量算法好坏的标准之一，我们需要掌握计算算法时间复杂度和空间复杂度的方法。计算时间复杂度的方法一般是找到执行次数最多的语句，然后计算语句执行次数的数量级，最后用大写 O 来表示结果。</li>
+<li>常用的字符串匹配算法，了解不同算法的匹配思路。 </li>
+<li>排序也是经常考察的知识点，排序算法分为插入、交换、选择、归并、基数五类，其中快速排序和堆排序考察的频率最高，要重点掌握，需要能够手写算法实现。</li>
+<li>常用的查找算法，包括二分查找、二叉排序树、B树、Hash、BloomFilter等，需要了解它们的适用场景，例如二分查找适合小数量集内存查找，B树适合文件索引，Hash常数级的时间复杂度更适合对查找效率要求较高的场合，BloomFilter 适合对大数据集进行数据存在性过滤。</li>
+</ol>
+<h2 id="一、详解二叉搜索树"><a href="#一、详解二叉搜索树" class="headerlink" title="一、详解二叉搜索树"></a>一、详解二叉搜索树</h2><h4 id="1-二叉搜索树"><a href="#1-二叉搜索树" class="headerlink" title="1. 二叉搜索树"></a>1. 二叉搜索树</h4><p><img src="/images/two_tree.png" alt><br>二叉树的查询时间复杂度是 log(N)，但是随着不断的插入、删除节点，二叉树的树高可能会不断变大，当一个二叉搜索树所有节点都只有左子树或者都只有右子树时，其查找性能就退化成线性的了。</p>
+<h4 id="2-平衡二叉树"><a href="#2-平衡二叉树" class="headerlink" title="2. 平衡二叉树"></a>2. 平衡二叉树</h4><p>平衡二叉树可以解决上面这个问题，平衡二叉树保证每个节点左右子树的高度差的绝对值不超过1，例如AVL树。AVL树是严格的平衡二叉树，插入或删除数据时可能经常需要旋转来保持平衡，插入或删除数据时可能经常需要旋转来保持平衡，比较适合插入、删除比较少的场景。</p>
+<h4 id="3-红黑树"><a href="#3-红黑树" class="headerlink" title="3. 红黑树"></a>3. 红黑树</h4><p> 红黑树是一种更加实用的非严格的平衡二叉树。红黑树更关注局部平衡而非整体平衡，确保没有一条路径会比其他路径长出 2 倍，所以是接近平衡的，但减少了许多不必要的旋转操作，更加实用。Java 8 的 HashMap 中就应用了红黑树来解决散列冲突时的查找问题。TreeMap 也是通过红黑树来保证有序性的。<br> 红黑树除了拥有二叉搜索树的特点外，还有以下规则，如下图所示。</p>
+<p><img src="/images/red_black_tree.png" alt></p>
+<ul>
+<li>每个节点不是红色就是黑色</li>
+<li>根结点是黑色</li>
+<li>每个叶子节点（NIL）都是黑色空节点</li>
+<li>红色节点的两个子节点都是黑色的</li>
+<li>任意节点到器叶节点的每条路径上，包含相同数量的黑色节点</li>
+</ul>
+<h4 id="4-B-树"><a href="#4-B-树" class="headerlink" title="4. B 树"></a>4. B 树</h4><p>一种多叉树，也叫多路搜索树</p>
 
       
     </div>
@@ -383,8 +409,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/12/Thinking-in-Java-第十五章/" rel="next" title="Thinking in Java 第十五章">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 第十五章
+              <a href="/2020/03/30/Java-JVM/" rel="next" title="Java JVM">
+                <i class="fa fa-chevron-left"></i> Java JVM
               </a>
             
           </div>
@@ -392,10 +418,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/23/Thinking-in-Java-第十七章/" rel="prev" title="Thinking in Java 第十七章">
-                Thinking in Java 第十七章 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第十六章-数组"><span class="nav-number">1.</span> <span class="nav-text">第十六章 数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-数组为什么特殊"><span class="nav-number">1.1.</span> <span class="nav-text">16.1 数组为什么特殊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-数组是一级对象"><span class="nav-number">1.2.</span> <span class="nav-text">16.2 数组是一级对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-3-返回一个数组"><span class="nav-number">1.3.</span> <span class="nav-text">16.3 返回一个数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-4-多维数组"><span class="nav-number">1.4.</span> <span class="nav-text">16.4 多维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-5-数组与泛型"><span class="nav-number">1.5.</span> <span class="nav-text">16.5 数组与泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-6-创建测试数据"><span class="nav-number">1.6.</span> <span class="nav-text">16.6 创建测试数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-7-Array-实用功能"><span class="nav-number">1.7.</span> <span class="nav-text">16.7 Array 实用功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-8-总结"><span class="nav-number">1.8.</span> <span class="nav-text">16.8 总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、详解二叉搜索树"><span class="nav-number">1.</span> <span class="nav-text">一、详解二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-二叉搜索树"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 二叉搜索树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-平衡二叉树"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-红黑树"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 红黑树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-B-树"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. B 树</span></a></li></ol></li></ol></div>
             
 
           </div>

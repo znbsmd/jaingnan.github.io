@@ -91,13 +91,13 @@
 <meta property="og:image" content="http://yoursite.com/images/jvm_ram.png">
 <meta property="og:image" content="http://yoursite.com/images/jmm.png">
 <meta property="og:image" content="http://yoursite.com/images/jmm_ensure.png">
-<meta property="og:image" content="http://yoursite.com/iamges/jvm_class_loader.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm_class_loader.png">
 <meta property="og:image" content="http://yoursite.com/images/class_loader.png">
 <meta property="og:image" content="http://yoursite.com/images/jvm_old_young.png">
 <meta property="og:image" content="http://yoursite.com/images/jvm_cms.png">
 <meta property="og:image" content="http://yoursite.com/images/jvm_g1.png">
 <meta property="og:image" content="http://yoursite.com/images/jvm_zgc.png">
-<meta property="og:updated_time" content="2020-03-30T07:37:56.012Z">
+<meta property="og:updated_time" content="2020-03-30T11:25:49.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java JVM">
 <meta name="twitter:description" content="JVM 是Java 程序运行的基础。例如 JVM 内存模型、Java 的类加载机制、常用的 GC 算法。 一、 JVM 内存模型  栈：也是方法栈，线程私有，用来存储局部变量表、操作栈、动态链接、方法出口等信息。 本地方法栈 ：和栈类似，也是用来保存线程执行方法时的信息，不同的是，执行 Java 方法使用栈，而执行 native 方法使用本地方法栈。  程序计数器 ： 保存着当前线程所执行的字节码">
@@ -379,7 +379,7 @@
 </li>
 </ul>
 <h2 id="三、-类加载机制"><a href="#三、-类加载机制" class="headerlink" title="三、 类加载机制"></a>三、 类加载机制</h2><p>类的加载指将编译好的 Class 类文件中的字节码读入内存中，将其放在方法区内并创建对应的 Class 对象。类的加载分为加载、链接、初始化，其中链接又包括验证、准备、解析三步。如下图所示。</p>
-<h4 id="加载流程"><a href="#加载流程" class="headerlink" title="加载流程"></a>加载流程</h4><p> <img src="/iamges/jvm_class_loader.png" alt></p>
+<h4 id="加载流程"><a href="#加载流程" class="headerlink" title="加载流程"></a>加载流程</h4><p> <img src="/images/jvm_class_loader.png" alt></p>
  <ol style=" white-space: normal;">
  <li><p style="text-align: justify; line-height: 1.75em;"><span style="font-family: &quot;Microsoft YaHei&quot;, sans-serif; color: rgb(63, 63, 63);">加载是文件到内存的过程。通过类的完全限定名查找此类字节码文件，并利用字节码文件创建一个 Class 对象。</span></p></li>
  <li><p style="text-align: justify; line-height: 1.75em;"><span style="font-family: &quot;Microsoft YaHei&quot;, sans-serif; color: rgb(63, 63, 63);">验证是对类文件内容验证。目的在于确保 Class 文件符合当前虚拟机要求，不会危害虚拟机自身安全。主要包括四种：文件格式验证，元数据验证，字节码验证，符号引用验证。</span></p></li>
@@ -490,6 +490,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/03/30/数据结构与算法/" rel="prev" title="数据结构与算法">
+                数据结构与算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -567,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -578,7 +582,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
