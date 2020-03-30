@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://yoursite.com/images/juc1.png">
 <meta property="og:image" content="http://yoursite.com/images/juc2.png">
 <meta property="og:image" content="http://yoursite.com/images/juc3.png">
-<meta property="og:updated_time" content="2020-03-27T08:13:53.915Z">
+<meta property="og:updated_time" content="2020-03-28T03:44:29.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 多线程与并发">
 <meta name="twitter:description" content="一、 线程状态转换线程是JVM 执行任务的最小单元，在JVM 运行中，线程一共有 NEW、RUNNABLE、BLOCKED、WATING、TIMED_WATIING、TERMINATED  二、 线程同步与互斥（ CAS  ABA synchronized ）解决互斥主要是CAS、synchronized、lock。 1. CASCAS是一种轻量级锁 JUC（即 java.util.concur">
@@ -403,10 +403,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final boolean hasQueuedPredecessors() &#123;</span><br><span class="line">       Node t = tail; // Read fields in reverse initialization order</span><br><span class="line">       Node h = head;</span><br><span class="line">       Node s;</span><br><span class="line">       return h != t &amp;&amp;</span><br><span class="line">           ((s = h.next) == null || s.thread != Thread.currentThread());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>NonFairSync <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (c == 0) &#123;</span><br><span class="line">    if (compareAndSetState(0, acquires)) &#123;</span><br><span class="line">        setExclusiveOwnerThread(current);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>NonFairSync </li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (c == 0) &#123;</span><br><span class="line">    if (compareAndSetState(0, acquires)) &#123;</span><br><span class="line">        setExclusiveOwnerThread(current);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>公平锁每次会检测又没有等待队列的，而非公平锁多次强调随机抢占，不会检测是否有等待队列。如果被加入等待队列，公平锁和非公平锁没有区别。</strong></p>
 <h2 id="三、线程池"><a href="#三、线程池" class="headerlink" title="三、线程池"></a>三、线程池</h2><p>线程池通过复用线程，避免频繁的创建和销毁。Java 的Executors 工具类中提供了5中类型的线程池创造方法，如下图所示，来看它们的特点和适用场景。</p>
 <p> <img src="/images/thread_pool.png" alt></p>
@@ -433,20 +433,15 @@
 </li>
 </ul>
 <h4 id="2-各种线程池都需要用哪几种参数"><a href="#2-各种线程池都需要用哪几种参数" class="headerlink" title="2. 各种线程池都需要用哪几种参数"></a>2. 各种线程池都需要用哪几种参数</h4><ul>
-<li><p>固定大小线程池创建时核心和最大线程数都设置成指定的线程数，这样线程池中就只会使用固定大小的线程数。</p>
-</li>
-<li><p>队列使用无界队列LinkedBlockingQueue。</p>
-</li>
-<li><p>Single线程池就是线程数设置为1 的固定线程池。</p>
-</li>
-<li><p>Cached线程池的核心线程数设置为0，最大线程数是Integer.MAX_VALUE，主要是通过把缓冲队列设置成SynchronousQueue，这样只要没有空闲线程就会新建。</p>
-</li>
-<li><p>Scheduled 线程池与前几种不同的是使用了 DelayedWorkQueue，这是一种按延迟时间获取任务的优先级队列。</p>
-<h4 id="3-执行流程"><a href="#3-执行流程" class="headerlink" title="3. 执行流程"></a>3. 执行流程</h4><p><img src="/images/threadpoolprocess.png" alt></p>
-<p>注意队列的判断与最大线程数判断的顺序</p>
-<h2 id="四、-JUC-工具类"><a href="#四、-JUC-工具类" class="headerlink" title="四、 JUC 工具类"></a>四、 JUC 工具类</h2></li>
+<li>固定大小线程池创建时核心和最大线程数都设置成指定的线程数，这样线程池中就只会使用固定大小的线程数。</li>
+<li>队列使用无界队列LinkedBlockingQueue。</li>
+<li>Single线程池就是线程数设置为1 的固定线程池。</li>
+<li>Cached线程池的核心线程数设置为0，最大线程数是Integer.MAX_VALUE，主要是通过把缓冲队列设置成SynchronousQueue，这样只要没有空闲线程就会新建。</li>
+<li>Scheduled 线程池与前几种不同的是使用了 DelayedWorkQueue，这是一种按延迟时间获取任务的优先级队列。</li>
 </ul>
-<p><img src="/images/juc1.png" alt><br><img src="/images/juc2.png" alt><br><img src="/images/juc3.png" alt></p>
+<h4 id="3-执行流程"><a href="#3-执行流程" class="headerlink" title="3. 执行流程"></a>3. 执行流程</h4><p> <img src="/images/threadpoolprocess.png" alt></p>
+<p> 注意队列的判断与最大线程数判断的顺序</p>
+<h2 id="四、-JUC-工具类"><a href="#四、-JUC-工具类" class="headerlink" title="四、 JUC 工具类"></a>四、 JUC 工具类</h2><p><img src="/images/juc1.png" alt><br><img src="/images/juc2.png" alt><br><img src="/images/juc3.png" alt></p>
 <p>CopyOnWriteArrayList，COW 通过写入数据时进行 copy 修改，然后更新引用的方式，来消除并行读写中的锁使用，比较适合读多写少，数据量比较小，但是并发非常高的场景。</p>
 <h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><ol>
 <li><p>synchronized实现同步原理是对象头中的monitor 同步机制，对同步方法和代码块有不同的操作流程，原理都是通过 C++封装的objectmonitor 机制。</p>
@@ -495,6 +490,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/30/Java-JVM/" rel="prev" title="Java JVM">
+                Java JVM <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -573,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
