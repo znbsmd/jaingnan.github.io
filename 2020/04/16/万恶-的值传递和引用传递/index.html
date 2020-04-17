@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="190 muscle coder">
 <meta property="og:description" content="今天面试栽倒了值传递和引用传递，记住了理论忘记了实际应用，归根结底还是没了解透彻，掌握了皮毛，接下来就要好好记下一笔，从此永固脑海。 在说明值传递和引用传递 需要了解几点知识，如下： 一. 形参与实参 形参：方法被调用时需要传递进来的参数，如：func(int a)中的a，它只有在func被调用期间a才有意义，也就是会被分配内存空间，在方法func执行完成后，a就会被销毁释放空间，也就是不存在了">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-04-17T01:09:03.493Z">
+<meta property="og:updated_time" content="2020-04-17T01:30:30.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="万恶的值传递和引用传递">
 <meta name="twitter:description" content="今天面试栽倒了值传递和引用传递，记住了理论忘记了实际应用，归根结底还是没了解透彻，掌握了皮毛，接下来就要好好记下一笔，从此永固脑海。 在说明值传递和引用传递 需要了解几点知识，如下： 一. 形参与实参 形参：方法被调用时需要传递进来的参数，如：func(int a)中的a，它只有在func被调用期间a才有意义，也就是会被分配内存空间，在方法func执行完成后，a就会被销毁释放空间，也就是不存在了">
@@ -351,7 +351,19 @@
 <li>boolean //布尔</li>
 </ol>
 <p>有了数据类型，JVM对程序数据的管理就规范化喽。</p>
-<h2 id="四-数据如何在内存中存储"><a href="#四-数据如何在内存中存储" class="headerlink" title="四. 数据如何在内存中存储"></a>四. 数据如何在内存中存储</h2><ol>
+<h2 id="三-栈-（每个方法调用存在每个栈中）"><a href="#三-栈-（每个方法调用存在每个栈中）" class="headerlink" title="三. 栈 （每个方法调用存在每个栈中）"></a>三. 栈 （每个方法调用存在每个栈中）</h2><p>是Java方法执行的内存模型，栈中存放着栈帧，每个栈帧分别对应一个被调用的方法，方法的调用过程对应栈帧在虚拟机中入栈到出栈的过程。栈是线程私有的，也就是线程之间的栈是隔离的；当程序中某个线程开始执行一个方法时就会相应的创建一个栈帧并且入栈（位于栈顶），在方法结束后，栈帧出栈。</p>
+<p>   <strong>栈帧:是用于支持虚拟机进行方法调用和方法执行的数据结构，它是虚拟机运行时数据区中的虚拟机栈的栈元素。</strong></p>
+<pre><code>每个栈帧中包括：
+
+- 局部变量表:用来存储方法中的局部变量（非静态变量、函数形参）。当变量为基本数据类型时，直接存储值，当变量为引用类型时，存储的是指向具体对象的引用。
+
+- 操作数栈:Java虚拟机的解释执行引擎被称为&quot;基于栈的执行引擎&quot;，其中所指的栈就是指操作数栈。
+
+- 指向运行时常量池的引用:存储程序执行时可能用到常量的引用。
+
+- 方法返回地址:存储方法执行完成后的返回地址。
+
+![](/images/data.stack.png)</code></pre><h2 id="四-数据如何在内存中存储"><a href="#四-数据如何在内存中存储" class="headerlink" title="四. 数据如何在内存中存储"></a>四. 数据如何在内存中存储</h2><ol>
 <li><p>基本数据类型的局部变量</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;</span><br><span class="line">a = 20;</span><br></pre></td></tr></table></figure>
 
@@ -553,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-形参与实参"><span class="nav-number">1.</span> <span class="nav-text">一. 形参与实参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-数据类型"><span class="nav-number">2.</span> <span class="nav-text">二. 数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-数据如何在内存中存储"><span class="nav-number">3.</span> <span class="nav-text">四. 数据如何在内存中存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-值传递和引用传递"><span class="nav-number">4.</span> <span class="nav-text">五. 值传递和引用传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-形参与实参"><span class="nav-number">1.</span> <span class="nav-text">一. 形参与实参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-数据类型"><span class="nav-number">2.</span> <span class="nav-text">二. 数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-栈-（每个方法调用存在每个栈中）"><span class="nav-number">3.</span> <span class="nav-text">三. 栈 （每个方法调用存在每个栈中）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-数据如何在内存中存储"><span class="nav-number">4.</span> <span class="nav-text">四. 数据如何在内存中存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-值传递和引用传递"><span class="nav-number">5.</span> <span class="nav-text">五. 值传递和引用传递</span></a></li></ol></div>
             
 
           </div>
