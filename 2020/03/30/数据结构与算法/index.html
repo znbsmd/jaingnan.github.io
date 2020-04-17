@@ -79,22 +79,26 @@
 
 
 
-<meta name="description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
+<meta name="description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   大O推导法，对于算法来说，总的时间复杂度等于其中最大的时间复杂度。数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法">
 <meta property="og:url" content="http://yoursite.com/2020/03/30/数据结构与算法/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
+<meta property="og:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   大O推导法，对于算法来说，总的时间复杂度等于其中最大的时间复杂度。数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/data_structure.png">
 <meta property="og:image" content="http://yoursite.com/images/algorithm.png">
 <meta property="og:image" content="http://yoursite.com/images/two_tree.png">
 <meta property="og:image" content="http://yoursite.com/images/red_black_tree.png">
-<meta property="og:updated_time" content="2020-03-30T11:23:58.732Z">
+<meta property="og:image" content="http://yoursite.com/images/b_tree.png">
+<meta property="og:image" content="http://yoursite.com/images/b+tree.png">
+<meta property="og:image" content="http://yoursite.com/images/topkb.png">
+<meta property="og:image" content="http://yoursite.com/images/fz.png">
+<meta property="og:updated_time" content="2020-04-01T03:57:26.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法">
-<meta name="twitter:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。  表，包括很多种，有占用连续空间的数组、用指针链接的单向和双向链表，">
+<meta name="twitter:description" content="程序 = 数据结构 + 算法。虽然有些夸张，但足以说明数据结构与算法的重要性。 主要介绍以下4点：  从搜索树到 B+ 树，讲解与树有关的数据结构；  字符串匹配相关的题目；  算法面试经常考察的 TopK 问题；  算法题的几种常用解题方法。   大O推导法，对于算法来说，总的时间复杂度等于其中最大的时间复杂度。数据结构知识点：   队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。">
 <meta name="twitter:image" content="http://yoursite.com/images/data_structure.png">
 
 
@@ -348,7 +352,7 @@
 <li><p>算法题的几种常用解题方法。</p>
 </li>
 </ol>
-<p><strong>数据结构知识点：</strong></p>
+<p><strong>大O推导法，对于算法来说，总的时间复杂度等于其中最大的时间复杂度。</strong><br><strong>数据结构知识点：</strong></p>
 <p><img src="/images/data_structure.png" alt></p>
 <ol>
 <li><p>队列和栈是经常用的数据结构。队列是先进先出，栈是后进后出。</p>
@@ -384,7 +388,35 @@
 <li>红色节点的两个子节点都是黑色的</li>
 <li>任意节点到器叶节点的每条路径上，包含相同数量的黑色节点</li>
 </ul>
-<h4 id="4-B-树"><a href="#4-B-树" class="headerlink" title="4. B 树"></a>4. B 树</h4><p>一种多叉树，也叫多路搜索树</p>
+<h4 id="4-B-树-（B-树）"><a href="#4-B-树-（B-树）" class="headerlink" title="4. B 树 （B- 树）"></a>4. B 树 （B- 树）</h4><p>一种多叉树，也叫多路搜索树。B 树中每个节点可以存储多个元素，非常适合用在文件索引上，可以有效减少磁盘 IO 次数。B 树中所有结点的最大子节点数称为 B 树的阶，如下图所示是一棵 3 阶 B 树，也叫 2-3 树。</p>
+<p><img src="/images/b_tree.png" alt></p>
+<p>一个m阶B树有如下特点：</p>
+<pre><code>- 非叶节点最多有m棵子树
+- 根节点最少有两个子树，非根、非叶子节点最少有m/2棵子树
+- 非叶子结点中保存的关键字个数，等于该节点子树个数−1，就是说一个节点如果有 3棵子树，那么其中必定包含 2 个关键字；（节点中的数字是关键字）
+- 非叶子节点中的关键字大小有序，如上图中左边的节点中 37、51 两个元素就是有序的；
+- 节点中每个关键字的左子树中的关键字都小于该关键字，右子树中的关键字都大于该关键字。如上图中关键字 51 的左子树有 42、49，都小于 51，右子树的节点有 59，大于51；
+- 所有叶节点都在同一层。</code></pre><p>B 树在查找时，从根结点开始，对结点内的有序的关键字序列进行二分查找，如果找到就结束，没有找到就进入查询关键字所属范围的子树进行查找，直到叶节点。B 树一般应用在文件系统。<strong>4 阶 B 树表示每个节点最多有 4 个子树、3 个关键字，最少有 2 个子树、一个关键字，超过关键字限制需要拆分</strong></p>
+<h4 id="5-B-树"><a href="#5-B-树" class="headerlink" title="5. B+ 树"></a>5. B+ 树</h4><p><img src="/images/b+tree.png" alt><br>B+ 树的定义与 B 树基本相同，除了下面这几个特点。</p>
+<pre><code>- 节点中的关键字与子树数目相同，比如节点中有 3 个关键字，那么就有 3 棵子树；
+- 关键字对应的子树中的节点都大于或等于关键字，子树中包括关键字自身；
+- 所有关键字都出现在叶子节点中；
+- 所有叶子节点都有指向下一个叶子节点的指针。</code></pre><p>与 B 树不同，<strong>B+ 树在搜索时不会在非叶子节点命中，一定会查询到叶子节点；另外一个，叶子节点相当于数据存储层，保存关键字对应的数据，而非叶子节点只保存关键字和指向叶节点的指针，不保存关键字对应的数据，所以同样数量关键字的非叶节点，B+ 树比 B 树要小很多。</strong></p>
+<p>B+ 树更适合索引系统，MySQL 数据库的索引就提供了 B+ 树实现。原因有三个：</p>
+<pre><code>- 由于叶节点之间有指针相连，B+ 树更适合范围检索；
+- 由于非叶节点只保存关键字和指针，同样大小非叶节点，B+ 树可以容纳更多的关键字，可以降低树高，查询时磁盘读写代价更低；
+- B+ 树的查询效率比较稳定。任何关键字的查找必须走一条从根结点到叶子结点的路，所有关键字查询的路径长度相同，效率相当。</code></pre><p>还有一种 B* 树的变种，在 B+ 树的非叶节点上，也增加了指向同一层下一个非叶节点的指针。</p>
+<h2 id="二、字符串匹配"><a href="#二、字符串匹配" class="headerlink" title="二、字符串匹配"></a>二、字符串匹配</h2><h4 id="1-字符串匹配问题"><a href="#1-字符串匹配问题" class="headerlink" title="1. 字符串匹配问题"></a>1. 字符串匹配问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line"></span><br><span class="line">    public static boolean isMatch(String str)&#123;</span><br><span class="line"></span><br><span class="line">        HashMap bucket = new HashMap();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        bucket.put(&apos;)&apos;,&apos;(&apos;);</span><br><span class="line">        bucket.put(&apos;]&apos;,&apos;[&apos;);</span><br><span class="line">        bucket.put(&apos;&#125;&apos;,&apos;&#123;&apos;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Stack&lt;Character&gt; characterStack = new Stack&lt;&gt;();</span><br><span class="line">        for(Character cs : str.toCharArray())&#123;</span><br><span class="line"></span><br><span class="line">            characterStack.empty();</span><br><span class="line">            if(bucket.containsValue(cs))&#123;</span><br><span class="line">                characterStack.push(cs);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            else if(bucket.containsKey(cs))&#123;</span><br><span class="line">                System.out.println(characterStack);</span><br><span class="line">                System.out.println(cs);</span><br><span class="line"></span><br><span class="line">                if(characterStack.empty()||characterStack.pop()!= bucket.get(cs))&#123;</span><br><span class="line"></span><br><span class="line">                    return  false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return characterStack.empty();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        String content = &quot;(我是中国人)&quot;;</span><br><span class="line">        System.out.println(isMatch(content));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、-排序"><a href="#三、-排序" class="headerlink" title="三、 排序"></a>三、 排序</h2><h4 id="1-TopK-问题"><a href="#1-TopK-问题" class="headerlink" title="1.TopK 问题"></a>1.TopK 问题</h4><p>解决思路：用前k个数创建大小为k的根堆，剩余N-K个数组和堆顶进行比较</p>
+<p><strong>对于n个数，取Top k个数，时间复杂度为O(nlogk)，这样在n较大情况下，是优于nlogn的时间复杂度的。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">package com.company;</span><br><span class="line"></span><br><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class TopK&lt;E extends Comparable&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private PriorityQueue&lt;E&gt; queue;</span><br><span class="line">    private int maxSize; //堆的最大容量</span><br><span class="line"></span><br><span class="line">    public TopK(int maxSize) &#123;</span><br><span class="line">        if (maxSize &lt;= 0) &#123;</span><br><span class="line">            throw new IllegalStateException();</span><br><span class="line">        &#125;</span><br><span class="line">        this.maxSize = maxSize;</span><br><span class="line">        this.queue = new PriorityQueue&lt;&gt;(maxSize, new Comparator&lt;E&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public int compare(E o1, E o2) &#123;</span><br><span class="line">                // 最大堆用o2 - o1，最小堆用o1 - o2</span><br><span class="line">                return (o1.compareTo(o2));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void add(E e) &#123;</span><br><span class="line">        if (queue.size() &lt; maxSize) &#123;</span><br><span class="line"></span><br><span class="line">            queue.add(e);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            E peek = queue.peek();</span><br><span class="line">            if (e.compareTo(peek) &gt; 0) &#123;</span><br><span class="line">                queue.poll();</span><br><span class="line">                queue.add(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;E&gt; sortedList() &#123;</span><br><span class="line">        List&lt;E&gt; list = new ArrayList&lt;&gt;(queue);</span><br><span class="line">        Collections.sort(list);</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] array = &#123;4, 5, 1, 6, 2, 7, 3, 8&#125;;</span><br><span class="line">        TopK pq = new TopK(4);</span><br><span class="line">        for (int n : array) &#123;</span><br><span class="line">            pq.add(n);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(pq.sortedList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-TopK-变种问题"><a href="#2-TopK-变种问题" class="headerlink" title="2. TopK 变种问题"></a>2. TopK 变种问题</h4><p>TopK 变种的问题，就是从 N 个有序队列中，找到最小或者最大的 K 个值。这个问题的不同点在于，是对多个数据集进行排序。由于初始的数据集是有序的，因此不需要遍历完 N 个队列中所有的元素。因此，解题思路是如何减少要遍历的元素。<br><img src="/images/topkb.png" alt></p>
+<h2 id="三、常用算法"><a href="#三、常用算法" class="headerlink" title="三、常用算法"></a>三、常用算法</h2><h4 id="1-分治法"><a href="#1-分治法" class="headerlink" title="1. 分治法"></a>1. 分治法</h4><p>分治法的思想是将一个难以直接解决的复杂问题或者大问题，分割成一些规模较小的相同问题，分而治之。比如快速排序、归并排序等都是应用了分治法。</p>
+<p><img src="/images/fz.png" alt></p>
+<h4 id="2-动态规划法"><a href="#2-动态规划法" class="headerlink" title="2. 动态规划法"></a>2. 动态规划法</h4><p>动态规划法，与分治法类似，也是将问题分解为多个子问题。与分治法不同的是，子问题的解之间是有关联的。前一子问题的解，为后一子问题的求解提供了有用的信息。动态规划法依次解决各子问题，在求解每一个子问题时，列出所有局部解，通过决策保留那些有可能达到全局最优的局部解。最后一个子问题的解就是初始问题的解。</p>
+<h4 id="4-贪心算法"><a href="#4-贪心算法" class="headerlink" title="4. 贪心算法"></a>4. 贪心算法</h4><p>第三个贪心算法，因为它考虑的是局部的最优解，所以贪心算法不是对所有问题都能得到整体最优解。贪心算法的关键是贪心策略的选择。贪心策略必须具备无后效性，就是说某个状态以后的过程不会影响以前的状态，只与当前状态有关。</p>
 
       
     </div>
@@ -418,6 +450,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/02/spring-框架/" rel="prev" title="spring 框架">
+                spring 框架 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -496,7 +532,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -507,7 +543,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -542,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、详解二叉搜索树"><span class="nav-number">1.</span> <span class="nav-text">一、详解二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-二叉搜索树"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 二叉搜索树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-平衡二叉树"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-红黑树"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 红黑树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-B-树"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. B 树</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、详解二叉搜索树"><span class="nav-number">1.</span> <span class="nav-text">一、详解二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-二叉搜索树"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 二叉搜索树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-平衡二叉树"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-红黑树"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 红黑树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-B-树-（B-树）"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. B 树 （B- 树）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-B-树"><span class="nav-number">1.0.5.</span> <span class="nav-text">5. B+ 树</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#二、字符串匹配"><span class="nav-number">2.</span> <span class="nav-text">二、字符串匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-字符串匹配问题"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 字符串匹配问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-排序"><span class="nav-number">3.</span> <span class="nav-text">三、 排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-TopK-问题"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.TopK 问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-TopK-变种问题"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. TopK 变种问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、常用算法"><span class="nav-number">4.</span> <span class="nav-text">三、常用算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-分治法"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. 分治法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-动态规划法"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. 动态规划法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-贪心算法"><span class="nav-number">4.0.3.</span> <span class="nav-text">4. 贪心算法</span></a></li></ol></li></div>
             
 
           </div>
