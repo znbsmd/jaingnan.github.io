@@ -88,7 +88,7 @@
 <meta property="og:description" content="今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答： 误区一 ： 如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打">
 <meta property="og:locale" content="chinese">
 <meta property="og:image" content="http://yoursite.com/images/fair_unfair.png">
-<meta property="og:updated_time" content="2020-04-23T15:00:20.309Z">
+<meta property="og:updated_time" content="2020-04-23T15:17:14.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="公平锁误区(no 100% fair)">
 <meta name="twitter:description" content="今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答： 误区一 ： 如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打">
@@ -338,8 +338,8 @@
 <h3 id="误区一-："><a href="#误区一-：" class="headerlink" title="误区一 ："></a>误区一 ：</h3><p><img src="/images/fair_unfair.png" alt></p>
 <p>如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打水的人就必须排队。管理员会查看下一个要去打水的人是不是队伍里排最前面的人，如果是的话，才会给你锁让你去打水；如果你不是排第一的人，就必须去队尾排队，这就是公平锁。</p>
 <p>看到这里，误区来了，都以为公平锁是按线程启动顺序执行，其实并不是，原因在javadoc文档里都已经说的很明确了。传送门-&gt;<a href="https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/Semaphore.html。" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/Semaphore.html。</a></p>
-<p> <strong>个人理解 锁的公平性不能保证线程调度的公平性。所以并不是100%顺序执行，FIFO （先进先出）顺序必须适用于特定的内部点执行这些方法。例如固定的执行流程（demo 为sleep(5) 这种的固定业务执行时间）。如果执行时间不确定,很可能出现一个线程有可能在另一个线程之前调用获取，但在另一个线程之后到达，这也就是Semaphore 特性，谁都能解！</strong></p>
-<h3 id="误区二-："><a href="#误区二-：" class="headerlink" title="误区二 ："></a>误区二 ：</h3><p>看到 Semaphore 有公平锁设置参数，以为设置 true/false 就能设置公平不公平了，如何只看结果很可能迷惑自己。 并不是按线程启动顺序觉得获得许可顺序的。是看哪个线程先抢到许可，这点要记住。由于 demo 多线程容易迷惑，故不上demo了，把源码看明白即可。</p>
+<p> <strong>个人理解 公平锁FIFO （先进先出）顺序必须适用于特定的内部点执行这些方法。例如固定的执行流程（demo 为sleep(5) 这种的固定业务执行时间）。如果执行时间不确定,很可能出现一个线程有可能在另一个线程之前调用获取，但在另一个线程之后到达。</strong></p>
+<h3 id="误区二-："><a href="#误区二-：" class="headerlink" title="误区二 ："></a>误区二 ：</h3><p>看到 Semaphore 有公平锁设置参数，以为设置 true/false 就能设置顺序执行了，如何只看结果很可能迷惑自己。 并不是按线程启动顺序觉得获得许可顺序的。是看哪个线程先抢到许可，所以不是100%，毕竟不是原子性的，这点要记住。由于 demo 多线程容易迷惑，故不上demo了，把源码看明白即可。</p>
 
       
     </div>
