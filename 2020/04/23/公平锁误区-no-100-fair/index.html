@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="打铁还需自身硬">
+<meta name="description" content="今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答： 误区一 ： 如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="website">
-<meta property="og:title" content="190 muscle coder">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="公平锁误区(no 100% fair)">
+<meta property="og:url" content="http://yoursite.com/2020/04/23/公平锁误区-no-100-fair/index.html">
 <meta property="og:site_name" content="190 muscle coder">
-<meta property="og:description" content="打铁还需自身硬">
+<meta property="og:description" content="今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答： 误区一 ： 如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打">
 <meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/fair_unfair.png">
+<meta property="og:updated_time" content="2020-04-23T15:00:20.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="190 muscle coder">
-<meta name="twitter:description" content="打铁还需自身硬">
+<meta name="twitter:title" content="公平锁误区(no 100% fair)">
+<meta name="twitter:description" content="今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答： 误区一 ： 如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打">
+<meta name="twitter:image" content="http://yoursite.com/images/fair_unfair.png">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/">
+  <link rel="canonical" href="http://yoursite.com/2020/04/23/公平锁误区-no-100-fair/">
 
 
 
 
 
-  <title>Archive | 190 muscle coder</title>
+  <title>公平锁误区(no 100% fair) | 190 muscle coder</title>
   
 
 
@@ -144,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -228,390 +231,168 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 44 posts in total. Keep on posting.
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/23/公平锁误区-no-100-fair/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190 muscle coder">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">公平锁误区(no 100% fair)</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-23T17:17:37+08:00">
+                2020-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/23/公平锁误区-no-100-fair/" itemprop="url">
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">公平锁误区(no 100% fair)</span>
+                <span class="post-meta-item-text">In</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/误区-踩坑/" itemprop="url" rel="index">
+                    <span itemprop="name">误区-踩坑</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-04-23T17:17:37+08:00" content="2020-04-23">
-          04-23
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+          
 
+          
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/16/万恶-的值传递和引用传递/" itemprop="url">
-              
-                <span itemprop="name">万恶的值传递和引用传递</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-04-16T22:24:27+08:00" content="2020-04-16">
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/02/spring-框架/" itemprop="url">
-              
-                <span itemprop="name">spring 框架</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-04-02T17:04:49+08:00" content="2020-04-02">
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>今天用pushy 推送框架做了一个高吞吐apns推送，其中使用到 Semaphore 共享锁，用来控制推送流量，理论知识终于能得以实践了，用时候才明白好多地方了解不到位，下面来一一作答：</p>
+<h3 id="误区一-："><a href="#误区一-：" class="headerlink" title="误区一 ："></a>误区一 ：</h3><p><img src="/images/fair_unfair.png" alt></p>
+<p>如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打水的人就必须排队。管理员会查看下一个要去打水的人是不是队伍里排最前面的人，如果是的话，才会给你锁让你去打水；如果你不是排第一的人，就必须去队尾排队，这就是公平锁。</p>
+<p>看到这里，误区来了，都以为公平锁是按线程启动顺序执行，其实并不是，原因在javadoc文档里都已经说的很明确了。传送门-&gt;<a href="https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/Semaphore.html。" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/Semaphore.html。</a></p>
+<p> <strong>个人理解 锁的公平性不能保证线程调度的公平性。所以并不是100%顺序执行，FIFO （先进先出）顺序必须适用于特定的内部点执行这些方法。例如固定的执行流程（demo 为sleep(5) 这种的固定业务执行时间）。如果执行时间不确定,很可能出现一个线程有可能在另一个线程之前调用获取，但在另一个线程之后到达，这也就是Semaphore 特性，谁都能解！</strong></p>
+<h3 id="误区二-："><a href="#误区二-：" class="headerlink" title="误区二 ："></a>误区二 ：</h3><p>看到 Semaphore 有公平锁设置参数，以为设置 true/false 就能设置公平不公平了，如何只看结果很可能迷惑自己。 并不是按线程启动顺序觉得获得许可顺序的。是看哪个线程先抢到许可，这点要记住。由于 demo 多线程容易迷惑，故不上demo了，把源码看明白即可。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/30/数据结构与算法/" itemprop="url">
-              
-                <span itemprop="name">数据结构与算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-30T17:49:21+08:00" content="2020-03-30">
-          03-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/30/Java-JVM/" itemprop="url">
-              
-                <span itemprop="name">Java JVM</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-30T08:52:33+08:00" content="2020-03-30">
-          03-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/26/Java-多线程与并发/" itemprop="url">
-              
-                <span itemprop="name">Java 多线程与并发</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-26T15:26:52+08:00" content="2020-03-26">
-          03-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/25/Java-语言特性/" itemprop="url">
-              
-                <span itemprop="name">Java 语言特性</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-25T11:51:30+08:00" content="2020-03-25">
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/24/Java-常用设计模式/" itemprop="url">
-              
-                <span itemprop="name">Java 常用设计模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-24T15:54:06+08:00" content="2020-03-24">
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/24/Java-ThreadPoolExecutor/" itemprop="url">
-              
-                <span itemprop="name">Java ThreadPoolExecutor</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-24T09:39:51+08:00" content="2020-03-24">
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/23/Java-HashMap/" itemprop="url">
-              
-                <span itemprop="name">Java HashMap 总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-23T16:25:50+08:00" content="2020-03-23">
-          03-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/16/万恶-的值传递和引用传递/" rel="next" title="万恶的值传递和引用传递">
+                <i class="fa fa-chevron-left"></i> 万恶的值传递和引用传递
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -619,6 +400,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -639,8 +424,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -693,6 +487,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#误区一-："><span class="nav-number">1.</span> <span class="nav-text">误区一 ：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#误区二-："><span class="nav-number">2.</span> <span class="nav-text">误区二 ：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -842,6 +652,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
