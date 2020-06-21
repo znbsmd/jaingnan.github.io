@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第十七章 容器深入研究Java容器类库成熟 完备 易用。 17.1 完整的容器分类法Java SE5新添加了：  Queue接口及其实现PriorityQueue及各种风格的BlockingQueue（多线程）； ConcurrentMap及其实现的ConcurrentHashMap（多线程）； CopyOnWriteArrayList和CopyOnWriteArraySet（多线程）； Enum">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinking in Java 第十七章">
+<meta property="og:url" content="http://yoursite.com/2020/02/23/Thinking-in-Java-第十七章/index.html">
+<meta property="og:site_name" content="坚持就是胜利">
+<meta property="og:description" content="第十七章 容器深入研究Java容器类库成熟 完备 易用。 17.1 完整的容器分类法Java SE5新添加了：  Queue接口及其实现PriorityQueue及各种风格的BlockingQueue（多线程）； ConcurrentMap及其实现的ConcurrentHashMap（多线程）； CopyOnWriteArrayList和CopyOnWriteArraySet（多线程）； Enum">
+<meta property="og:locale" content="chinese">
+<meta property="og:updated_time" content="2020-02-27T09:34:08.486Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinking in Java 第十七章">
+<meta name="twitter:description" content="第十七章 容器深入研究Java容器类库成熟 完备 易用。 17.1 完整的容器分类法Java SE5新添加了：  Queue接口及其实现PriorityQueue及各种风格的BlockingQueue（多线程）； ConcurrentMap及其实现的ConcurrentHashMap（多线程）； CopyOnWriteArrayList和CopyOnWriteArraySet（多线程）； Enum">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/23/Thinking-in-Java-第十七章/">
+
+
+
+
+
+  <title>Thinking in Java 第十七章 | 坚持就是胜利</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坚持就是胜利</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/23/Thinking-in-Java-第十七章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坚持就是胜利">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinking in Java 第十七章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-23T20:11:47+08:00">
+                2020-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第十七章-容器深入研究"><a href="#第十七章-容器深入研究" class="headerlink" title="第十七章 容器深入研究"></a>第十七章 容器深入研究</h1><p>Java容器类库成熟 完备 易用。</p>
+<h2 id="17-1-完整的容器分类法"><a href="#17-1-完整的容器分类法" class="headerlink" title="17.1 完整的容器分类法"></a>17.1 完整的容器分类法</h2><p>Java SE5新添加了：</p>
+<ul>
+<li>Queue接口及其实现PriorityQueue及各种风格的BlockingQueue（多线程）；</li>
+<li>ConcurrentMap及其实现的ConcurrentHashMap（多线程）；</li>
+<li>CopyOnWriteArrayList和CopyOnWriteArraySet（多线程）；</li>
+<li>EnumSet和EnumMap（enum）；</li>
+<li>Collection类中的多个便利方法。</li>
+</ul>
+<h2 id="17-2-填充容器"><a href="#17-2-填充容器" class="headerlink" title="17.2 填充容器"></a>17.2 填充容器</h2><p>Collections.nCopies() 所有引用都被设置为指向相同的对象；例： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;StringAddress&gt;  ls = Collections.nCopies(4, new StringAddress(&quot;helli&quot;));</span><br><span class="line">//output ls</span><br><span class="line">[StringAddress@82ba41 Hello,StringAddress@82ba41 Hello,StringAddress@82ba41 Hello,StringAddress@82ba41 Hello]</span><br></pre></td></tr></table></figure>
+
+<p>Collections.fill() 只能替换已经存在的元素，而不能添加新元素。</p>
+<h4 id="17-2-1-一种Generator解决方案"><a href="#17-2-1-一种Generator解决方案" class="headerlink" title="17.2.1 一种Generator解决方案"></a>17.2.1 一种Generator解决方案</h4><p>Collection生成器CollectionData：</p>
+<p><strong>所有collection子类都有一个接受另一个Collection对象的构造器，用来填充数据</strong></p>
+<p>CollectionData体现了适配器模式的设计思想，它能把实现Generator接口的类的对象(包括上一章数组中的各种RandomGenerator)都复制到自身当中</p>
+<p><strong>直接上代码，看完代码在看中文解释会更清晰（tij 的心得，哈哈，上来看简介是真看不懂，再不济可以Google ，只要弄明白他要说的 再回来看解析就会清晰很多）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.LinkedHashSet;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line">interface Generator&lt;T&gt; &#123;</span><br><span class="line">    T next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class CollectionData&lt;T&gt; extends ArrayList&lt;T&gt; &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    public CollectionData(Generator&lt;T&gt; gen, int quantity) &#123;</span><br><span class="line">        for (int i = 0; i &lt; quantity; i++)</span><br><span class="line">            add(gen.next());</span><br><span class="line">    &#125;</span><br><span class="line">    public static &lt;T&gt; CollectionData&lt;T&gt; list(Generator&lt;T&gt; gen, int quantity) &#123;</span><br><span class="line">        return new CollectionData&lt;T&gt;(gen, quantity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Animal implements Generator&lt;String&gt; &#123;</span><br><span class="line">    private String[] items = &#123; &quot;Dog&quot;, &quot;Pig&quot;, &quot;Cat&quot; &#125;;</span><br><span class="line">    private int index;</span><br><span class="line">    @Override</span><br><span class="line">    public String next() &#123;</span><br><span class="line">        return items[index++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Set&lt;String&gt; set = new LinkedHashSet&lt;String&gt;(new CollectionData&lt;String&gt;(new Animal(), 2));</span><br><span class="line">        System.out.println(set); // [Dog, Pig, Cat]</span><br><span class="line">        set.addAll(CollectionData.list(new Animal(), 3));</span><br><span class="line">        System.out.println(set); // [Dog, Pig, Cat]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="17-2-12-Map生成器"><a href="#17-2-12-Map生成器" class="headerlink" title="17.2.12 Map生成器"></a>17.2.12 Map生成器</h4><p>思想与2.1 相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public MapData(Generator&lt;Pair&lt;K,V&gt;&gt; gen,int quantity)&#123;</span><br><span class="line">    Pair&lt;K,V&gt; p=gen.next();</span><br><span class="line">    put(p.key,p.vaule);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="17-2-3-使用Abstract类"><a href="#17-2-3-使用Abstract类" class="headerlink" title="17.2.3 使用Abstract类"></a>17.2.3 使用Abstract类</h4><p><strong>享元模式</strong>使得对象的一部分可以被具体化，因此，与对象中的所有事物都包含在对象内部不同，我们可以在更加高效的外部表中查找对象的一部分或整体。</p>
+<p>书中的代码和解析比较不容易理解和啰嗦。用网上一段例子说明<br>典型的享元工厂类的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class FlyweightFactory &#123;</span><br><span class="line">    //定义一个HashMap用于存储享元对象，实现享元池</span><br><span class="line">    private HashMap flyweights = newHashMap();</span><br><span class="line">    public Flyweight getFlyweight(String key)&#123;</span><br><span class="line">        //如果对象存在，则直接从享元池获取</span><br><span class="line">        if(flyweights.containsKey(key))&#123;</span><br><span class="line">            return(Flyweight)flyweights.get(key);</span><br><span class="line">        &#125;</span><br><span class="line">        //如果对象不存在，先创建一个新的对象添加到享元池中，然后返回</span><br><span class="line">        else &#123;</span><br><span class="line">            Flyweight fw = newConcreteFlyweight();</span><br><span class="line">            flyweights.put(key,fw);</span><br><span class="line">            return fw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不存在才创建，存在就get出来。</p>
+<h2 id="17-3-Collection的功能方法"><a href="#17-3-Collection的功能方法" class="headerlink" title="17.3 Collection的功能方法"></a>17.3 Collection的功能方法</h2><p>主要介绍Collection的主要方法，子类可以拿来即用。</p>
+<h2 id="17-4-可选操作"><a href="#17-4-可选操作" class="headerlink" title="17.4 可选操作"></a>17.4 可选操作</h2><p>实现类并不需要为这些方法提供功能定义。简单的说就是 List Map Set 都可以共用 Collection接口的方法，但是 就像 List 不能使用set 一样,虽然编译器不会检查，但是运行会抛出异常。</p>
+<h2 id="17-5-List-的功能方法"><a href="#17-5-List-的功能方法" class="headerlink" title="17.5 List 的功能方法"></a>17.5 List 的功能方法</h2><p>常用list方法 iterator 等等。</p>
+<h2 id="17-6-Set和存储顺序"><a href="#17-6-Set和存储顺序" class="headerlink" title="17.6 Set和存储顺序"></a>17.6 Set和存储顺序</h2><p>良好的编码风格：应该在覆盖equals()方法时，总是同时覆盖hashCode()方法。</p>
+<p>SortedSet</p>
+<ol>
+<li>Comparator comparator() 返回当前Set中使用的Comparator；或者返回null表示以自然方式排序。</li>
+<li>Object first() 返回容器中第一个元素。</li>
+<li>Object last() 返回容器中第末一个元素。</li>
+<li>SortedSet subSet(fromElement, toElement) 生成此Set的子集，范围从fromElement（包含）到toElement（不包含）。</li>
+<li>SortedSet headSet(toElement) 生成此Set的子集，由小于toElement的元素组成。</li>
+<li>SortedSet tailSet(fromElement) 生成此Set的子集，由大于或等于formElement的元素组成。</li>
+</ol>
+<p><strong>SortedSet的意思是按对象比较函数对元素排序，而不是元素插入次序，插入顺序可以用LinkedHashSet保存。</strong><br><a href="https://blog.csdn.net/trbbadboy/article/details/6939598" target="_blank" rel="noopener">https://blog.csdn.net/trbbadboy/article/details/6939598</a><br>贴上简单明了的例子</p>
+<h2 id="17-7-队列"><a href="#17-7-队列" class="headerlink" title="17.7 队列"></a>17.7 队列</h2><ol>
+<li><p>优先级队列 PriorityQueue  <a href="https://www.jianshu.com/p/c577796e537a" target="_blank" rel="noopener">https://www.jianshu.com/p/c577796e537a</a> 这篇文章讲解到位。<br>Queue指先进先出的队列。Java中Queue为一个接口，集成Collection接口，实现可以为LinkedBlockingQueue,LinkedList,PriorityQueue等。<br>普通队列特点，先进先出。插入队列和移出队列的时间复杂度都为O(1)。<br>优先级队列，不同于普通队列，优先级队列默认按照元素的自然顺序排序（也可以重写comparator接口compare方法进行自定义排序）插入。移出队列和普通队列一样，但插入队列的时间复杂度与元素个数N有关，时间复杂度为O（logN）。</p>
+</li>
+<li><p>双向队列 Deque<br> 两端放入元素并提取他们，不是特别常用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Deque&lt;T&gt; &#123; </span><br><span class="line">    private LinkedList&lt;T&gt; deque = new LinkedList&lt;T&gt;(); </span><br><span class="line">    public void addFirst(T e) &#123; deque.addFirst(e); &#125; </span><br><span class="line">    public void addLast(T e) &#123; deque.addLast(e); &#125; </span><br><span class="line">    public T getFirst() &#123; return deque.getFirst(); &#125; </span><br><span class="line">    public T getLast() &#123; return deque.getLast(); &#125; </span><br><span class="line">    public T removeFirst() &#123; return deque.removeFirst(); &#125; </span><br><span class="line">    public T removeLast() &#123; return deque.removeLast(); &#125; </span><br><span class="line">    public int size() &#123; return deque.size(); &#125; </span><br><span class="line">    public String toString() &#123; return deque.toString(); &#125; </span><br><span class="line">    // And other methods as necessary... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="17-8-理解Map"><a href="#17-8-理解Map" class="headerlink" title="17.8 理解Map"></a>17.8 理解Map</h2><p>开始的Map 用get 取值 效率最低 因为要从头轮询equals比较key值 ，只是简单并没有效率。</p>
+<h4 id="17-8-1-性能"><a href="#17-8-1-性能" class="headerlink" title="17.8.1 性能"></a>17.8.1 性能</h4><p>get()线性搜索，效率低下，HsahMap 因此而生。HsahMap使用了散列码，，hashcode() 是 Object中的方法，因此所有的Java对象都能产生散列码。</p>
+<p>Treemap 查询键值对他们会被排序（由Comparable 或者 Comparator决定）。</p>
+<h4 id="17-8-2-SortedMap"><a href="#17-8-2-SortedMap" class="headerlink" title="17.8.2 SortedMap"></a>17.8.2 SortedMap</h4><p>使用SortedMap（TreeMap是其现阶段的唯一实现），可以确保键处于排序状态。</p>
+<ol>
+<li>Comparator comparator() 返回当前Map中使用的Comparator；或者返回null表示以自然方式排序。</li>
+<li>T firstKey() 返回Map中的第一个键。</li>
+<li>T lastKey() 返回Map中的第末一个键。</li>
+<li>SortedMap subMap(fromKey, toKey) 生成此Map的子集，范围从fromKey（包含）到toKey（不包含）的键确定。</li>
+<li>SortedMap headMap(toKey) 生成此Map的子集，由小于toKey的键确定的键值对组成。</li>
+<li>SortedMap tailMap(fromKey) 生成此Map的子集，由大于或等于fromKey的键确定的键值对组成。</li>
+</ol>
+<h4 id="17-8-2-LinkedHashMap"><a href="#17-8-2-LinkedHashMap" class="headerlink" title="17.8.2 LinkedHashMap"></a>17.8.2 LinkedHashMap</h4><p>两个特点：</p>
+<ol>
+<li>为了提高速度，散列化所有元素，，遍历时候又以元素的插入顺序返回键值对，</li>
+<li>可以在构造器里第三个参数设置accessOrder true，在我们访问了一个Entry&lt;K,V&gt;时，我们会调用afterNodeAccess()方法，将我们当前访问的节点放入到链表的末尾，利用这个特性便可以区分谁是最近访问，谁是最近最不常访问元素了。boolean removeEldestEntry(Map.Entry)该方法返回值为true时，会删除最近最不常使用的元素，也就是double-link的头部节点，当插入一个新节点之后removeEldestEntry()方法会被put()、putAll()方法调用，我们可以通过override该方法，来控制删除最旧节点的条件。<br>同redis淘汰策略的 <strong>LRU 算法</strong>。没有访问的放在最前面。对于定期清理节省空间或实现LRU缓存以下案例得以实现。</li>
+</ol>
+<p>简单案例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Iterator;</span><br><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Map.Entry;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * 为最近最少使用（LRU）缓存策略设计一个数据结构，</span><br><span class="line"> * 它应该支持以下操作：获取数据（get）和写入数据（set）。</span><br><span class="line"> * 获取数据get(key)：如果缓存中存在key，则获取其数据值（通常是正数），否则返回-1。</span><br><span class="line"> * 写入数据set(key, value)：如果key还没有在缓存中，则写入其数据值。</span><br><span class="line"> * 当缓存达到上限，它应该在写入新数据之前删除最近最少使用的数据用来腾出空闲位置。 </span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class LRUCache&lt;K, V&gt;&#123;</span><br><span class="line">    LinkedHashMap&lt;K,V&gt; cache = null;</span><br><span class="line">    private int cacheSize;</span><br><span class="line">    public LRUCache(int cacheSize)&#123;</span><br><span class="line">        this.cacheSize = (int) Math.ceil (cacheSize / 0.75f) + 1;  // ceil浮点数向上取整数</span><br><span class="line">        cache = new LinkedHashMap&lt;K,V&gt;(this.cacheSize,0.75f,true)&#123;  //boolean accessOrder用来控制访问顺序的，默认设置为false，在访问之后，不会将当前访问的元素插入到链表尾部</span><br><span class="line">          //内部类来重写removeEldestEntry()方法</span><br><span class="line">        @Override</span><br><span class="line">          protected boolean removeEldestEntry (Map.Entry&lt;K, V&gt; eldest)&#123;</span><br><span class="line">              System.out.println(&quot;size=&quot;+size());</span><br><span class="line">              return size() &gt; cacheSize; //当前size()大于了cacheSize便删掉头部的元素</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public V get(K key)&#123;   //如果使用继承的话就用getE而不是get，防止覆盖了父类的该方法</span><br><span class="line">       return (V) cache.get(key);</span><br><span class="line">    &#125;</span><br><span class="line">    public V set(K key,V value)&#123;</span><br><span class="line">       return cache.put(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int getCacheSize() &#123;</span><br><span class="line">        return cacheSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCacheSize(int cacheSize) &#123;</span><br><span class="line">        this.cacheSize = cacheSize;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void printCache()&#123;</span><br><span class="line">        for(Iterator it = cache.entrySet().iterator();it.hasNext();)&#123;</span><br><span class="line">            Entry&lt;K,V&gt; entry = (Entry&lt;K, V&gt;)it.next();</span><br><span class="line">            if(!&quot;&quot;.equals(entry.getValue()))&#123;</span><br><span class="line">                System.out.println(entry.getKey() + &quot;\t&quot; + entry.getValue()); </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void PrintlnCache()&#123;</span><br><span class="line">        Set&lt;Map.Entry&lt;K,V&gt;&gt; set = cache.entrySet();</span><br><span class="line">        for(Entry&lt;K,V&gt; entry : set)&#123;</span><br><span class="line">            K key = entry.getKey();</span><br><span class="line">            V value = entry.getValue();</span><br><span class="line">            System.out.println(&quot;key:&quot;+key+&quot;value:&quot;+value);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        LRUCache&lt;String,Integer&gt; lrucache = new LRUCache&lt;String,Integer&gt;(3);</span><br><span class="line">        lrucache.set(&quot;aaa&quot;, 1);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;bbb&quot;, 2);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;ccc&quot;, 3);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;ddd&quot;, 4);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;eee&quot;, 5);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        System.out.println(&quot;这是访问了ddd后的结果&quot;);</span><br><span class="line">        lrucache.get(&quot;ddd&quot;);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;fff&quot;, 6);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">        lrucache.set(&quot;aaa&quot;, 7);</span><br><span class="line">        lrucache.printCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="17-9-散列与散列码"><a href="#17-9-散列与散列码" class="headerlink" title="17.9 散列与散列码"></a>17.9 散列与散列码</h2><p>Object的hashCode()默认使用当前对象的地址计算散列码，equals()比较对象的地址。</p>
+<p>覆盖hashCode()的同时覆盖equals()方法，正确的equals()方法的五个条件：</p>
+<ul>
+<li>自反性</li>
+<li>对称性</li>
+<li>传递性</li>
+<li>一致性</li>
+<li>对任何不是null的x，x.equals(null)一定返回false</li>
+</ul>
+<h4 id="17-9-1-理解hashcode-散列码"><a href="#17-9-1-理解hashcode-散列码" class="headerlink" title="17.9.1 理解hashcode()散列码"></a>17.9.1 理解hashcode()散列码</h4><p>hashMap 使用 key 的 hashcode 来保存键值对。</p>
+<h4 id="17-9-2-为速度而散列"><a href="#17-9-2-为速度而散列" class="headerlink" title="17.9.2 为速度而散列"></a>17.9.2 为速度而散列</h4><p>通过键对象生成一个数字，将其作为数组的下标。这个数字就是散列码，由定义在Object中的、且可被覆盖的hashCode()（散列函数）方法生成。</p>
+<p>查询一个值的过程首先是计算散列码，然后使用散列码查询数组。如果能够保证没有冲突（如果值的数量是固定的，那么就有可能），那就有了一个完美的散列函数，但是这种情况是特例。通常，冲突由外部链接处理：数组并不直接保存值，而是保存值的List。</p>
+<p>由于散列表中的“槽位”（slot）通常被称为桶位（bucket），因此我们将表示实际散列表的数组命名为bucket。为使散列分布均匀，桶的数量通常使用质数。</p>
+<p><strong>保证时间复杂度O(1) 是在 没有hash冲突的情况下。</strong></p>
+<hr>
+<p><strong>HashMap源码分析：</strong><br>（引用自网络）</p>
+<p>在这之前，先介绍一下负载因子和容量的属性。大家都知道其实一个HashMap的实际容量就是因子×容量，其默认值是16×0.75=12；这个很重要，对效率很一定影响！当存入HashMap的对象超过这个容量时，HashMap就会重新构造存取表。这就是一个大问题，我后面慢慢介绍，反正，如果你已经知道你大概要存放多少个对象，最好设为该实际容量的能接受的数字。</p>
+<p>两个关键的方法，put和get：</p>
+<p>先有这样一个概念，HashMap是声明了Map，Cloneable, Serializable接口，继承AbstractMap类，里面的Iterator其实主要都是其内部类HashIterator和其他几个iterator类实现，当然还有一个很重要的继承了Map.Entry的Entry内部类。Entry内部类包含了hash、value、key和next这四个属性，很重要。put的源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public Object put(Object key, Object value) &#123;</span><br><span class="line">    Object k = maskNull(key); // 这个就是判断键值是否为空，如果为空，它会返回一个static Object作为键值，这就是为什么HashMap允许空键值的原因。</span><br><span class="line">    int hash = hash(k);</span><br><span class="line">    int i = indexFor(hash, table.length);</span><br><span class="line">    // 其中hash就是通过key这个Object的hashCode()进行hash，然后通过indexFor获得在Object table的索引值。</span><br><span class="line">    // put其实是一个有返回的方法，它会把相同键值的put覆盖掉并返回旧的值。如下方法彻底说明了HashMap的结构，其实就是一个表加上在相应位置的Entry的链表：</span><br><span class="line">    for (Entry e = table[i]; e != null; e = e.next) &#123;</span><br><span class="line">        if (e.hash == hash &amp;&amp; eq(k, e.key)) &#123;</span><br><span class="line">            Object oldvalue = e.value;</span><br><span class="line">            e.value = value; // 把新的值赋予给对应键值。</span><br><span class="line">            e.recordAccess(this); // 空方法，留待实现</span><br><span class="line">            return oldvalue; // 返回相同键值的对应的旧的值。</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    modCount++; // 结构性更改的次数</span><br><span class="line">    addEntry(hash, k, value, i); // 添加新元素，关键所在！</span><br><span class="line">    return null; // 没有相同的键值返回</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们把关键的方法拿出来分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void addEntry(int hash, Object key, Object value, int bucketIndex) &#123;</span><br><span class="line">    </span><br><span class="line">    table[bucketIndex] = new Entry(hash, key, value, table[bucketIndex]);</span><br><span class="line">    // 因为hash的算法有可能令不同的键值有相同的hash码并有相同的table索引，它们经过indexfor之后的索引一定为i，这样在new的时候这个Entry的next就会指向这个原本的table[i]，再有下一个也如此，形成一个链表，和put的循环对定e.next获得旧的值。</span><br><span class="line">    if (size++ &gt;= threshold) // 这个threshold就是能实际容纳的量</span><br><span class="line">        resize(2 * table.length); // 超出这个容量就会将Object table重构</span><br><span class="line">        // 所谓的重构也不神，就是建一个两倍大的table，然后再一个个indexfor进去。注意，这就是效率，如果你能让你的HashMap不需要重构那么多次，效率会大大提高！</span><br></pre></td></tr></table></figure>
+
+<p> <strong>所谓的重构也不神，就是建一个两倍大的table，然后再一个个indexfor进去。注意，这就是效率，如果你能让你的HashMap不需要重构那么多次，效率会大大提高！</strong></p>
+<h4 id="17-9-2-覆盖hashCode"><a href="#17-9-2-覆盖hashCode" class="headerlink" title="17.9.2 覆盖hashCode()"></a>17.9.2 覆盖hashCode()</h4><p>无论何时，对同一个对象调用hashCode()都应该生成相同的值。</p>
+<p>要使hashCode()实用，它必须速度快，并且有意义。（即必须基于对象内容生成散列码）。</p>
+<p>那么如何设计一个 hashCode 算法，书中设计了一个算法：</p>
+<ol>
+<li><p>把某个非 0 的常数值，比如 17，保存在一个名为 result 的 int 类型的变量中。</p>
+</li>
+<li><p>对于对象中的每个域，做如下操作：</p>
+<ul>
+<li><p>为该域计算 int 类型的哈希值 c ：</p>
+<ul>
+<li><p>如果该域是 boolean 类型，则计算 (f?1:0)</p>
+</li>
+<li><p>如果该域是 byte、char、short 或者 int 类型，则计算 (int)f</p>
+</li>
+<li><p>如果该域是 long 类型，则计算 (int)(f^(f&gt;&gt;&gt;32))</p>
+</li>
+<li><p>如果该域是 float 类型，则计算 Float.floatToIntBits(f)</p>
+</li>
+<li><p>如果该域是 double 类型，则计算 Double.doubleToLongBits(f)，然后重复第三个步骤。</p>
+</li>
+<li><p>如果该域是一个对象引用，并且该类的 equals 方法通过递归调用 equals 方法来比较这个域，同样为这个域递归的调用 hashCode，如果这个域为 null，则返回0。</p>
+</li>
+<li><p>如果该域是数组，则要把每一个元素当作单独的域来处理，递归的运用上述规则，如果数组域中的每个元素都很重要，那么可以使用 Arrays.hashCode 方法。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* 按照公式 result = 31 * result + c，把上面步骤 2.1 中计算得到的散列码 c 合并到 result 中。
+
+**选择值31是因为它是奇数质数。如果是偶数且乘法运算溢出，则信息将丢失，因为乘以2等于移位。使用质数的优势尚不清楚，但这是传统的。31的一个不错的特性是乘法可以用移位和减法来代替，以获得更好的性能：31 * i == (i &lt;&lt; 5) - i。JVM自动执行这种优化。**</code></pre><ol start="3">
+<li>返回 result</li>
+</ol>
+<h2 id="17-10-选择接口的不同实现"><a href="#17-10-选择接口的不同实现" class="headerlink" title="17.10 选择接口的不同实现"></a>17.10 选择接口的不同实现</h2><p>Map、List、Set和Queue</p>
+<h4 id="17-10-1-性能测试框架"><a href="#17-10-1-性能测试框架" class="headerlink" title="17.10.1 性能测试框架"></a>17.10.1 性能测试框架</h4><p>计算所有操作所需的纳秒数。封装好Test 对象 使用。输出各种容器的纳秒数。</p>
+<h4 id="17-10-2-对List-的选择"><a href="#17-10-2-对List-的选择" class="headerlink" title="17.10.2 对List 的选择"></a>17.10.2 对List 的选择</h4><p>将ArrayList作为默认首选，只有需要使用额外的功能，或者当程序的性能因为经常从表中间进行插入和删除操作而变差时，才去选择LinkedList。如果使用的是固定数量的元素，那么既可以使用背后有数组支撑的List，也可以选择真正的数组。</p>
+<h4 id="17-10-3-微基准测试的危险"><a href="#17-10-3-微基准测试的危险" class="headerlink" title="17.10.3  微基准测试的危险"></a>17.10.3  微基准测试的危险</h4><p>剖析器可以把性能分析工作做得更好。Java Profiler</p>
+<h4 id="17-10-4-对Set的选择"><a href="#17-10-4-对Set的选择" class="headerlink" title="17.10.4 对Set的选择"></a>17.10.4 对Set的选择</h4><p>HashSet的性能基本上总是比TreeSet好，特别是在添加和查询元素时，而这两个操作也是最重要的操作。TreeSet存在的唯一原因是它可以维持元素的排序状态，所以当需要一个排好序的Set时，才应该使用TreeSet。</p>
+<h4 id="17-10-5-对Map的选择"><a href="#17-10-5-对Map的选择" class="headerlink" title="17.10.5 对Map的选择"></a>17.10.5 对Map的选择</h4><p>调整HashMap以提高性能：</p>
+<ul>
+<li>容量：表中的桶位数。</li>
+<li>初始容量：表在创建时所拥有的桶位数。</li>
+<li>尺寸：表中当前存储的项数。</li>
+<li>负载因子：尺寸/容量。（如0.75 是达到3/4再散列）</li>
+</ul>
+<h2 id="17-11-实用方法"><a href="#17-11-实用方法" class="headerlink" title="17.11 实用方法"></a>17.11 实用方法</h2><p>介绍 Collections 详细方法。</p>
+<h4 id="17-11-1-List的排序和查询"><a href="#17-11-1-List的排序和查询" class="headerlink" title="17.11.1 List的排序和查询"></a>17.11.1 List的排序和查询</h4><p>List的排序和查询所使用的方法与对象数组所使用的相应方法有相同的名字和语法，只是用Collections的static方法替换为Arrays的方法而已。</p>
+<h4 id="17-11-2-设定Collection或Map为不可修改"><a href="#17-11-2-设定Collection或Map为不可修改" class="headerlink" title="17.11.2 设定Collection或Map为不可修改"></a>17.11.2 设定Collection或Map为不可修改</h4><p>Collections.unmodifiableCollection() 有时候需要对它进行保护，避免返回结果被人修改。</p>
+<p>Collections.unmodifiableCollection这个可以得到一个集合的镜像，它的返回结果不可直接被改变，否则会提示 :<br>Exception in thread “main” java.lang.UnsupportedOperationException</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class CollectionsTest &#123;  </span><br><span class="line">      </span><br><span class="line">    @Test  </span><br><span class="line">    public void test()&#123;  </span><br><span class="line">        Collection&lt;String&gt; c = new ArrayList&lt;String&gt;();  </span><br><span class="line">          </span><br><span class="line">        Collection&lt;String&gt; s = Collections.unmodifiableCollection(c);  </span><br><span class="line">          </span><br><span class="line">        c.add(&quot;str&quot;);  </span><br><span class="line">          </span><br><span class="line">        System.out.println(s);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="17-11-3-Collection或Map同步控制"><a href="#17-11-3-Collection或Map同步控制" class="headerlink" title="17.11.3 Collection或Map同步控制"></a>17.11.3 Collection或Map同步控制</h4><p>Collections.synchronizedCollection() 采用装饰者模式实现 线程安全几个操作方法。</p>
+<p>快速报错</p>
+<p>获取遍历对象前添加元素 会抛出异常 ConcurrentModificationException，防止多个进程同时修改同一个容器的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            // creating object of List&lt;String&gt;</span><br><span class="line">            List&lt;String&gt; vector = new ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">            Iterator&lt;String&gt; iterator = vector.iterator();</span><br><span class="line"></span><br><span class="line">            vector.add(&quot;A&quot;);</span><br><span class="line"></span><br><span class="line">            String next = iterator.next();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        catch (ConcurrentModificationException e) &#123;</span><br><span class="line">            System.out.println(&quot;Exception thrown : &quot; + e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ConcurrentHashMap  CopyOnWriteArrayList  CopyOnWriteArraySet 都是使用了避免 ConcurrentModificationException 的错误。</p>
+<h2 id="17-12-持有引用"><a href="#17-12-持有引用" class="headerlink" title="17.12 持有引用"></a>17.12 持有引用</h2><p>StrongReference SoftReference  WeakReference PhantomReference （后三个使用暂时有些迷糊 继续往后看）<br>WeakHashMap<br>这是一种节约存储空间的技术，因为WeakHashMap允许垃圾回收器自动清理键和值，所以它显得十分便利。</p>
+<h2 id="17-13-Java-1-0-1-1-的容器"><a href="#17-13-Java-1-0-1-1-的容器" class="headerlink" title="17.13 Java 1.0/1.1 的容器"></a>17.13 Java 1.0/1.1 的容器</h2><ol>
+<li><p>Vector和Enumeration<br> Vector基本可看做ArrayList。<br> Enumeration（枚举）只是接口而不是实现，应尽量使用iterator。</p>
+</li>
+<li><p>Hashtable</p>
+</li>
+<li><p>Stack<br> 继承Vector，而不是用Vector创建Stack。</p>
+</li>
+<li><p>BitSet<br> 高效存储大量“开/关”信息。其效率仅对空间而言，如果需要高效的访问时间，BitSet比本地数组稍慢一点。<br>BitSet的最小容量是long：64位。<br>如果拥有一个可以命名的固定的标志集合，那么EnumSet与BitSet相比，通常是一个更好的选择。</p>
+</li>
+</ol>
+<h2 id="17-14-总结"><a href="#17-14-总结" class="headerlink" title="17.14 总结"></a>17.14 总结</h2><p>java容器对于面向对象来说是最重要的类库。最重要的hashcode 和如何编写 hashcode.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/23/Thinking-in-Java-第十六章/" rel="next" title="Thinking in Java 第十六章">
+                <i class="fa fa-chevron-left"></i> Thinking in Java 第十六章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/28/Thinking-in-Java-第十八章/" rel="prev" title="Thinking in Java 第十八章">
+                Thinking in Java 第十八章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">坚信持续学习就一定能超过大多数人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第十七章-容器深入研究"><span class="nav-number">1.</span> <span class="nav-text">第十七章 容器深入研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#17-1-完整的容器分类法"><span class="nav-number">1.1.</span> <span class="nav-text">17.1 完整的容器分类法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-2-填充容器"><span class="nav-number">1.2.</span> <span class="nav-text">17.2 填充容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-2-1-一种Generator解决方案"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">17.2.1 一种Generator解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-2-12-Map生成器"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">17.2.12 Map生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-2-3-使用Abstract类"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">17.2.3 使用Abstract类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-3-Collection的功能方法"><span class="nav-number">1.3.</span> <span class="nav-text">17.3 Collection的功能方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-4-可选操作"><span class="nav-number">1.4.</span> <span class="nav-text">17.4 可选操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-5-List-的功能方法"><span class="nav-number">1.5.</span> <span class="nav-text">17.5 List 的功能方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-6-Set和存储顺序"><span class="nav-number">1.6.</span> <span class="nav-text">17.6 Set和存储顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-7-队列"><span class="nav-number">1.7.</span> <span class="nav-text">17.7 队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-8-理解Map"><span class="nav-number">1.8.</span> <span class="nav-text">17.8 理解Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-8-1-性能"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">17.8.1 性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-8-2-SortedMap"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">17.8.2 SortedMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-8-2-LinkedHashMap"><span class="nav-number">1.8.0.3.</span> <span class="nav-text">17.8.2 LinkedHashMap</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#17-9-散列与散列码"><span class="nav-number">1.9.</span> <span class="nav-text">17.9 散列与散列码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-9-1-理解hashcode-散列码"><span class="nav-number">1.9.0.1.</span> <span class="nav-text">17.9.1 理解hashcode()散列码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-9-2-为速度而散列"><span class="nav-number">1.9.0.2.</span> <span class="nav-text">17.9.2 为速度而散列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-9-2-覆盖hashCode"><span class="nav-number">1.9.0.3.</span> <span class="nav-text">17.9.2 覆盖hashCode()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-10-选择接口的不同实现"><span class="nav-number">1.10.</span> <span class="nav-text">17.10 选择接口的不同实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-10-1-性能测试框架"><span class="nav-number">1.10.0.1.</span> <span class="nav-text">17.10.1 性能测试框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-10-2-对List-的选择"><span class="nav-number">1.10.0.2.</span> <span class="nav-text">17.10.2 对List 的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-10-3-微基准测试的危险"><span class="nav-number">1.10.0.3.</span> <span class="nav-text">17.10.3  微基准测试的危险</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-10-4-对Set的选择"><span class="nav-number">1.10.0.4.</span> <span class="nav-text">17.10.4 对Set的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-10-5-对Map的选择"><span class="nav-number">1.10.0.5.</span> <span class="nav-text">17.10.5 对Map的选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-11-实用方法"><span class="nav-number">1.11.</span> <span class="nav-text">17.11 实用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-11-1-List的排序和查询"><span class="nav-number">1.11.0.1.</span> <span class="nav-text">17.11.1 List的排序和查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-11-2-设定Collection或Map为不可修改"><span class="nav-number">1.11.0.2.</span> <span class="nav-text">17.11.2 设定Collection或Map为不可修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-11-3-Collection或Map同步控制"><span class="nav-number">1.11.0.3.</span> <span class="nav-text">17.11.3 Collection或Map同步控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-12-持有引用"><span class="nav-number">1.12.</span> <span class="nav-text">17.12 持有引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-13-Java-1-0-1-1-的容器"><span class="nav-number">1.13.</span> <span class="nav-text">17.13 Java 1.0/1.1 的容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-14-总结"><span class="nav-number">1.14.</span> <span class="nav-text">17.14 总结</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+	
+           
+         
+         <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

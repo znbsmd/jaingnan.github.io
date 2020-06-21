@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。 一、 客户端负载均衡不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud Ribbon">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/Spring-Cloud-Ribbon/index.html">
+<meta property="og:site_name" content="坚持就是胜利">
+<meta property="og:description" content="Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。 一、 客户端负载均衡不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="http://yoursite.com/images/ribbon_flow.png">
+<meta property="og:updated_time" content="2020-03-20T04:32:25.396Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Cloud Ribbon">
+<meta name="twitter:description" content="Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。 一、 客户端负载均衡不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔">
+<meta name="twitter:image" content="http://yoursite.com/images/ribbon_flow.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/Spring-Cloud-Ribbon/">
+
+
+
+
+
+  <title>Spring Cloud Ribbon | 坚持就是胜利</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坚持就是胜利</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/Spring-Cloud-Ribbon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坚持就是胜利">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Cloud Ribbon</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-17T18:04:05+08:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring Cloud Ribbon 是一个基于HTTP和TCP的客户端负载均衡工具，基于Netflix Ribbon 实现。 它只是一个工具类框架，不像服务注册中心、配置中心、API网关独立部署。因为微服务间的调用，API网关的请求转发等内容,都通过Ribbon 实现。包括Feign。</p>
+<h2 id="一、-客户端负载均衡"><a href="#一、-客户端负载均衡" class="headerlink" title="一、 客户端负载均衡"></a>一、 客户端负载均衡</h2><p>不论是硬件负载均衡设备还是软件负载均衡模块都会维护一个服务可用清单，通过心跳模式来检测剔除故障的服务端节点以保障清单中都是可以正常访问的服务端节点。当客户端发送请求到负载均和的设备时候，该设备会按某种算法（线性轮询，按权重负载、按流量负载等），从清单中取出地址，进行转发。</p>
+<p>通过Spring Cloud Ribbon 自动化配置整合，在微服务客户端使用负载均衡调用非常简单：</p>
+<ul>
+<li>服务提供者启动多个实例注册到一个注册中心，或者多个相关联的。</li>
+<li>消费者直接调用被@LoadBalanced修饰过的RsetTemplate 来实现面向服务的接口调用。</li>
+</ul>
+<h2 id="二、-RsetTemplate详解"><a href="#二、-RsetTemplate详解" class="headerlink" title="二、 RsetTemplate详解"></a>二、 RsetTemplate详解</h2><p>RsetTemplate会使Ribbon自动化配置，同时通过@LoadBalanced实现负载均衡。</p>
+<h4 id="1-GET-请求"><a href="#1-GET-请求" class="headerlink" title="1. GET 请求"></a>1. GET 请求</h4><ul>
+<li><p>getForEntity 返回的是ResponseEntity,该对象是Spring 对HTTP请求响应的封装，储存了HTTP重要元素，如状态码，headers和body对象。有三种重载方法。</p>
+</li>
+<li><p>getForObject 对getForEntity进一步封装，将body进行对象转换。</p>
+</li>
+</ul>
+<h4 id="2-POST请求"><a href="#2-POST请求" class="headerlink" title="2. POST请求"></a>2. POST请求</h4><ul>
+<li>postForEntity 比 getForEntity 多个第二个参数 Object request 可以是 HttpEntity 也可以是普通对象。</li>
+<li>postForObject 与 getForObject 相似</li>
+</ul>
+<h4 id="3-PUT请求"><a href="#3-PUT请求" class="headerlink" title="3. PUT请求"></a>3. PUT请求</h4><p>为void 类型，没返回参数，其他与post 一致。</p>
+<h4 id="4-DELETE请求"><a href="#4-DELETE请求" class="headerlink" title="4. DELETE请求"></a>4. DELETE请求</h4><p>无request 参数，直接参数绑定 url 删除。</p>
+<h2 id="三、-源码分析"><a href="#三、-源码分析" class="headerlink" title="三、 源码分析"></a>三、 源码分析</h2><p>整个流程如下：</p>
+<p>通过LoadBalancerInterceptor 拦截器对RestTemplate的请求进行拦截，并利用Spring Cloud 的负载均衡器 LoadBalancerClient 将以逻辑服务名为host的URI转换称为具体的服务实例地址。用ribbon实现负载均衡器的时候，实际使用Ribbon定义的ILoadBalancer 接口的实现，BaseLoadBalancer类实现理基础的负载均衡，DynamicServerListLoadBalancer 和 ZoneAwareLoadBalancer 在负载均衡的策略上做了一些扩展功能。而RibbonClientConfiguration 配置类 默认采用ZoneAwareLoadBalancer 里面 chooseServer 获取了负载均衡策略分配到服务实例对象后，使用该对象调回通过LoadBalancerInterceptor拦截器的apply 像具体实例发起请求。</p>
+<p>流程图如下：</p>
+<p><img src="/images/ribbon_flow.png" alt></p>
+<h4 id="1-负载均衡器"><a href="#1-负载均衡器" class="headerlink" title="1. 负载均衡器"></a>1. 负载均衡器</h4><p><strong>AbstractLoadBalancer</strong></p>
+<p> 是 ILoadBalancer 接口的抽象实现。里面定义了服务分组枚举类：</p>
+<ul>
+<li>All ： 所有服务实例</li>
+<li>STATUS_UP ：正常实例</li>
+<li>STATUS_NOT_UP ：不正常实例</li>
+</ul>
+<p><strong>BaseLoadBalancer</strong><br>是AbstractLoadBalancer基础实现类</p>
+<p><strong>DynamicServerListLoadBalancer</strong></p>
+<p>继承于 BaseLoadBalancer，对负载均衡扩展，实现了服务实例清单汇总动态更新的能力;还有对服务清单过滤功能。<br>ServerList<br>因为负载均衡需要实现服务的动态更新，所以Ribbon与Eureka 整合后从 Eureka Server 获取服务实例清单。<br>ServerListupdater<br>然后以定时任务的方式进行服务列表的更新。<br>ServerListFilter</p>
+<p><strong>ZoneAwareLoadBalancer</strong></p>
+<p>继承DynamicServerListLoadBalancer 对其扩展，所以依然会使用BaseLoadBalancer里的RoundRobinRule规则，以线性轮询的方式调用服务实例，该算法没有区域概念，所以会把所有的实例视为一个Zone来看待，这样周期性的跨区域访问会产生更高的延迟，所以多区域会有一定性能问题。<br>ZoneAwareLoadBalancer 就是解决这样的问题。</p>
+<p>setServerListForZones 设置每一个Zone 对应一个ZoneStats，储存每个Zone 的一些状态和同级信息。创建一个ConcurrentHashMap()类型的balancers对象，储存每个Zone 对应的负载均衡器。当Zone区域个数大于1 时候才会执行这里的选择策略 ，否侧还是父类的实现。</p>
+<h4 id="2-负载均衡策略"><a href="#2-负载均衡策略" class="headerlink" title="2. 负载均衡策略"></a>2. 负载均衡策略</h4><p><strong>RandomRule</strong></p>
+<p>随机选取，如果出现死循环获取不到，有可能存在并发bug</p>
+<p><strong>RoundRobinRule</strong></p>
+<p>和 RandomRule 类似，增加了计数，如果选择不到server 超过10次，就会结束尝试，打印警告。</p>
+<p><strong>RetryRule</strong></p>
+<p>顾名思义，具备重试机制，内部定义了RoundRobinRule ，如果取不到就设置尝试结束的时间为阈值。</p>
+<p><strong>WeightedResponseTimeRule</strong></p>
+<p>是 RandomRule的扩展，增加根据实例运行情况计算权重，并根据权重来挑选实例，达到更优分配效果。实现有3个核心内容：</p>
+<ul>
+<li><p>定时任务 ：通过定时任务计算权重，默认30秒一次</p>
+</li>
+<li><p>权重计算</p>
+<ul>
+<li><p>根据LoadBalancerStats 记录的统计信息，累加所有实例的平均响应时间，得到总平均响应时间totalResponseTime，该值会用于后续计算。</p>
+</li>
+<li><p>为实例逐一计算权重，规则是 weightSoFar + totalResponseTime - 实例的平均响应时间，weightSoFar初始为0，每次累加到此，供下一次计算使用。</p>
+<p>权重区间越大，被选中概率越大。</p>
+</li>
+</ul>
+</li>
+<li><p>实例选择</p>
+<ul>
+<li>生成 [0,最大权重值] 的随机数</li>
+<li>遍历权重列表，比较随机数，去选择区间。</li>
+</ul>
+</li>
+</ul>
+<p><strong>ClientConfigEnabledRoundRobinRule</strong></p>
+<p>类似RoundRobinRule，比RoundRobinRule 高级。</p>
+<p><strong>BestAvailableRule</strong></p>
+<p>继承ClientConfigEnabledRoundRobinRule，会过滤掉故障实例，并找出并发请求数最小的一个，该策略选出最空闲的实例。localBalancerStats 为空时候，该策略是无法执行的。所以采用父级轮询。</p>
+<p><strong>PredicateBaseRule</strong></p>
+<p>先过滤清单，再轮询选择。</p>
+<p><strong>AvaliabilityFilteringRule</strong></p>
+<p>继承PredicateBaseRule，过滤实例两项内容：</p>
+<ul>
+<li>是否故障，即断路器是否生效已断开。</li>
+<li>实例并发大于阈值。</li>
+</ul>
+<p>只要有一个满足apply就返回false。</p>
+<p>除了实现上面的过滤方法外，对choose策略也改进优化，所以父类只是一个备选。优化策略为：先过滤选择，不满足选择下一个，当这个过程重复了10次还是没有符合的要求实例，就采用父类实现方案。<br><strong>通过线性抽样的方式直接尝试寻找可用且空闲的实例，优化了父类每次都要遍历所有实例的开销。</strong></p>
+<p><strong>ZoneAvoidanceRule</strong></p>
+<p>也是PredicateBaseRule 具体实现类，使用组合过滤条件，定义了一个主过滤条件，以及一组次过滤条件列表，次条件列表用List存储。可按顺序执行。</p>
+<h2 id="三、配置详解"><a href="#三、配置详解" class="headerlink" title="三、配置详解"></a>三、配置详解</h2><h4 id="1-自动化配置"><a href="#1-自动化配置" class="headerlink" title="1. 自动化配置"></a>1. 自动化配置</h4><p>自动化默认配置解决选择策略的痛点。</p>
+<h4 id="2-参数配置"><a href="#2-参数配置" class="headerlink" title="2. 参数配置"></a>2. 参数配置</h4><p>ribbon.ConnectTimeOut=250<br>如果没有服务治理的框架，需要指定具体的实例清单。</p>
+<h4 id="3-与Eureka-结合"><a href="#3-与Eureka-结合" class="headerlink" title="3. 与Eureka 结合"></a>3. 与Eureka 结合</h4><p>Spring Cloud 的应用同时引入 Spring Cloud Ribbon 和 Spring Cloud Eureka 依赖时，会触发Eureka 中实现的对Ribbon 的自动化配置。与Eureka结合，我们的配置更加简单。Eureka会维护实例清单。此外，由于Spring Cloud Ribbon 默认实现了区域亲和策略，我们可以通过Erueka 实例元数据配置不同区域。以作为跨区域的容错机制。通过 ribbon.erueka.enabled =false 来金融erueka 和ribbon 结合。</p>
+<h4 id="4-重试机制"><a href="#4-重试机制" class="headerlink" title="4. 重试机制"></a>4. 重试机制</h4><p>Eureka 强调 CAP 中的 AP， <strong>CAP定理（C- 数据一致性；A-服务可用性；P-服务对网络分区故障的容错性，这三个特性在任何分布式系统中不能同时满足，最多同时满足两个）；</strong> 即可用性和容错性。 ZooKeeper是个CP，这就是Eureka与ZooKeeper最大的区别。牺牲一致性，换取容错性，宁愿接收故障实例，也不愿意丢下健康实例。 例如，服务中心发生故障断开时候，所有服务实例无法维持续约心跳，强调AP的服务会把所有服务剔除，而Eureka 在15分钟内超过85%的客户端节点都没有正常的心跳触发保护机制，注册中心会保护所有节点，实现服务间进行互相调用。保证正常服务消费。</p>
+<p>由于Eureka 在可用性和一致性的取舍，引起服务调用故障，我们为了增强这类问题的容错，增加重试机制，Spring Cloud 整合了Spring Retry 来增强 RestTemplate 重试能力。</p>
+<p><code>spring.cloud.loadbalancer.retry.enabled</code>开启重试机制，默认关闭。<br>配置相关参数后，遇到故障实例会重试，（次数由MaxAutoRetries配置），还不行，换个实例访问，再不行在换，（次数由MaxAutoRetriesNextServer配置）再不行 返回失败信息。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/17/Spring-Cloud-简介-Spring-Boot-快速理解使用/" rel="next" title="Spring Cloud 简介 & Spring Boot 快速理解使用">
+                <i class="fa fa-chevron-left"></i> Spring Cloud 简介 & Spring Boot 快速理解使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/19/Spring-Cloud-Hystrix/" rel="prev" title="Spring Cloud Hystrix">
+                Spring Cloud Hystrix <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">坚信持续学习就一定能超过大多数人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-客户端负载均衡"><span class="nav-number">1.</span> <span class="nav-text">一、 客户端负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-RsetTemplate详解"><span class="nav-number">2.</span> <span class="nav-text">二、 RsetTemplate详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-GET-请求"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. GET 请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-POST请求"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-PUT请求"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-DELETE请求"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. DELETE请求</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-源码分析"><span class="nav-number">3.</span> <span class="nav-text">三、 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-负载均衡器"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 负载均衡器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-负载均衡策略"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. 负载均衡策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、配置详解"><span class="nav-number">4.</span> <span class="nav-text">三、配置详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-自动化配置"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. 自动化配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-参数配置"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. 参数配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-与Eureka-结合"><span class="nav-number">4.0.3.</span> <span class="nav-text">3. 与Eureka 结合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-重试机制"><span class="nav-number">4.0.4.</span> <span class="nav-text">4. 重试机制</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+	
+           
+         
+         <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
