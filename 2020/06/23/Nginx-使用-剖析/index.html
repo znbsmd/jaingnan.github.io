@@ -90,18 +90,28 @@
 
 
 
-<meta name="description" content="坚信持续学习就一定能超过大多数人">
+<meta name="description" content="一、Nginx基础 Nginx 到底是什么？ Nginx是⼀个⾼性能的HTTP和反向代理web服务器，核⼼特点是占有内存少，并发能⼒强  Nginx ⼜能做什么事情（应⽤场景）  Http服务器（Web服务器）性能⾮常⾼，⾮常注重效率，能够经受⾼负载的考验。⽀持50000个并发连接数，不仅如此，CPU和内存的占⽤也⾮常的低，10000个没有活动的连接才占⽤2.5M的内存。 反向代理服务器 （浏览器">
 <meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx 使用&amp; 剖析">
+<meta property="og:url" content="http://yoursite.com/2020/06/23/Nginx-使用-剖析/index.html">
 <meta property="og:site_name" content="坚持就是胜利">
-<meta property="og:description" content="坚信持续学习就一定能超过大多数人">
+<meta property="og:description" content="一、Nginx基础 Nginx 到底是什么？ Nginx是⼀个⾼性能的HTTP和反向代理web服务器，核⼼特点是占有内存少，并发能⼒强  Nginx ⼜能做什么事情（应⽤场景）  Http服务器（Web服务器）性能⾮常⾼，⾮常注重效率，能够经受⾼负载的考验。⽀持50000个并发连接数，不仅如此，CPU和内存的占⽤也⾮常的低，10000个没有活动的连接才占⽤2.5M的内存。 反向代理服务器 （浏览器">
 <meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2019-07-16T14:23:40.993Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e16edfeb5cc94?w=1274&h=324&f=png&s=128586">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e16fdaa99c511?w=1280&h=172&f=png&s=73330">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e1712d2aa05f7?w=1284&h=450&f=png&s=104836">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e1773fff662af?w=1180&h=1118&f=png&s=359247">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e17c236275c13?w=1206&h=582&f=png&s=231162">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e183308ca4142?w=1148&h=460&f=png&s=60377">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e1868f495ae27?w=1126&h=402&f=png&s=53943">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e187dda381c4f?w=1152&h=286&f=png&s=94411">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e18d53ac59fd3?w=1294&h=772&f=png&s=154951">
+<meta property="og:updated_time" content="2020-06-23T15:29:19.118Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="坚信持续学习就一定能超过大多数人">
+<meta name="twitter:title" content="Nginx 使用&amp; 剖析">
+<meta name="twitter:description" content="一、Nginx基础 Nginx 到底是什么？ Nginx是⼀个⾼性能的HTTP和反向代理web服务器，核⼼特点是占有内存少，并发能⼒强  Nginx ⼜能做什么事情（应⽤场景）  Http服务器（Web服务器）性能⾮常⾼，⾮常注重效率，能够经受⾼负载的考验。⽀持50000个并发连接数，不仅如此，CPU和内存的占⽤也⾮常的低，10000个没有活动的连接才占⽤2.5M的内存。 反向代理服务器 （浏览器">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/6/23/172e16edfeb5cc94?w=1274&h=324&f=png&s=128586">
 
 
 
@@ -131,13 +141,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/">
+  <link rel="canonical" href="http://yoursite.com/2020/06/23/Nginx-使用-剖析/">
 
 
 
 
 
-  <title>categories | 坚持就是胜利</title>
+  <title>Nginx 使用& 剖析 | 坚持就是胜利</title>
   
 
 
@@ -242,40 +252,280 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/23/Nginx-使用-剖析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坚持就是胜利">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                15 categories in total
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-基础/">Java 基础</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka-zookeeper/">Kafka zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java基础/">java基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lagouedu-notes/">lagouedu notes</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/learing-route/">learing route</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-mvc/">spring-mvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/《深入理解java虚拟机》读书笔记/">《深入理解java虚拟机》读书笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具篇/">工具篇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机基础/">计算机基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/误区-踩坑/">误区-踩坑</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">Nginx 使用& 剖析</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-23T23:28:39+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="一、Nginx基础"><a href="#一、Nginx基础" class="headerlink" title="一、Nginx基础"></a>一、Nginx基础</h1><ul>
+<li><p>Nginx 到底是什么？</p>
+<p>Nginx是⼀个⾼性能的HTTP和反向代理web服务器，核⼼特点是占有内存少，并发能⼒强</p>
+</li>
+<li><p>Nginx ⼜能做什么事情（应⽤场景）</p>
+<ul>
+<li>Http服务器（Web服务器）性能⾮常⾼，⾮常注重效率，能够经受⾼负载的考验。<br>⽀持50000个并发连接数，不仅如此，CPU和内存的占⽤也⾮常的低，10000个没有活动的连接才占⽤2.5M的内存。</li>
+<li>反向代理服务器 （浏览器发送请求到Nginx，由Nginx反向代理选择原始服务器得到结果，最终再返回给客户端浏览器 Nginx + Tomcat）</li>
+<li>正向代理 （国内访问 google）</li>
+<li>负载均衡服务器 （由Nginx反向代理多台Tomcat,这样⼀个寻找确定的过程就叫做负载均衡）</li>
+<li>动静分离（静态资源由Nginx 直接处理，动态Servlet 请求代理到Tomcat）</li>
+</ul>
+</li>
+<li><p>Nginx 特点</p>
+<ul>
+<li>跨平台</li>
+<li>配置简单</li>
+<li>高并发，性能好，稳定，宕机率低</li>
+</ul>
+</li>
+<li><p>Nginx主要命令</p>
+<ul>
+<li>nginx -s start</li>
+<li>nginx -s stop</li>
+<li>nginx -s reload (重新加载nginx.conf配置⽂件,Master 节点不重启)</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、Nginx-核心配置文件解读"><a href="#二、Nginx-核心配置文件解读" class="headerlink" title="二、Nginx 核心配置文件解读"></a>二、Nginx 核心配置文件解读</h1><p>Nginx 核心配置文件conf/nginx.conf包含三块内容：全局块、events块、http块。</p>
+<ul>
+<li><p>全局块 </p>
+<p>  从配置⽂件开始到events块之间的内容，此处的配置影响nginx服务器整体的运⾏，⽐如worker进程的数量、错误⽇志的位置等<br>  <img src="https://user-gold-cdn.xitu.io/2020/6/23/172e16edfeb5cc94?w=1274&h=324&f=png&s=128586" alt></p>
+</li>
+<li><p>events块 </p>
+<p>  events块主要影响nginx服务器与⽤户的⽹络连接，⽐如worker_connections 1024，标识每个workderprocess⽀持的最⼤连接数为1024<br>  <img src="https://user-gold-cdn.xitu.io/2020/6/23/172e16fdaa99c511?w=1280&h=172&f=png&s=73330" alt></p>
+</li>
+<li><p>http块<br>  http块是配置最频繁的部分，虚拟主机的配置，监听端⼝的配置，请求转发、反向代理、负载均衡等   <strong>⚠️http下可配置多个server</strong><br>  <img src="https://user-gold-cdn.xitu.io/2020/6/23/172e1712d2aa05f7?w=1284&h=450&f=png&s=104836" alt><br>  <img src="https://user-gold-cdn.xitu.io/2020/6/23/172e1773fff662af?w=1180&h=1118&f=png&s=359247" alt></p>
+</li>
+</ul>
+<h1 id="三、Nginx应⽤场景之反向代理"><a href="#三、Nginx应⽤场景之反向代理" class="headerlink" title="三、Nginx应⽤场景之反向代理"></a>三、Nginx应⽤场景之反向代理</h1><ul>
+<li><p>部署tomcat 8080</p>
+</li>
+<li><p>修改nginx配置<br><img src="https://user-gold-cdn.xitu.io/2020/6/23/172e17c236275c13?w=1206&h=582&f=png&s=231162" alt></p>
+</li>
+<li><p>nginx -s relod （重启，配置生效）</p>
+</li>
+<li><p>注意 location 语法，nginx中server/location == tomcat中的Host/Context</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location [=|~|~*|^~] /uri/ &#123; … &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在nginx配置⽂件中，location主要有这⼏种形式：</p>
+<ol>
+<li><p>精确匹配 location = /lagou { }</p>
+</li>
+<li><p>匹配路径的前缀 location ^~ /lagou { }</p>
+</li>
+<li><p>不区分⼤⼩写的正则匹配 location ~* /lagou { }</p>
+</li>
+<li><p>正则匹配 location ~ /lagou { }</p>
+</li>
+<li><p>普通路径前缀匹配 location /lagou { }</p>
+<p>优先级 ：asc</p>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="四、Nginx应⽤场景之负载均衡"><a href="#四、Nginx应⽤场景之负载均衡" class="headerlink" title="四、Nginx应⽤场景之负载均衡"></a>四、Nginx应⽤场景之负载均衡</h1><p><img src="https://user-gold-cdn.xitu.io/2020/6/23/172e183308ca4142?w=1148&h=460&f=png&s=60377" alt></p>
+<h2 id="1-Nginx负载均衡策略"><a href="#1-Nginx负载均衡策略" class="headerlink" title="1. Nginx负载均衡策略"></a>1. Nginx负载均衡策略</h2><ul>
+<li><p>轮询 （默认策略）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream lagouServer&#123;</span><br><span class="line">    server 111.229.248.243:8080;</span><br><span class="line">    server 111.229.248.243:8082;</span><br><span class="line">&#125;</span><br><span class="line">location /abc &#123;</span><br><span class="line">    proxy_pass http://lagouServer/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>weight 权重</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream lagouServer&#123;</span><br><span class="line">    server 111.229.248.243:8080 weight=1;</span><br><span class="line">    server 111.229.248.243:8082 weight=2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ip_hash 按 ip 走，每一个客户端会打进同一个服务</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream lagouServer&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 111.229.248.243:8080;</span><br><span class="line">    server 111.229.248.243:8082;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="五、Nginx应⽤场景之动静分离"><a href="#五、Nginx应⽤场景之动静分离" class="headerlink" title="五、Nginx应⽤场景之动静分离"></a>五、Nginx应⽤场景之动静分离</h1><p><img src="https://user-gold-cdn.xitu.io/2020/6/23/172e1868f495ae27?w=1126&h=402&f=png&s=53943" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/23/172e187dda381c4f?w=1152&h=286&f=png&s=94411" alt></p>
+<h1 id="六、-Nginx底层进程机制剖析"><a href="#六、-Nginx底层进程机制剖析" class="headerlink" title="六、 Nginx底层进程机制剖析"></a>六、 Nginx底层进程机制剖析</h1><h2 id="1-Nginx-启动"><a href="#1-Nginx-启动" class="headerlink" title="1.Nginx 启动"></a>1.Nginx 启动</h2><p>以daemon多进程⽅式在后台运⾏，有⼀个Master进程和多个Worker进程</p>
+<ul>
+<li>Master 进程<ul>
+<li>接收外界信号像Worker 发送信号 如 nginx -s reload</li>
+<li>监控Worker，Worker异常退出，Master 自动重启新的Worker</li>
+</ul>
+</li>
+<li>Worker 进程<ul>
+<li>处理网络请求，各Worker独立，一个请求只能在一个Worker。worker进程的个数是可以设置的，⼀般设置与机器cpu核数⼀致。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Nginx进程模型示意图"><a href="#2-Nginx进程模型示意图" class="headerlink" title="2. Nginx进程模型示意图"></a>2. Nginx进程模型示意图</h2><p><img src="https://user-gold-cdn.xitu.io/2020/6/23/172e18d53ac59fd3?w=1294&h=772&f=png&s=154951" alt></p>
+<ul>
+<li><p>举例以 ./nginx -s reload 来说明nginx信号处理这部分</p>
+<ol>
+<li>Master 对配置文件进行语法检测</li>
+<li>配置（⽐如修改了监听端⼝，那就尝试分配新的监听端⼝）</li>
+<li>配置成功则使⽤新的配置，新建worker进程</li>
+<li>new worker success，old worker close</li>
+<li>old worker 会继续运行到请求没有为止才关闭</li>
+</ol>
+</li>
+<li><p>worker进程处理请求</p>
+<ul>
+<li>请求进来有多个Worker ，每个Worker都有可能处理请求</li>
+<li>Master 启动好后，会建立socket链接，然后fork出多个Worker。所以，所有Worker进程的监听描述符listenfd在新连接到来时都变得可读</li>
+<li>nginx 使用互斥锁保证只有一个Worker处理一个请求。拿到互斥锁的那个进程注册listenfd读事件，在读事件⾥调⽤accept接受该连接，然后解析、处理、返回客户端</li>
+</ul>
+</li>
+<li><p>nginx多进程模型好处</p>
+<ul>
+<li>每个worker进程都是独⽴的，不需要加锁，节省开销</li>
+<li>每个worker进程都是独⽴的，互不影响，⼀个异常结束，其他的照样能提供服务</li>
+<li>多进程模型为reload热部署机制提供了⽀撑</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><em>《lagouedu》nginx总结</em></p>
+</blockquote>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/21/Tomcat-深度剖析及性能调优/" rel="next" title="Tomcat 深度剖析及性能调优">
+                <i class="fa fa-chevron-left"></i> Tomcat 深度剖析及性能调优
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -308,8 +558,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -627,6 +886,22 @@ if(canvas.getContext){
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Nginx基础"><span class="nav-number">1.</span> <span class="nav-text">一、Nginx基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Nginx-核心配置文件解读"><span class="nav-number">2.</span> <span class="nav-text">二、Nginx 核心配置文件解读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Nginx应⽤场景之反向代理"><span class="nav-number">3.</span> <span class="nav-text">三、Nginx应⽤场景之反向代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Nginx应⽤场景之负载均衡"><span class="nav-number">4.</span> <span class="nav-text">四、Nginx应⽤场景之负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Nginx负载均衡策略"><span class="nav-number">4.1.</span> <span class="nav-text">1. Nginx负载均衡策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Nginx应⽤场景之动静分离"><span class="nav-number">5.</span> <span class="nav-text">五、Nginx应⽤场景之动静分离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、-Nginx底层进程机制剖析"><span class="nav-number">6.</span> <span class="nav-text">六、 Nginx底层进程机制剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Nginx-启动"><span class="nav-number">6.1.</span> <span class="nav-text">1.Nginx 启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Nginx进程模型示意图"><span class="nav-number">6.2.</span> <span class="nav-text">2. Nginx进程模型示意图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
