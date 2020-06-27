@@ -104,8 +104,12 @@
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3ef40628a0dd?w=1068&h=708&f=png&s=180428">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3f7be3fab24d?w=1340&h=568&f=png&s=153215">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&h=346&f=png&s=61019">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350">
-<meta property="og:updated_time" content="2020-06-27T14:31:55.691Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&h=602&f=png&s=125139">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&h=526&f=png&s=89997">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&h=740&f=png&s=144419">
+<meta property="og:updated_time" content="2020-06-27T15:01:40.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式集群架构场景化解决⽅案">
 <meta name="twitter:description" content="一、一致性Hash算法 简单介绍下Hash算法，⽐如说在安全加密领域MD5、SHA等加密算法，在数据存储和查找⽅⾯有Hash表等, 以上都应⽤到了Hash算法。  查找效率(时间&amp;amp;空间，时间优先) ：  顺序查找法（for遍历） &amp;lt; ⼆分查找（折半查找） &amp;lt; 直接寻址法（数组） &amp;lt;  开放寻址法（简单hash） &amp;lt; 拉链法(hash+链表)。  如果Hash算法设计">
@@ -393,11 +397,16 @@
 </ul>
 <p>ngx_http_upstream_consistent_hash模块是⼀个第三⽅模块，需要下载安装后使⽤-&gt;<a href="https://github.com/replay/ngx_http_consistent_hash" target="_blank" rel="noopener">https://github.com/replay/ngx_http_consistent_hash</a>  使用步骤如下：</p>
 <ul>
-<li>解压到nginx 源码目录</li>
-<li>./configure —add-module=/root/ngx_http_consistent_hash-master</li>
-<li>make</li>
-<li>make install</li>
-<li>在nginx.conf⽂件中配置  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream zjnServer &#123;</span><br><span class="line">    consistent_hash $request_uri;// 根据客户端请求的uri映射</span><br><span class="line">    server 127.0.0.1:8080;</span><br><span class="line">    server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>解压到nginx 源码目录</p>
+</li>
+<li><p>./configure —add-module=/root/ngx_http_consistent_hash-master</p>
+</li>
+<li><p>make</p>
+</li>
+<li><p>make install</p>
+</li>
+<li><p>在nginx.conf⽂件中配置</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream zjnServer &#123;</span><br><span class="line">    consistent_hash $request_uri;// 根据客户端请求的uri映射</span><br><span class="line">    server 127.0.0.1:8080;</span><br><span class="line">    server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -405,27 +414,27 @@
 <h2 id="2-集群时钟同步配置"><a href="#2-集群时钟同步配置" class="headerlink" title="2. 集群时钟同步配置"></a>2. 集群时钟同步配置</h2><ul>
 <li><p>集群时钟同步思路</p>
 <ul>
-<li><p>分布式集群中各个服务器节点都可以连接互联⽹</p>
-<p>  <img src="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511" alt></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#使⽤ ntpdate ⽹络时间同步命令</span><br><span class="line">ntpdate -u ntp.api.bz #从⼀个时间服务器同步时间</span><br></pre></td></tr></table></figure>
+<li><p>分布式集群中各个服务器节点都可以连接互联⽹<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#使⽤ ntpdate ⽹络时间同步命令</span><br><span class="line">ntpdate -u ntp.api.bz #从⼀个时间服务器同步时间</span><br></pre></td></tr></table></figure>
 
+<p>最后使用crontab 定时任务去同步</p>
+</li>
+<li><p>分布式集群中某⼀个服务器节点可以访问互联⽹或者所有节点都不能够访问互联⽹</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&h=346&f=png&s=61019" alt><br>选node1 作为主时间服务器，（如果这台服务器能够访问互联⽹，可以让这台服务器和⽹络时间保持同步，如果不能就⼿动设置⼀个时间）</p>
+</li>
+<li><p>设置好node1 时间</p>
+</li>
+<li><p>把A配置为时间服务器（修改/etc/ntp.conf⽂件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1、如果有 restrict default ignore，注释掉它</span><br><span class="line"># 2、添加如下⼏⾏内容</span><br><span class="line">restrict 172.17.0.0 mask 255.255.255.0 nomodify notrap #放开局域⽹同步功能,172.17.0.0是你的局域⽹⽹段</span><br><span class="line">server 127.127.1.0 # local clock</span><br><span class="line">fudge 127.127.1.0 stratum 10</span><br><span class="line"># 3、重启⽣效并配置ntpd服务开机⾃启动</span><br><span class="line">service ntpd restart</span><br><span class="line">chkconfig ntpd on</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>集群中其他节点就可以从A服务器同步时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate 172.17.0.17</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 </li>
 </ul>
-<pre><code>    最后使用crontab 定时任务去同步
-
-- 分布式集群中某⼀个服务器节点可以访问互联⽹或者所有节点都不能够访问互联⽹
-
-    ![](https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&amp;h=346&amp;f=png&amp;s=61019)
-    选node1 作为主时间服务器，（如果这台服务器能够访问互联⽹，可以让这台服务器和⽹络时间保持同步，如果不能就⼿动设置⼀个时间）
-    - 设置好node1 时间
-    - 把A配置为时间服务器（修改/etc/ntp.conf⽂件）
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1、如果有 restrict default ignore，注释掉它</span><br><span class="line"># 2、添加如下⼏⾏内容</span><br><span class="line">restrict 172.17.0.0 mask 255.255.255.0 nomodify notrap #放开局域⽹同步功能,172.17.0.0是你的局域⽹⽹段</span><br><span class="line">server 127.127.1.0 # local clock</span><br><span class="line">fudge 127.127.1.0 stratum 10</span><br><span class="line"># 3、重启⽣效并配置ntpd服务开机⾃启动</span><br><span class="line">service ntpd restart</span><br><span class="line">chkconfig ntpd on</span><br></pre></td></tr></table></figure>
-
-    - 集群中其他节点就可以从A服务器同步时间
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate 172.17.0.17</span><br></pre></td></tr></table></figure></code></pre><h1 id="三、分布式ID解决⽅案"><a href="#三、分布式ID解决⽅案" class="headerlink" title="三、分布式ID解决⽅案"></a>三、分布式ID解决⽅案</h1><p>分表后，ID不能重复</p>
+<h1 id="三、分布式ID解决⽅案"><a href="#三、分布式ID解决⽅案" class="headerlink" title="三、分布式ID解决⽅案"></a>三、分布式ID解决⽅案</h1><p>分表后，ID不能重复</p>
 <ul>
 <li><p>UUID(可以⽤)</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">         System.out.println(java.util.UUID.randomUUID().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -435,42 +444,104 @@
 <li><p>SnowFlake 雪花算法（可以⽤，推荐）</p>
 </li>
 <li><p>雪花算法是⼀个算法，基于这个算法可以⽣成ID，⽣成的ID是⼀个long型，那么在Java中⼀个long<br>型是8个字节，算下来是64bit，如下是使⽤雪花算法⽣成的⼀个ID的⼆进制形式示意：</p>
+<p>  <img src="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350" alt><br>  ⼀些互联⽹公司也基于上述的⽅案封装了⼀些分布式ID⽣成器，⽐如滴滴的tinyid（基于数据库实现）、百度的uidgenerator（基于SnowFlake）和美团的leaf（基于数据库和SnowFlake）等</p>
 </li>
-</ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350" alt></p>
-<p>⼀些互联⽹公司也基于上述的⽅案封装了⼀些分布式ID⽣成器，⽐如滴滴的tinyid（基于数据库实现）、百度的uidgenerator（基于SnowFlake）和美团的leaf（基于数据库和SnowFlake）等</p>
-<ul>
 <li><p>redis.incr (推荐)</p>
 <ul>
 <li><p>引入jedis jar</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.9.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 </li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">    Jedis jedis = new Jedis(&quot;127.0.0.1&quot;,6379);</span><br><span class="line">        try &#123;</span><br><span class="line">            long id = jedis.incr(&quot;id&quot;);</span><br><span class="line">            System.out.println(&quot;从redis中获取的分布式id为：&quot; + id);</span><br><span class="line">            &#125; </span><br><span class="line">        finally &#123;</span><br><span class="line">            if (null != jedis) &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ``` </span><br><span class="line">    </span><br><span class="line"># 四、分布式调度问题</span><br><span class="line"></span><br><span class="line">## 1. 分布式调度有两层含义</span><br><span class="line">- 同一个定时任务部署多份，只有一个运行</span><br><span class="line">- 定时任务拆分，同时执行</span><br><span class="line"></span><br><span class="line">## 2. 定时任务与消息队列的区别</span><br><span class="line">本质不同，定时任务是时间驱动，⽽MQ是事件驱动；定时任务作业更倾向于批处理，MQ倾向于逐条处理；</span><br><span class="line"></span><br><span class="line">## 3. 定时任务的实现⽅式</span><br><span class="line">任务调度框架Quartz</span><br><span class="line">## 4. 分布式调度框架Elastic-Job</span><br><span class="line">Elastic-Job是当当⽹开源的⼀个分布式调度解决⽅案，基于Quartz⼆次开发的，由两个相互独⽴的⼦项</span><br><span class="line">⽬Elastic-Job-Lite和Elastic-Job-Cloud组成。地址-&gt; ：https://github.com/elasticjob</span><br><span class="line"></span><br><span class="line">主要功能：</span><br><span class="line">- 分布式避免同一任务重复执行</span><br><span class="line">- 基于cron表达式</span><br><span class="line">- 弹性扩容，增加减少，能转移到别的实例执行</span><br><span class="line">- 失效转移，执行失败后，转移其他实例执行</span><br><span class="line">- 错过执⾏作业重触发 若因某种原因导致作业错过执⾏，⾃动记录错过执⾏的作业，并在上次作业完成后⾃动触发。</span><br><span class="line">- 支持并行调度 支持任务分片，任务分⽚是指将⼀个任务分为多个⼩任务项在多个实例同时执⾏。</span><br><span class="line">- 作业分⽚⼀致性 当任务被分⽚后，保证同⼀分⽚在分布式环境中仅⼀个执⾏实例。</span><br><span class="line"></span><br><span class="line">#### 4.1 Elastic-Job-Lite应⽤</span><br><span class="line"></span><br><span class="line">jar包（API） + 安装zk软件</span><br><span class="line"></span><br><span class="line">Elastic-Job依赖于Zookeeper进⾏分布式协调，所以需要安装Zookeeper软件（3.4.6版本以上）</span><br><span class="line">- 安装配置zk</span><br><span class="line">- 引入jar</span><br></pre></td></tr></table></figure>
+<li><p>编写测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Jedis jedis = new Jedis(&quot;127.0.0.1&quot;,6379);</span><br><span class="line">    try &#123;</span><br><span class="line">        long id = jedis.incr(&quot;id&quot;);</span><br><span class="line">        System.out.println(&quot;从redis中获取的分布式id为：&quot; + id);</span><br><span class="line">        &#125; </span><br><span class="line">    finally &#123;</span><br><span class="line">        if (null != jedis) &#123;</span><br><span class="line">        jedis.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<dependency>
-    <groupid>com.dangdang</groupid>
-    <artifactid>elastic-job-lite-core</artifactid>
-    <version>2.1.5</version>
-</dependency>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">- 定时任务实例...</span><br><span class="line">- Leader节点选举机制</span><br><span class="line">    每个Elastic-Job的任务执⾏实例App作为Zookeeper的客户端来操作ZooKeeper的znode</span><br><span class="line">    - 多个实例同时创建/leader节点</span><br><span class="line">    - /leader节点只能创建⼀个，后创建的会失败，创建成功的实例会被选为leader节点，执⾏任务</span><br><span class="line"></span><br><span class="line">#### 4.2 Elastic-Job-Lite轻量级去中⼼化的特点</span><br><span class="line"></span><br><span class="line">![](https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&amp;h=602&amp;f=png&amp;s=125139)</span><br><span class="line"></span><br><span class="line">#### 4.2 任务分⽚</span><br><span class="line"></span><br><span class="line">ElasticJob可以把作业分为多个的task（每⼀个task就是⼀个任务分⽚），每</span><br><span class="line">⼀个task交给具体的⼀个机器实例去处理（⼀个机器实例是可以处理多个task的），但是具体每个task</span><br><span class="line">执⾏什么逻辑由我们⾃⼰来指定。</span><br><span class="line">![](https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&amp;h=526&amp;f=png&amp;s=89997)</span><br><span class="line"></span><br><span class="line">Strategy策略定义这些分⽚项怎么去分配到各个机器上去，**默认是平均分配**，可以定制，⽐如某⼀个机</span><br><span class="line">器负载 ⽐较⾼或者预配置⽐较⾼，那么就可以写策略。分⽚和作业本身是通过⼀个注册中⼼协调的，因</span><br><span class="line">为在分布式环境下，状态数据肯定集中到⼀点，才可以在分布式中沟通。</span><br><span class="line"></span><br><span class="line">#### 4.3 弹性扩容</span><br><span class="line"></span><br><span class="line">新增加⼀个运⾏实例app3，它会⾃动注册到注册中⼼，注册中⼼发现新的服务上线，注册中⼼会通知</span><br><span class="line">ElasticJob 进⾏重新分⽚，那么总得分⽚项有多少，那么就可以搞多少个实例机器，⽐如完全可以分1000⽚</span><br><span class="line">最多就可以有多少app实例，完全可以分1000⽚，那么就可以搞1000台机器⼀起执⾏作业</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1. 分⽚项也是⼀个JOB配置，修改配置，重新分⽚，在下⼀次定时运⾏之前会重新调⽤分⽚算法，那么</span><br><span class="line">这个分⽚算法的结果就是：哪台机器运⾏哪⼀个⼀⽚，这个结果存储到zk中的，主节点会把分⽚给分好</span><br><span class="line">放到注册中⼼去，然后执⾏节点从注册中⼼获取信息(执⾏节点在定时任务开启的时候获取相应的分⽚)。</span><br><span class="line">2. 如果所有的节点挂掉值剩下⼀个节点，所有分⽚都会指向剩下的⼀个节点，这也是ElasticJob的⾼可⽤。</span><br><span class="line"></span><br><span class="line"># 五、Session共享问题</span><br><span class="line">## 1. Session问题原因分析</span><br><span class="line">因为Http协议是⽆状态，Http为什么要设计为⽆状态协议？早期都是静态⻚⾯⽆所谓有⽆状态，后来有动态的内容更丰富，就需要有状态，出现了两种⽤于保持Http状态的技术，那就是Cookie和Session。</span><br><span class="line"></span><br><span class="line">使用nginx默认轮询策略，会出现Session打到不同的服务器问题。</span><br><span class="line">## 2. 解决Session⼀致性的⽅案</span><br><span class="line">- Nginx的 IP_Hash 策略（可以使⽤）</span><br><span class="line">    - 优点：配置简单，不⼊侵应⽤，不需要额外修改代码</span><br><span class="line">    - 缺点：</span><br><span class="line">      - 服务器重启Session丢失</span><br><span class="line">      - 存在单点负载⾼的⻛险（恶意攻击）</span><br><span class="line">      - 单点故障问题（重新hash，导致会话丢失）</span><br><span class="line">- Session复制（不推荐）</span><br><span class="line">    - 大数据时代缺点一堆，就不细说了</span><br><span class="line">- redis，Session共享，Session集中存储（推荐）</span><br><span class="line">    - 唯一缺点：对应⽤有⼊侵，引⼊了和Redis的交互代码（有专门jar包，暂无缺点）</span><br><span class="line">    - 引入jar</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、分布式调度问题"><a href="#四、分布式调度问题" class="headerlink" title="四、分布式调度问题"></a>四、分布式调度问题</h1><h2 id="1-分布式调度有两层含义"><a href="#1-分布式调度有两层含义" class="headerlink" title="1. 分布式调度有两层含义"></a>1. 分布式调度有两层含义</h2><ul>
+<li>同一个定时任务部署多份，只有一个运行</li>
+<li>定时任务拆分，同时执行</li>
+</ul>
+<h2 id="2-定时任务与消息队列的区别"><a href="#2-定时任务与消息队列的区别" class="headerlink" title="2. 定时任务与消息队列的区别"></a>2. 定时任务与消息队列的区别</h2><p>本质不同，定时任务是时间驱动，⽽MQ是事件驱动；定时任务作业更倾向于批处理，MQ倾向于逐条处理；</p>
+<h2 id="3-定时任务的实现⽅式"><a href="#3-定时任务的实现⽅式" class="headerlink" title="3. 定时任务的实现⽅式"></a>3. 定时任务的实现⽅式</h2><p>任务调度框架Quartz</p>
+<h2 id="4-分布式调度框架Elastic-Job"><a href="#4-分布式调度框架Elastic-Job" class="headerlink" title="4. 分布式调度框架Elastic-Job"></a>4. 分布式调度框架Elastic-Job</h2><p>Elastic-Job是当当⽹开源的⼀个分布式调度解决⽅案，基于Quartz⼆次开发的，由两个相互独⽴的⼦项<br>⽬Elastic-Job-Lite和Elastic-Job-Cloud组成。地址-&gt; ：<a href="https://github.com/elasticjob" target="_blank" rel="noopener">https://github.com/elasticjob</a></p>
+<p>主要功能：</p>
+<ul>
+<li>分布式避免同一任务重复执行</li>
+<li>基于cron表达式</li>
+<li>弹性扩容，增加减少，能转移到别的实例执行</li>
+<li>失效转移，执行失败后，转移其他实例执行</li>
+<li>错过执⾏作业重触发 若因某种原因导致作业错过执⾏，⾃动记录错过执⾏的作业，并在上次作业完成后⾃动触发。</li>
+<li>支持并行调度 支持任务分片，任务分⽚是指将⼀个任务分为多个⼩任务项在多个实例同时执⾏。</li>
+<li>作业分⽚⼀致性 当任务被分⽚后，保证同⼀分⽚在分布式环境中仅⼀个执⾏实例。</li>
+</ul>
+<h4 id="4-1-Elastic-Job-Lite应⽤"><a href="#4-1-Elastic-Job-Lite应⽤" class="headerlink" title="4.1 Elastic-Job-Lite应⽤"></a>4.1 Elastic-Job-Lite应⽤</h4><p>jar包（API） + 安装zk软件</p>
+<p>Elastic-Job依赖于Zookeeper进⾏分布式协调，所以需要安装Zookeeper软件（3.4.6版本以上）</p>
+<ul>
+<li><p>安装配置zk</p>
+</li>
+<li><p>引入jar</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.dangdang&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;elastic-job-lite-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定时任务实例…</p>
+</li>
+<li><p>Leader节点选举机制<br>  每个Elastic-Job的任务执⾏实例App作为Zookeeper的客户端来操作ZooKeeper的znode</p>
+<ul>
+<li>多个实例同时创建/leader节点</li>
+<li>/leader节点只能创建⼀个，后创建的会失败，创建成功的实例会被选为leader节点，执⾏任务</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-2-Elastic-Job-Lite轻量级去中⼼化的特点"><a href="#4-2-Elastic-Job-Lite轻量级去中⼼化的特点" class="headerlink" title="4.2 Elastic-Job-Lite轻量级去中⼼化的特点"></a>4.2 Elastic-Job-Lite轻量级去中⼼化的特点</h4><p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&h=602&f=png&s=125139" alt></p>
+<h4 id="4-2-任务分⽚"><a href="#4-2-任务分⽚" class="headerlink" title="4.2 任务分⽚"></a>4.2 任务分⽚</h4><p>ElasticJob可以把作业分为多个的task（每⼀个task就是⼀个任务分⽚），每<br>⼀个task交给具体的⼀个机器实例去处理（⼀个机器实例是可以处理多个task的），但是具体每个task<br>执⾏什么逻辑由我们⾃⼰来指定。<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&h=526&f=png&s=89997" alt></p>
+<p>Strategy策略定义这些分⽚项怎么去分配到各个机器上去，<strong>默认是平均分配</strong>，可以定制，⽐如某⼀个机<br>器负载 ⽐较⾼或者预配置⽐较⾼，那么就可以写策略。分⽚和作业本身是通过⼀个注册中⼼协调的，因<br>为在分布式环境下，状态数据肯定集中到⼀点，才可以在分布式中沟通。</p>
+<h4 id="4-3-弹性扩容"><a href="#4-3-弹性扩容" class="headerlink" title="4.3 弹性扩容"></a>4.3 弹性扩容</h4><p>新增加⼀个运⾏实例app3，它会⾃动注册到注册中⼼，注册中⼼发现新的服务上线，注册中⼼会通知<br>ElasticJob 进⾏重新分⽚，那么总得分⽚项有多少，那么就可以搞多少个实例机器，⽐如完全可以分1000⽚<br>最多就可以有多少app实例，完全可以分1000⽚，那么就可以搞1000台机器⼀起执⾏作业</p>
+<p>注意：</p>
+<ol>
+<li>分⽚项也是⼀个JOB配置，修改配置，重新分⽚，在下⼀次定时运⾏之前会重新调⽤分⽚算法，那么<br>这个分⽚算法的结果就是：哪台机器运⾏哪⼀个⼀⽚，这个结果存储到zk中的，主节点会把分⽚给分好<br>放到注册中⼼去，然后执⾏节点从注册中⼼获取信息(执⾏节点在定时任务开启的时候获取相应的分⽚)。</li>
+<li>如果所有的节点挂掉值剩下⼀个节点，所有分⽚都会指向剩下的⼀个节点，这也是ElasticJob的⾼可⽤。</li>
+</ol>
+<h1 id="五、Session共享问题"><a href="#五、Session共享问题" class="headerlink" title="五、Session共享问题"></a>五、Session共享问题</h1><h2 id="1-Session问题原因分析"><a href="#1-Session问题原因分析" class="headerlink" title="1. Session问题原因分析"></a>1. Session问题原因分析</h2><p>因为Http协议是⽆状态，Http为什么要设计为⽆状态协议？早期都是静态⻚⾯⽆所谓有⽆状态，后来有动态的内容更丰富，就需要有状态，出现了两种⽤于保持Http状态的技术，那就是Cookie和Session。</p>
+<p>使用nginx默认轮询策略，会出现Session打到不同的服务器问题。</p>
+<h2 id="2-解决Session⼀致性的⽅案"><a href="#2-解决Session⼀致性的⽅案" class="headerlink" title="2. 解决Session⼀致性的⽅案"></a>2. 解决Session⼀致性的⽅案</h2><ul>
+<li><p>Nginx的 IP_Hash 策略（可以使⽤）</p>
+<ul>
+<li>优点：配置简单，不⼊侵应⽤，不需要额外修改代码</li>
+<li>缺点：<ul>
+<li>服务器重启Session丢失</li>
+<li>存在单点负载⾼的⻛险（恶意攻击）</li>
+<li>单点故障问题（重新hash，导致会话丢失）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Session复制（不推荐）</p>
+<ul>
+<li>大数据时代缺点一堆，就不细说了</li>
+</ul>
+</li>
+<li><p>redis，Session共享，Session集中存储（推荐）</p>
+<ul>
+<li><p>唯一缺点：对应⽤有⼊侵，引⼊了和Redis的交互代码（有专门jar包，暂无缺点）</p>
+</li>
+<li><p>引入jar</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<dependency>
-    <groupid>org.springframework.boot</groupid>
-    <artifactid>spring-boot-starter-data-redis</artifactid>
-</dependency>
-<dependency>
-    <groupid>org.springframework.session</groupid>
-    <artifactid>spring-session-data-redis</artifactid>
-</dependency>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 配置redis</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>配置redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.database=0</span><br><span class="line">spring.redis.host=127.0.0.1</span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
 
-<p>spring.redis.database=0<br>spring.redis.host=127.0.0.1<br>spring.redis.port=6379</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 主run方法添加注解</span><br></pre></td></tr></table></figure>
+<ul>
+<li>主run方法添加注解</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@EnableRedisHttpSession</span><br></pre></td></tr></table></figure>
 
-<p>@EnableRedisHttpSession</p>
-<pre><code>- 原理：主要是在过滤器进行请求拦截
-
-![](https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&amp;h=740&amp;f=png&amp;s=144419)</code></pre></li>
+<ul>
+<li>原理：主要是在过滤器进行请求拦截<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&h=740&f=png&s=144419" alt></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -896,7 +967,7 @@ if(canvas.getContext){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、一致性Hash算法"><span class="nav-number">1.</span> <span class="nav-text">一、一致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hash算法应⽤场景"><span class="nav-number">1.1.</span> <span class="nav-text">1. Hash算法应⽤场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-普通Hash存在的问题"><span class="nav-number">1.2.</span> <span class="nav-text">2. 普通Hash存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-⼀致性Hash算法"><span class="nav-number">1.3.</span> <span class="nav-text">3. ⼀致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-设计思路"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">3.1 设计思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-数据倾斜问题"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">3.2 数据倾斜问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-虚拟节点解决方案"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3.3 虚拟节点解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-手写一致性hash-帮助理解"><span class="nav-number">1.4.</span> <span class="nav-text">4. 手写一致性hash 帮助理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Nginx-配置⼀致性Hash负载均衡策略"><span class="nav-number">1.5.</span> <span class="nav-text">5. Nginx 配置⼀致性Hash负载均衡策略</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#二、集群时钟同步问题"><span class="nav-number">2.</span> <span class="nav-text">二、集群时钟同步问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-时钟不同步导致的问题"><span class="nav-number">2.1.</span> <span class="nav-text">1. 时钟不同步导致的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集群时钟同步配置"><span class="nav-number">2.2.</span> <span class="nav-text">2. 集群时钟同步配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、分布式ID解决⽅案"><span class="nav-number">3.</span> <span class="nav-text">三、分布式ID解决⽅案</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、一致性Hash算法"><span class="nav-number">1.</span> <span class="nav-text">一、一致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hash算法应⽤场景"><span class="nav-number">1.1.</span> <span class="nav-text">1. Hash算法应⽤场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-普通Hash存在的问题"><span class="nav-number">1.2.</span> <span class="nav-text">2. 普通Hash存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-⼀致性Hash算法"><span class="nav-number">1.3.</span> <span class="nav-text">3. ⼀致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-设计思路"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">3.1 设计思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-数据倾斜问题"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">3.2 数据倾斜问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-虚拟节点解决方案"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3.3 虚拟节点解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-手写一致性hash-帮助理解"><span class="nav-number">1.4.</span> <span class="nav-text">4. 手写一致性hash 帮助理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Nginx-配置⼀致性Hash负载均衡策略"><span class="nav-number">1.5.</span> <span class="nav-text">5. Nginx 配置⼀致性Hash负载均衡策略</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#二、集群时钟同步问题"><span class="nav-number">2.</span> <span class="nav-text">二、集群时钟同步问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-时钟不同步导致的问题"><span class="nav-number">2.1.</span> <span class="nav-text">1. 时钟不同步导致的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集群时钟同步配置"><span class="nav-number">2.2.</span> <span class="nav-text">2. 集群时钟同步配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、分布式ID解决⽅案"><span class="nav-number">3.</span> <span class="nav-text">三、分布式ID解决⽅案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、分布式调度问题"><span class="nav-number">4.</span> <span class="nav-text">四、分布式调度问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-分布式调度有两层含义"><span class="nav-number">4.1.</span> <span class="nav-text">1. 分布式调度有两层含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-定时任务与消息队列的区别"><span class="nav-number">4.2.</span> <span class="nav-text">2. 定时任务与消息队列的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-定时任务的实现⽅式"><span class="nav-number">4.3.</span> <span class="nav-text">3. 定时任务的实现⽅式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-分布式调度框架Elastic-Job"><span class="nav-number">4.4.</span> <span class="nav-text">4. 分布式调度框架Elastic-Job</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Elastic-Job-Lite应⽤"><span class="nav-number">4.4.0.1.</span> <span class="nav-text">4.1 Elastic-Job-Lite应⽤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Elastic-Job-Lite轻量级去中⼼化的特点"><span class="nav-number">4.4.0.2.</span> <span class="nav-text">4.2 Elastic-Job-Lite轻量级去中⼼化的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-任务分⽚"><span class="nav-number">4.4.0.3.</span> <span class="nav-text">4.2 任务分⽚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-弹性扩容"><span class="nav-number">4.4.0.4.</span> <span class="nav-text">4.3 弹性扩容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Session共享问题"><span class="nav-number">5.</span> <span class="nav-text">五、Session共享问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Session问题原因分析"><span class="nav-number">5.1.</span> <span class="nav-text">1. Session问题原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-解决Session⼀致性的⽅案"><span class="nav-number">5.2.</span> <span class="nav-text">2. 解决Session⼀致性的⽅案</span></a></li></ol></li></div>
             
 
           </div>
