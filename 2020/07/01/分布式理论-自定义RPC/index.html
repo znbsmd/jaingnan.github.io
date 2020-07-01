@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式理论&amp;自定义RPC">
+<meta property="og:url" content="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/index.html">
+<meta property="og:site_name" content="坚持就是胜利">
+<meta property="og:description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006e24830b3cb?w=1716&h=548&f=png&s=100496">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/1730074d1bbb5eb6?w=1402&h=926&f=png&s=214892">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300a6f1d49072a?w=1184&h=1072&f=png&s=323220">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300bece0339a47?w=1592&h=986&f=png&s=1062631">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300bfae56b636a?w=1358&h=1266&f=png&s=162833">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300c83441ecbe2?w=1292&h=1144&f=png&s=185479">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300cb6896dad24?w=762&h=590&f=png&s=89755">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17300d384577a4e1?w=1544&h=932&f=png&s=284577">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17302ae16e332c98?w=1632&h=1018&f=png&s=263790">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17302c2217871f50?w=1400&h=690&f=png&s=649514">
+<meta property="og:updated_time" content="2020-07-01T14:13:39.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式理论&amp;自定义RPC">
+<meta name="twitter:description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/">
+
+
+
+
+
+  <title>分布式理论&自定义RPC | 坚持就是胜利</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坚持就是胜利</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坚持就是胜利">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分布式理论&自定义RPC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-01T22:09:19+08:00">
+                2020-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/分布式/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、分布式理论"><a href="#一、分布式理论" class="headerlink" title="一、分布式理论"></a>一、分布式理论</h2><h3 id="1-分布式架构"><a href="#1-分布式架构" class="headerlink" title="1. 分布式架构"></a>1. 分布式架构</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。</p>
+<p>分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。</p>
+<h4 id="1-2-发展"><a href="#1-2-发展" class="headerlink" title="1.2 发展"></a>1.2 发展</h4><p>阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？</p>
+<ol>
+<li>升级单机处理能力的性价比越来越低</li>
+<li>单机处理能力存在瓶颈</li>
+<li>稳定性和可用性这两个指标很难达到</li>
+</ol>
+<h4 id="1-3-演变"><a href="#1-3-演变" class="headerlink" title="1.3 演变"></a>1.3 演变</h4><p>单体-&gt;应用与数据库分离-&gt;集群-&gt;负载均衡-&gt;数据读写分离-&gt;➕ 搜索引擎 -&gt;➕缓存-&gt;数据库水平/垂直拆分-&gt;应用拆分-&gt;服务化</p>
+<h3 id="2-分布式问题"><a href="#2-分布式问题" class="headerlink" title="2. 分布式问题"></a>2. 分布式问题</h3><ul>
+<li><p>通信异常：网络不可用，会导致分布式系统无法顺利进行一次网络通信</p>
+</li>
+<li><p>网络分区：网络不连通，但各个子网络的内部网络是正常的，从而导致整个系统的网络环境被切分成了若干个孤立的区域，分布式系统就会出现局部小集群造成数据不一致。</p>
+</li>
+<li><p>节点故障：服务器节点出现的宕机或”僵死”现象</p>
+</li>
+<li><p>三态：即成功、失败和超时</p>
+</li>
+</ul>
+<h3 id="3-一致性"><a href="#3-一致性" class="headerlink" title="3. 一致性"></a>3. 一致性</h3><h4 id="3-1-一致性分类"><a href="#3-1-一致性分类" class="headerlink" title="3.1 一致性分类"></a>3.1 一致性分类</h4><ul>
+<li><p>强一致性 ： 分布式很难实现</p>
+</li>
+<li><p>弱一致性 ： 不承诺立即可以读到写入的值，也不承诺多久之后数据能够达到一致，<br>但会尽可能地保证到某个时间级别（比如秒级别）后，数据能够达到一致状态。</p>
+</li>
+<li><p>读写一致性 ：用户读取自己写入结果的一致性，保证用户永远能够第一时间看到自己更新的内容。比如我们发一条朋友圈，朋友圈的内容是不是第一时间被朋友看见不重要，但是一定要显示在自己的列表上。</p>
+<p>  解决方案:</p>
+<ol>
+<li>一种方案是对于一些特定的内容我们每次都去主库读取。 （问题主库压力大）</li>
+<li>我们设置一个更新时间窗口，在刚刚更新的一段时间内，我们默认都从主库读取，过了这个窗口之后，我们会挑选最近有过更新的从库进行读取</li>
+<li>我们直接记录用户更新的时间戳，在请求的时候把这个时间戳带上，凡是最后更新时间小于这个时间戳的从库都<br>不予以响应。</li>
+</ol>
+</li>
+<li><p>单调读一致性 : 本次读到的数据不能比上次读到的旧。多次刷新返回旧数据出现灵异事件。</p>
+<p>  解决方案：通过hash 映射到同一台机器上。</p>
+</li>
+<li><p>因果一致性 ：如果节点 A 在更新完某个数据后通知了节点 B，那么节点 B 之后对该数据的访问和修改都是基于 A 更新后的值。于此同时，和节点 A 无因果关系的节点 C 的数据访问则没有这样的限制。</p>
+</li>
+<li><p>最终一致性 ：是所有分布式一致性模型当中最弱的。不考虑中间的任何状态，只保证经过一段时间之后，最终系统内数据正确。它最大程度上保证了系统的并发能力，也因此，在高并发的场景下，它也是使用最广的一致性模型。可以参考现在的共享单车场景。</p>
+</li>
+</ul>
+<h3 id="4-CAP定理"><a href="#4-CAP定理" class="headerlink" title="4. CAP定理"></a>4. CAP定理</h3><p>CAP 理论含义是，一个分布式系统不可能同时满足一致性（C:Consistency)，可用性（A: Availability）和分区容错<br>性（P：Partition tolerance）这三个基本需求，最多只能同时满足其中的2个。</p>
+<ul>
+<li>C - Consistency ： 一致性是值<strong>写操作后读操作可以读到最新的数据状态</strong>，查询数据宁可返回失败也不返回旧数据。</li>
+<li>A - Availability ：可用性是指任何操作都可以得到响应的结果,且<strong>不会出现响应超时或响应错误</strong>。（即使是旧数据，只要不返回超时就可以。）<strong>实现方案：1. 数据多节点同步 2. 不可以将数据库中资源锁定 3. 即使旧数据也要返回查询信息</strong></li>
+<li>P - Partition tolerance ：分布式不可避免就是出现由于网络问题导致的节点通信失败或者服务挂掉，此时仍可以对外提供服务。<strong>实现方案：1. 用异步通知取代同步操作 2. 添加多个数据库节点</strong></li>
+</ul>
+<p><strong>CAP只能3选2，因为在分布式系统中，容错性P肯定是必须有的，所以这时候无非就两种情况，网络问题导致要么错误返回，要么阻塞等待，前者牺牲了一致性，后者牺牲了可用性。</strong></p>
+<h3 id="5-BASE-理论"><a href="#5-BASE-理论" class="headerlink" title="5. BASE 理论"></a>5. BASE 理论</h3><p>BASE：全称：Basically Available(基本可用)，Soft state（软状态）,和 Eventually consistent（最终一致性）三个<br>短语的缩写，来自 ebay 的架构师提出。<strong>核心思想是：即使无法做到强一致性，但每个应用都可<br>以根据自身业务特点，采用适当的方式来使系统达到最终一致性。</strong> 即各作出让步，理解为做事别走极端，中和下。<br>下面举几个例子：</p>
+<ul>
+<li>响应时间上的损失：出现故障或者高峰，查询结果可适当延长，以用户体验上限为主。</li>
+<li>功能上的损失：例如淘宝双11，为保护系统稳定性，正常下单，其他边缘服务可暂时不可用。</li>
+</ul>
+<p>基于Base理论还提出了以下2个特性 ：</p>
+<ul>
+<li>Soft state（软状态）：允许系统中的数据存在中间状态，并认为该状态不影响系统的整体可用性，即允许系统在多个不同<br>节点的数据副本之间进行数据同步的过程中存在延迟。</li>
+<li>Eventually consistent（最终一致性）： 最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此最终<br>一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。</li>
+</ul>
+<h3 id="6-分布式事务"><a href="#6-分布式事务" class="headerlink" title="6. 分布式事务"></a>6. 分布式事务</h3><p>事务的基本特性：ACID，分布式事务就是微服务时代也要像单机时代一样，保证ACID。</p>
+<h3 id="7-一致性协议-2PC"><a href="#7-一致性协议-2PC" class="headerlink" title="7. 一致性协议 2PC"></a>7. 一致性协议 2PC</h3><h4 id="1-2PC"><a href="#1-2PC" class="headerlink" title="1.  2PC"></a>1.  2PC</h4><p>2是指两个阶段，P是指准备阶段，C是指提交阶段。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085" alt><br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006e24830b3cb?w=1716&h=548&f=png&s=100496" alt></p>
+<p>优点： 简单 </p>
+<p>缺点：同步阻塞，单点问题，数据不一致（整个过程都不是原子性，任何一步失败都可能导致不一致），过于保守（出现故障而导致协调者始终无法获取到所有参与者的响应信息的话，这时协调者只能依靠其自身的超时机制来判断是否需要中断事务）</p>
+<h3 id="8-一致性协议-3PC"><a href="#8-一致性协议-3PC" class="headerlink" title="8. 一致性协议 3PC"></a>8. 一致性协议 3PC</h3><p>3PC，全称 “three phase commit”，是 2PC 的改进版，将 2PC 的 “提交事务请求” 过程一分为二，共形成了由CanCommit、PreCommit和doCommit三个阶段组成的事务处理协议。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/1730074d1bbb5eb6?w=1402&h=926&f=png&s=214892" alt></p>
+<p>2PC对比3PC </p>
+<ol>
+<li>首先对于<strong>协调者和参与者都设置了超时机制</strong>（在2PC中，只有协调者拥有超时机制，即如果在一定时间内没有收到参与者的消息则默认失败）,主要是避免了参与者在长时间无法与协调者节点通讯（协调者挂掉了）的情况下，无法释放资源的问题，因为参与者自身拥有超时机制会在超时后，自动进行本地commit从而进行释放资源。而这种机制也侧面降低了整个事务的阻塞时间和范围。 </li>
+<li>通过CanCommit、PreCommit、DoCommit三个阶段的设计，相较于2PC而言，多设置了一个缓冲阶段保证了在最后提交阶段之前各参与节点的状态是一致的 。</li>
+<li>PreCommit是一个缓冲，保证了在最后提交阶段之前各参与节点的状态是一致的。</li>
+<li><strong>3PC协议并没有完全解决数据不一致问题</strong>。</li>
+</ol>
+<h3 id="9-一致性算法-Paxos"><a href="#9-一致性算法-Paxos" class="headerlink" title="9. 一致性算法 Paxos"></a>9. 一致性算法 Paxos</h3><p>Paxos为了解决2PC和3PC的单个协调者，和后续增加多个协调者集群，该听谁的，而产生的。在Paxos算法中，有如下角色：</p>
+<ul>
+<li>Client 客户端：客户端向分布式系统发出请求，并等待响应。例如，对分布式文件服务器中文件的写请求。</li>
+<li>Proposer 提案发起者 ：提案者提倡客户请求，试图说服Acceptor对此达成一致，并在发生冲突时充当协调者以推动协议向前发展</li>
+<li>Acceptor 决策者 ：可以批准提案，Acceptor可以接受（accept）提案；如果某个提案被选定（chosen），那么该提案里的value就被选定了</li>
+<li>Learners：最终决策的学习者，学习者充当该协议的复制因素</li>
+</ul>
+<p>如何保证Paxos算法的活性？</p>
+<p>活性：最终一定会发生的事情：最终一定要选定value</p>
+<p>解决：通过选取主Proposer，并规定只有主Proposer才能提出议案。</p>
+<h3 id="10-一致性算法-Raft"><a href="#10-一致性算法-Raft" class="headerlink" title="10. 一致性算法 Raft"></a>10. 一致性算法 Raft</h3><p>Raft 是一种为了管理复制日志的一致性算法。Raft将一致性算法分解成了3模块</p>
+<ol>
+<li>领导人选举</li>
+<li>日志复制</li>
+<li>安全性</li>
+</ol>
+<p>Raft算法分为两个阶段，首先是选举过程，然后在选举出来的领导人带领进行正常操作，比如日志复制等。</p>
+<p>这里的两个算法就不过多阐述…</p>
+<h2 id="二、分布式系统设计策略"><a href="#二、分布式系统设计策略" class="headerlink" title="二、分布式系统设计策略"></a>二、分布式系统设计策略</h2><h3 id="1-心跳检测"><a href="#1-心跳检测" class="headerlink" title="1. 心跳检测"></a>1. 心跳检测</h3><p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300a6f1d49072a?w=1184&h=1072&f=png&s=323220" alt></p>
+<ul>
+<li>周期检测心跳机制（设定超时时间）</li>
+<li>累计失效检测机制（在周期检测心跳机制的基础上，统计一定周期内节点的返回情况，以此计算节点的“死亡”概率。另外，对于宣告“濒临死亡”的节点可以发起有限次数的重试，以作进一步判断。）**</li>
+</ul>
+<h3 id="2-高可用设计"><a href="#2-高可用设计" class="headerlink" title="2. 高可用设计"></a>2. 高可用设计</h3><p>经过设计来减少系统不能提供服务的时间。系统高可用性的常用设计模式包括三种：主备（Master-SLave）、互备（Active-Active）和集群（Cluster）模式。一般采用主备模式。</p>
+<h3 id="3-容错性"><a href="#3-容错性" class="headerlink" title="3. 容错性"></a>3. 容错性</h3><p>系统对于错误包容的能力</p>
+<h3 id="4-负载均衡"><a href="#4-负载均衡" class="headerlink" title="4. 负载均衡"></a>4. 负载均衡</h3><p>其关键在于使用多台集群服务器共同分担计算任务，把网络请求及计算分配到集群可用的不同服务器节<br>点上，从而达到高可用性及较好的用户操作体验。</p>
+<h2 id="三、分布式架构网络通信"><a href="#三、分布式架构网络通信" class="headerlink" title="三、分布式架构网络通信"></a>三、分布式架构网络通信</h2><h3 id="1-基本原理"><a href="#1-基本原理" class="headerlink" title="1. 基本原理"></a>1. 基本原理</h3><p>基于传输协议和网络IO来实现，其中传输协议比较出名的有tcp、udp等等，tcp、udp都是在基于Socket概念上为某类应用场景而扩展出的传输协议，网络IO，主要有bio、nio、aio三种方式</p>
+<h3 id="2-RPC"><a href="#2-RPC" class="headerlink" title="2. RPC"></a>2. RPC</h3><p>RPC全称为remote procedurecall，即远程过程调用。可以做到像本地调用一样调用远程服务，是一种进程间的通信方式，<strong>RPC并不是一个具体的技术，而是指整个网络远程调用过程。</strong></p>
+<p>RPC架构：一个完整的RPC架构里面包含了四个核心的组件，分别是Client，Client Stub，Server以及Server Stub，这个Stub可以理解为存根。</p>
+<ul>
+<li>客户端(Client)，服务的调用方。</li>
+<li>客户端存根(Client Stub)，存放服务端的地址消息，再将客户端的请求参数打包成网络消息，然后通过网络远程发送给服务方。</li>
+<li>服务端(Server)，真正的服务提供者。</li>
+<li>服务端存根(Server Stub)，接收客户端发送过来的消息，将消息解包，并调用本地的方法。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bece0339a47?w=1592&h=986&f=png&s=1062631" alt></li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bfae56b636a?w=1358&h=1266&f=png&s=162833" alt></p>
+<h3 id="3-RMI"><a href="#3-RMI" class="headerlink" title="3. RMI"></a>3. RMI</h3><p>Java RMI 指的是远程方法调用 (Remote Method Invocation),是java原生支持的远程调用 ,采用JRMP（Java Remote Messageing protocol）作为通信协议，可以认为是纯java版本的分布式远程调用解决方案，这里的通信可以理解为一个虚拟机上的对象调用另一个虚拟机上对象的方法。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300c83441ecbe2?w=1292&h=1144&f=png&s=185479" alt></p>
+<h3 id="4-BIO、NIO、AIO"><a href="#4-BIO、NIO、AIO" class="headerlink" title="4. BIO、NIO、AIO"></a>4. BIO、NIO、AIO</h3><ul>
+<li>BIO：一个socket连接一个线程。简单易用但资源开销太高。</li>
+<li>NIO：<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300cb6896dad24?w=762&h=590&f=png&s=89755" alt><br>  当一个连接创建后，不会需要对应一个线程，这个连接会被注册到多路复用器，所以一个连接只需要一个线程即可，所有的连接需要一个线程就可以操作，该线程的多路复用器会轮训，发现连接有请求时，才开启一个线程处理。<strong>大多数情况下，1w个连接里面同一时刻只有少量的连接有数据可读。</strong></li>
+<li>AIO：异步非阻塞IO。A代表asynchronize，主动通知，完成后会调用回调函数。使用场景：连接数目多且连接比较长（重操作）的架构，比如相册服务器。重点调用了OS参与并发操作，编程比较复杂。Java7开始支持</li>
+</ul>
+<h3 id="5-Netty"><a href="#5-Netty" class="headerlink" title="5. Netty"></a>5. Netty</h3><p>简化和流程化了 NIO 的开发过程，NIO 的 Bug。例如 Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU 100%。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17300d384577a4e1?w=1544&h=932&f=png&s=284577" alt></p>
+<p>Netty模型：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302ae16e332c98?w=1632&h=1018&f=png&s=263790" alt></p>
+<p>Netty 抽象出两组线程池， BossGroup 专门负责接收客 户端连接， WorkerGroup 专门负责网络读写操作。NioEventLoop 表示一个不断循环执行处理 任务的线程， <strong>每个NioEventLoop 都有一个selector</strong>，用于监听绑定在其上的socket网络通道。NioEventLoop内部采用串行化设计，从消息的读取-&gt;解码-&gt;处理-&gt;编码-&gt;发送， 始终由 IO 线 程 NioEventLoop 负责。</p>
+<h3 id="6-Netty核心组件"><a href="#6-Netty核心组件" class="headerlink" title="6. Netty核心组件"></a>6. Netty核心组件</h3><h4 id="6-1-ChannelHandler-及其实现类"><a href="#6-1-ChannelHandler-及其实现类" class="headerlink" title="6.1 ChannelHandler 及其实现类"></a>6.1 ChannelHandler 及其实现类</h4><p>ChannelHandler 接口定义了许多事件处理的方法，我们可以通过重写这些方法去实现具 体的业务逻辑。我们经常需要自定义一个Handler类去继承ChannelInboundHandlerAdapter， 然后通过 重写相应方法实现业务逻辑，我们接下来看看一般都需要重写哪些方法：</p>
+<ul>
+<li>public void channelActive(ChannelHandlerContext ctx)， 通道就绪事件</li>
+<li>public void channelRead(ChannelHandlerContext ctx, Object msg)， 通道读取数据事件</li>
+<li>public void channelReadComplete(ChannelHandlerContext ctx) ， 数据读取完毕事件</li>
+<li>public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)， 通道发生异常事件</li>
+</ul>
+<h4 id="6-2-ChannelPipeline"><a href="#6-2-ChannelPipeline" class="headerlink" title="6.2 ChannelPipeline"></a>6.2 ChannelPipeline</h4><p>ChannelPipeline 是一个 Handler 的集合， 它负责处理和拦截 inbound 或者 outbound 的事 件和操作， 相当于一个贯穿 Netty 的链。</p>
+<ul>
+<li>ChannelPipeline addFirst(ChannelHandler…handlers)，把一个业务处理类（handler） 添加到链中的第一个位置</li>
+<li>ChannelPipeline addLast(ChannelHandler…handlers)，把一个业务处理类（handler） 添加到链中的最后一个位置</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302c2217871f50?w=1400&h=690&f=png&s=649514" alt></p>
+<h4 id="6-3-ChannelHandlerContext"><a href="#6-3-ChannelHandlerContext" class="headerlink" title="6.3 ChannelHandlerContext"></a>6.3 ChannelHandlerContext</h4><p>这 是 事 件 处 理 器 上 下 文 对 象 ， Pipeline 链 中 的 实 际 处 理 节 点 。 每 个 处 理 节 点ChannelHandlerContext 中 包 含 一 个 具 体 的 事 件 处 理 器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler 进行调用。常用方法如下所示：</p>
+<ul>
+<li>ChannelFuture close()， 关闭通道</li>
+<li>ChannelOutboundInvoker flush()， 刷新</li>
+<li>ChannelFuture writeAndFlush(Object msg) ， 将 数 据 写 到 ChannelPipeline 中 当 前</li>
+<li>ChannelHandler 的下一个 ChannelHandler 开始处理（出站）</li>
+</ul>
+<h4 id="6-4-ChannelFuture"><a href="#6-4-ChannelFuture" class="headerlink" title="6.4 ChannelFuture"></a>6.4 ChannelFuture</h4><p>表示 Channel 中异步 I/O 操作的结果， <strong>在 Netty 中所有的 I/O 操作都是异步的， I/O 的调 用会直接返回， 调用者并不能立刻获得结果， 但是可以通过 ChannelFuture 来获取 I/O 操作 的处理状态。</strong> 常用方法如下所示：</p>
+<ul>
+<li>Channel channel()， 返回当前正在进行 IO 操作的通道</li>
+<li>ChannelFuture sync()， 等待异步操作执行完毕</li>
+</ul>
+<h4 id="6-5-EventLoopGroup-和其实现类-NioEventLoopGroup"><a href="#6-5-EventLoopGroup-和其实现类-NioEventLoopGroup" class="headerlink" title="6.5 EventLoopGroup 和其实现类 NioEventLoopGroup"></a>6.5 EventLoopGroup 和其实现类 NioEventLoopGroup</h4><p>EventLoopGroup 是一组 EventLoop 的抽象， Netty 为了更好的利用多核 CPU 资源， 一般 会有多个 EventLoop同时工作。<strong>每个EventLoop维护着一个Selector实例。EventLoopGroup提供next接口，可以从组里面按照一定规则获取其中一个 EventLoop 来处理任务。</strong> 在 Netty服务器端编程中，我们一般都需要提供两个EventLoopGroup，例如：BossEventLoopGroup和WorkerEventLoopGroup。</p>
+<ul>
+<li>public NioEventLoopGroup()， 构造方法</li>
+<li>public Future&lt;?&gt; shutdownGracefully()， 断开连接， 关闭线程</li>
+</ul>
+<h4 id="6-6-ServerBootstrap-和-Bootstrap"><a href="#6-6-ServerBootstrap-和-Bootstrap" class="headerlink" title="6.6 ServerBootstrap 和 Bootstrap"></a>6.6 ServerBootstrap 和 Bootstrap</h4><p>ServerBootstrap 是 Netty中的服务器端启动助手，通过它可以完成服务器端的各种配置； Bootstrap 是 Netty 中的客户端启动助手， 通过它可以完成客户端的各种配置。 常用方法如下 所示：</p>
+<ul>
+<li>public ServerBootstrap group(EventLoopGroup parentGroup, EventLoopGroup childGroup)，该方法用于<br>服务器端， 用来设置两个 EventLoop</li>
+<li>public B group(EventLoopGroup group) ， 该方法用于客户端， 用来设置一个 EventLoop</li>
+<li>public B channel(Class&lt;? extends C&gt; channelClass)， 该方法用来设置一个服务器端的通道实现</li>
+<li>public <t> B option(ChannelOption<t> option, T value)， 用来给 ServerChannel 添加配置</t></t></li>
+<li>public <t> ServerBootstrap childOption(ChannelOption<t> childOption, T value)， 用来给接收到的通道添加配置</t></t></li>
+<li>public ServerBootstrap childHandler(ChannelHandler childHandler)， 该方法用来设置业务处理类（自定义的 handler）</li>
+<li>public ChannelFuture bind(int inetPort) ， 该方法用于服务器端， 用来设置占用的端口号</li>
+<li>public ChannelFuture connect(String inetHost, int inetPort) 该方法用于客户端， 用来连接服务器端</li>
+</ul>
+<h3 id="7-实现基础RPC"><a href="#7-实现基础RPC" class="headerlink" title="7. 实现基础RPC"></a>7. 实现基础RPC</h3><p>主要注意编码器、解码器、序列化、客户端通过动态代理隐藏具体网络实现、服务端通过反射调用实现类来解藕。</p>
+<p>源码地址-&gt; <a href="https://gitee.com/znbsmd/lagou_homework/tree/master/rpc_homework/code" target="_blank" rel="noopener">https://gitee.com/znbsmd/lagou_homework/tree/master/rpc_homework/code</a></p>
+<blockquote>
+<p><em>《lagouedu》分布式原理总结</em></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/27/分布式集群架构场景化解决⽅案/" rel="next" title="分布式集群架构场景化解决⽅案">
+                <i class="fa fa-chevron-left"></i> 分布式集群架构场景化解决⽅案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">坚信持续学习就一定能超过大多数人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、分布式理论"><span class="nav-text">一、分布式理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-分布式架构"><span class="nav-text">1. 分布式架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概念"><span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-发展"><span class="nav-text">1.2 发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-演变"><span class="nav-text">1.3 演变</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-分布式问题"><span class="nav-text">2. 分布式问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-一致性"><span class="nav-text">3. 一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-一致性分类"><span class="nav-text">3.1 一致性分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-CAP定理"><span class="nav-text">4. CAP定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-BASE-理论"><span class="nav-text">5. BASE 理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-分布式事务"><span class="nav-text">6. 分布式事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-一致性协议-2PC"><span class="nav-text">7. 一致性协议 2PC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2PC"><span class="nav-text">1.  2PC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-一致性协议-3PC"><span class="nav-text">8. 一致性协议 3PC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-一致性算法-Paxos"><span class="nav-text">9. 一致性算法 Paxos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-一致性算法-Raft"><span class="nav-text">10. 一致性算法 Raft</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、分布式系统设计策略"><span class="nav-text">二、分布式系统设计策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-心跳检测"><span class="nav-text">1. 心跳检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-高可用设计"><span class="nav-text">2. 高可用设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-容错性"><span class="nav-text">3. 容错性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-负载均衡"><span class="nav-text">4. 负载均衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、分布式架构网络通信"><span class="nav-text">三、分布式架构网络通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本原理"><span class="nav-text">1. 基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-RPC"><span class="nav-text">2. RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RMI"><span class="nav-text">3. RMI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-BIO、NIO、AIO"><span class="nav-text">4. BIO、NIO、AIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Netty"><span class="nav-text">5. Netty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Netty核心组件"><span class="nav-text">6. Netty核心组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-ChannelHandler-及其实现类"><span class="nav-text">6.1 ChannelHandler 及其实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-ChannelPipeline"><span class="nav-text">6.2 ChannelPipeline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-ChannelHandlerContext"><span class="nav-text">6.3 ChannelHandlerContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4-ChannelFuture"><span class="nav-text">6.4 ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-EventLoopGroup-和其实现类-NioEventLoopGroup"><span class="nav-text">6.5 EventLoopGroup 和其实现类 NioEventLoopGroup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-6-ServerBootstrap-和-Bootstrap"><span class="nav-text">6.6 ServerBootstrap 和 Bootstrap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-实现基础RPC"><span class="nav-text">7. 实现基础RPC</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+	
+           
+         
+         <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
