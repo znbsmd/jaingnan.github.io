@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="chinese">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+<meta name="referrer" content="no-referrer">
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、分布式链路追踪技术适⽤场景（问题场景）  1. 场景描述 在微服务架构下，⼀次请求少则经过三四次服务调⽤完成，多则跨越⼏⼗个甚⾄是上百个服 务节点。那么问题接踵⽽来：  如何动态展示服务的调⽤链路？（⽐如A服务调⽤了哪些其他的服务---依赖关系）如何分析服务调⽤链路中的瓶颈节点并对其进⾏调优？(⽐如A—&amp;gt;B—&amp;gt;C，C服务处理时间特别⻓)如何快速进⾏服务链路的故障发现？ 2. 分布式">
+<meta name="keywords" content="Java Php hexo Thinking in Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务监控之分布式链路追踪技术 Sleuth + Zipkin">
+<meta property="og:url" content="http://yoursite.com/2020/07/30/微服务监控之分布式链路追踪技术-Sleuth-Zipkin/index.html">
+<meta property="og:site_name" content="190呐">
+<meta property="og:description" content="一、分布式链路追踪技术适⽤场景（问题场景）  1. 场景描述 在微服务架构下，⼀次请求少则经过三四次服务调⽤完成，多则跨越⼏⼗个甚⾄是上百个服 务节点。那么问题接踵⽽来：  如何动态展示服务的调⽤链路？（⽐如A服务调⽤了哪些其他的服务---依赖关系）如何分析服务调⽤链路中的瓶颈节点并对其进⾏调优？(⽐如A—&amp;gt;B—&amp;gt;C，C服务处理时间特别⻓)如何快速进⾏服务链路的故障发现？ 2. 分布式">
+<meta property="og:locale" content="chinese">
+<meta property="og:image" content="https://imgkr.cn-bj.ufileos.com/ac7ff0e4-6d6e-4baa-a95c-d97feb437957.png">
+<meta property="og:image" content="https://imgkr.cn-bj.ufileos.com/6c02678e-a272-4d3e-8300-d6e9e70f7898.png">
+<meta property="og:updated_time" content="2020-07-30T07:23:50.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务监控之分布式链路追踪技术 Sleuth + Zipkin">
+<meta name="twitter:description" content="一、分布式链路追踪技术适⽤场景（问题场景）  1. 场景描述 在微服务架构下，⼀次请求少则经过三四次服务调⽤完成，多则跨越⼏⼗个甚⾄是上百个服 务节点。那么问题接踵⽽来：  如何动态展示服务的调⽤链路？（⽐如A服务调⽤了哪些其他的服务---依赖关系）如何分析服务调⽤链路中的瓶颈节点并对其进⾏调优？(⽐如A—&amp;gt;B—&amp;gt;C，C服务处理时间特别⻓)如何快速进⾏服务链路的故障发现？ 2. 分布式">
+<meta name="twitter:image" content="https://imgkr.cn-bj.ufileos.com/ac7ff0e4-6d6e-4baa-a95c-d97feb437957.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '190coder'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/30/微服务监控之分布式链路追踪技术-Sleuth-Zipkin/">
+
+
+
+
+
+  <title>微服务监控之分布式链路追踪技术 Sleuth + Zipkin | 190呐</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">190呐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/30/微服务监控之分布式链路追踪技术-Sleuth-Zipkin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="190coder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="190呐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务监控之分布式链路追踪技术 Sleuth + Zipkin</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-30T15:22:39+08:00">
+                2020-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-Cloud/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Cloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <section id="nice" data-tool="mdnice编辑器" data-website="https://www.mdnice.com" style="font-size: 16px; color: black; padding: 0 10px; line-height: 1.6; word-spacing: 0px; letter-spacing: 0px; word-break: break-word; word-wrap: break-word; text-align: left; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">一、分布式链路追踪技术适⽤场景（问题场景）</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; font-size: 20px;"><span class="prefix" style="display: none;"></span><span class="content">1. 场景描述</span><span class="suffix" style="display: none;"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在微服务架构下，⼀次请求少则经过三四次服务调⽤完成，多则跨越⼏⼗个甚⾄是上百个服
+务节点。那么问题接踵⽽来：</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">如何动态展示服务的调⽤链路？（⽐如A服务调⽤了哪些其他的服务---依赖关系）</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">如何分析服务调⽤链路中的瓶颈节点并对其进⾏调优？(⽐如A—&gt;B—&gt;C，C服务处理时间特别⻓)</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">如何快速进⾏服务链路的故障发现？</section></li></ul>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; font-size: 20px;"><span class="prefix" style="display: none;"></span><span class="content">2. 分布式链路追踪技术</span><span class="suffix" style="display: none;"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">分布式环境下基于这种想法<strong style="font-weight: bold; color: black;">实现的监控技术</strong>就是就是分布式链路追踪（全链路追踪)</p>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; font-size: 20px;"><span class="prefix" style="display: none;"></span><span class="content">3. 市场上的分布式链路追踪⽅案</span><span class="suffix" style="display: none;"></span></h3>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">Spring Cloud Sleuth + Twitter Zipkin(社区最活跃、文档最丰富)</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">阿⾥巴巴的“鹰眼”</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">⼤众点评的“CAT”</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">美团的“Mtrace”</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">京东的“Hydra”</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">新浪的“Watchman”</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">Apache Skywalking（最近被提到很多）</section></li></ul>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">二、分布式链路追踪技术核⼼思想</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">本质：记录⽇志，作为⼀个完整的技术，分布式链路追踪也有⾃⼰的理论和概念</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">微服务架构中，针对请求处理的调⽤链可以展现为⼀棵树，示意如下：</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;"><img src="https://imgkr.cn-bj.ufileos.com/ac7ff0e4-6d6e-4baa-a95c-d97feb437957.png" alt style="display: block; margin: 0 auto; max-width: 100%;"></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">上图标识⼀个请求链路，⼀条链路通过TraceId唯⼀标识，span标识发起的请求信息，各span通过parrentId关联起来</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Trace：</strong> request-&gt; response 整个过程</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Trace ID：</strong> 服务跟踪框架为该请求
+创建⼀个唯⼀的跟踪标识Trace ID，同时在分布式系统内部流转的时候，框架失踪保持该唯⼀标识，直到返回给请求⽅</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Span ID：</strong> 为了统计各处理单元的时间延迟，当请求到达各个服务组件时，也是通过⼀个<strong style="font-weight: bold; color: black;">唯⼀标识SpanID来标记它的开始</strong>，具体过程以及结束。对每⼀个Span来说，它必须有开始和结束两个节点，通过记录开始Span和结束Span的时间戳，就能统计出该Span的时间延迟，除了时间戳记录之外，它还可以包含⼀些其他元数据，⽐如时间名称、请求信息等。每⼀个Span都会有⼀个唯⼀跟踪标识 Span ID,若⼲个有序的 span 就组成了⼀个 trace。</p>
+<hr data-tool="mdnice编辑器" style="height: 1px; margin: 0; margin-top: 10px; margin-bottom: 10px; border: none; border-top: 1px solid black;">
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">Span可以认为是⼀个⽇志数据结构，在⼀些特殊的时机点会记录了⼀些⽇志信息，⽐如有时间戳、spanId、TraceId，parentIde等，Span中也抽象出了另外⼀个概念，叫做事件，核⼼事件如下：</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">CS ：client send/start 客户端/消费者发出⼀个请求，描述的是⼀个span开始</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">SR: server received/start 服务端/⽣产者接收请求 SR-CS属于请求发送的⽹络延迟</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">SS: server send/finish 服务端/⽣产者发送应答 SS-SR属于服务端消耗时间</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">CR：client received/finished 客户端/消费者接收应答 CR-SS表示回复需要的时间(响应的⽹络延迟)</section></li></ul>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">注意：我们往往把Spring Cloud Sleuth 和 Zipkin ⼀起使⽤，把 Sleuth 的数据信息发送给 Zipkin 进⾏聚合，利⽤ Zipkin 存储并展示数据。</p>
+<figure data-tool="mdnice编辑器" style="margin: 0; margin-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;"><img src="https://imgkr.cn-bj.ufileos.com/6c02678e-a272-4d3e-8300-d6e9e70f7898.png" alt style="display: block; margin: 0 auto; max-width: 100%;"></figure>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0px; font-weight: bold; color: black; border-bottom: 2px solid rgb(239, 112, 96); font-size: 1.3em;"><span class="prefix" style="display: none;"></span><span class="content" style="display: inline-block; font-weight: bold; background: rgb(239, 112, 96); color: #ffffff; padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;">三、Sleuth + Zipkin</span><span class="suffix"></span><span style="display: inline-block; vertical-align: bottom; border-bottom: 36px solid #efebe9; border-right: 20px solid transparent;"> </span></h2>
+<ol data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: decimal;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">每⼀个</strong>需要被追踪踪迹的微服务⼯程都引⼊依赖坐标</section></li></ol>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--链路追踪--&gt;</span>
+<span><span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-cloud-starter-sleuth<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span><span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span></span></span></span></span></span></code></pre>
+<ol start="2" data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: decimal;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">每⼀个微服务都修改application.yml配置⽂件，添加⽇志级别</section></li></ol>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">#分布式链路追踪</span>
+<span><span class="hljs-attr" style="line-height: 26px;">logging:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  level:</span>
+<span>    <span class="hljs-string" style="color: #d14; line-height: 26px;">org.springframework.web.servlet.DispatcherServlet:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">debug</span>
+<span>    <span class="hljs-string" style="color: #d14; line-height: 26px;">org.springframework.cloud.sleuth:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">debug</span>
+<span></span></span></span></span></span></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">请求到来时，我们在控制台可以观察到 Sleuth 输出的⽇志（全局 TraceId、SpanId等）。</p>
+<ol start="3" data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: decimal;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">结合 Zipkin 展示追踪数据</section></li></ol>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">Zipkin 包括Zipkin Server和 Zipkin Client两部分，Zipkin Server是⼀个单独的服务，Zipkin Client就是具体的微服务</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Zipkin Server 构建 :</strong></p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">pom.xml</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependencies</span>&gt;</span>
+<span>        <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--zipkin-server的依赖坐标--&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>io.zipkin.java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>zipkin-server<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>2.12.3<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">exclusions</span>&gt;</span>
+<span>                <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--排除掉log4j2的传递依赖，避免和springboot依赖的日志组件冲突--&gt;</span>
+<span>                <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">exclusion</span>&gt;</span>
+<span>                    <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>                    <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>                <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">exclusion</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">exclusions</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>
+<span>        <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--zipkin-server ui界面依赖坐标--&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>io.zipkin.java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>zipkin-autoconfigure-ui<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>2.12.3<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>
+<span>
+<span>        <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--zipkin针对mysql持久化的依赖--&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>io.zipkin.java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>zipkin-autoconfigure-storage-mysql<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>2.12.3<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>mysql<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>1.1.10<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>        <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">&lt;!--操作数据库需要事务控制--&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-tx<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>            <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-jdbc<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>        <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>    <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependencies</span>&gt;</span>
+<span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">⼊⼝启动类</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-meta" style="color: #999; font-weight: bold; line-height: 26px;">@SpringBootApplication</span>
+<span><span class="hljs-meta" style="color: #999; font-weight: bold; line-height: 26px;">@EnableZipkinServer</span> <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">// 开启Zipkin 服务器功能</span>
+<span><span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">public</span> <span class="hljs-class" style="line-height: 26px;"><span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">class</span> <span class="hljs-title" style="color: #458; font-weight: bold; line-height: 26px;">ZipkinServerApplication9411</span> </span>{
+<span>
+<span>    <span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">public</span> <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">static</span> <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">void</span> <span class="hljs-title" style="color: #900; font-weight: bold; line-height: 26px;">main</span><span class="hljs-params" style="line-height: 26px;">(MysqlxDatatypes.Scalar.String[] args)</span> </span>{
+<span>        SpringApplication.run(ZipkinServerApplication9411.class,args);
+<span>    }
+<span>
+<span>    <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">// 注入事务控制器</span>
+<span>    <span class="hljs-meta" style="color: #999; font-weight: bold; line-height: 26px;">@Bean</span>
+<span>    <span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">public</span> PlatformTransactionManager <span class="hljs-title" style="color: #900; font-weight: bold; line-height: 26px;">transactionManager</span><span class="hljs-params" style="line-height: 26px;">(DataSource dataSource)</span> </span>{
+<span>        <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">return</span> <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">new</span> DataSourceTransactionManager(dataSource);
+<span>    }
+<span>}
+<span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">application.yml</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-attr" style="line-height: 26px;">server:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  port:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">9411</span>
+<span><span class="hljs-attr" style="line-height: 26px;">management:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  metrics:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    web:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      server:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">        auto-time-requests:</span> <span class="hljs-literal" style="color: #008080; line-height: 26px;">false</span> <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;"># 关闭自动检测</span>
+<span></span></span></span></span></span></span></span></code></pre>
+<hr data-tool="mdnice编辑器" style="height: 1px; margin: 0; margin-top: 10px; margin-bottom: 10px; border: none; border-top: 1px solid black;">
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Zipkin Client 构建 :</strong></p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">pom中添加 zipkin 依赖（在具体微服务中修改）</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-cloud-starter-zipkin<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span><span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">application.yml 中添加对zipkin server的引⽤</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-attr" style="line-height: 26px;">spring:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  application:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    name:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">lagou-service-autodeliver</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  zipkin:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    base-url:</span> <span class="hljs-attr" style="line-height: 26px;">http://127.0.0.1:9411/</span> <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;"># zipkin server的请求地址</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    sender:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      type:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">web</span> <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;"># 请求方式,默认以http的方式向zipkin server发送追踪数据</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  sleuth:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    sampler:</span>
+<span>      <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;">#采样的百分比，默认为0.1，即10%，这里配置1，是记录全部 的sleuth信息，是为了收集到更多的数据（仅供测试用）。在分布式系统中，过于频繁的采样会影响系 统性能，所以这里配置需要采用一个合适的值。</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      probability:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">1.0</span>
+<span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">对于log⽇志，依然保持开启debug状态</section></li></ul>
+<hr data-tool="mdnice编辑器" style="height: 1px; margin: 0; margin-top: 10px; margin-bottom: 10px; border: none; border-top: 1px solid black;">
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">Zipkin server ⻚⾯⽅便我们查看服务调⽤依赖关系及⼀些性能指标和异常信息</strong></p>
+<hr data-tool="mdnice编辑器" style="height: 1px; margin: 0; margin-top: 10px; margin-bottom: 10px; border: none; border-top: 1px solid black;">
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">追踪数据Zipkin持久化到mysql</strong></p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">mysql中创建名称为zipkin的数据库，并执⾏如下sql语句（github zipkin stronge 中提供）</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">pom.xml 引入依赖</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;">  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>io.zipkin.java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>zipkin-autoconfigure-storagemysql<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/
+<span>      <span class="hljs-attr" style="color: #008080; line-height: 26px;">artifactId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>2.12.3<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>mysql<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>1.1.10<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">version</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-tx<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>org.springframework<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">groupId</span>&gt;</span>
+<span>      <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>spring-jdbc<span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">artifactId</span>&gt;</span>
+<span>  <span class="hljs-tag" style="color: #000080; font-weight: normal; line-height: 26px;">&lt;/<span class="hljs-name" style="color: #000080; font-weight: normal; line-height: 26px;">dependency</span>&gt;</span>
+<span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">application.yml</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-attr" style="line-height: 26px;">server:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  port:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">9411</span>
+<span><span class="hljs-attr" style="line-height: 26px;">management:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  metrics:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    web:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      server:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">        auto-time-requests:</span> <span class="hljs-literal" style="color: #008080; line-height: 26px;">false</span> <span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;"># 关闭自动检测</span>
+<span><span class="hljs-attr" style="line-height: 26px;">spring:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  datasource:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    driver-class-name:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">com.mysql.jdbc.Driver</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    url:</span> <span class="hljs-attr" style="line-height: 26px;">jdbc:mysql://localhost:3306/zipkin?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;allowMultiQueries=true</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    username:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">root</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    password:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">123456</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    druid:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      initialSize:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">10</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      minIdle:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">10</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      maxActive:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">30</span>
+<span><span class="hljs-attr" style="line-height: 26px;">      maxWait:</span> <span class="hljs-number" style="color: #008080; line-height: 26px;">50000</span>
+<span><span class="hljs-comment" style="color: #998; font-style: italic; line-height: 26px;"># 指定zipkin持久化介质为mysql</span>
+<span><span class="hljs-attr" style="line-height: 26px;">zipkin:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">  storage:</span>
+<span><span class="hljs-attr" style="line-height: 26px;">    type:</span> <span class="hljs-string" style="color: #d14; line-height: 26px;">mysql</span>
+<span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">启动类中注⼊事务管理器</section></li></ul>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;"><span style="display: block; background: url(https://imgkr.cn-bj.ufileos.com/97e4eed2-a992-4976-acf0-ccb6fb34d308.png); height: 30px; width: 100%; background-size: 40px; background-repeat: no-repeat; background-color: #f8f8f8; margin-bottom: -7px; border-radius: 5px; background-position: 10px 10px;"></span><code class="hljs" style="overflow-x: auto; padding: 16px; color: #333; display: block; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; padding-top: 15px; background: #f8f8f8; border-radius: 5px;"><span class="hljs-meta" style="color: #999; font-weight: bold; line-height: 26px;">@Bean</span>
+<span><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">public</span> PlatformTransactionManager <span class="hljs-title" style="color: #900; font-weight: bold; line-height: 26px;">txManager</span><span class="hljs-params" style="line-height: 26px;">(DataSource dataSource)</span> </span>{
+<span>  <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">return</span> <span class="hljs-keyword" style="color: #333; font-weight: bold; line-height: 26px;">new</span> DataSourceTransactionManager(dataSource);
+<span>}
+<span></span></span></span></span></code></pre>
+<blockquote data-tool="mdnice编辑器" style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border-left: 3px solid rgba(0, 0, 0, 0.4); color: #6a737d; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 10px; margin-bottom: 20px; margin-top: 20px; border-left-color: rgb(239, 112, 96); background: #fff9f9;">
+<p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0px; color: black; line-height: 26px;">lagouedu 笔记总结</p>
+</blockquote>
+<p id="nice-suffix-juejin-container" class="nice-suffix-juejin-container" data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black; margin-top: 20px !important;">本文使用 <a href="https://mdnice.com/?from=juejin" style="text-decoration: none; word-wrap: break-word; font-weight: bold; color: rgb(239, 112, 96); border-bottom: 1px solid rgb(239, 112, 96);" target="_blank" rel="noopener">mdnice</a> 排版</p></section>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/28/Spring-Cloud-全家桶/" rel="next" title="Spring Cloud 全家桶">
+                <i class="fa fa-chevron-left"></i> Spring Cloud 全家桶
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
+            
+              <p class="site-author-name" itemprop="name">190coder</p>
+              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nice"><span class="nav-text">一、分布式链路追踪技术适⽤场景（问题场景） </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nice"><span class="nav-text">1. 场景描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nice"><span class="nav-text">2. 分布式链路追踪技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nice"><span class="nav-text">3. 市场上的分布式链路追踪⽅案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nice"><span class="nav-text">二、分布式链路追踪技术核⼼思想 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nice"><span class="nav-text">三、Sleuth + Zipkin </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+	
+           
+         
+         <div style>
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">190coder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+<div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
