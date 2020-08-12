@@ -1,372 +1,210 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN" >
 
 
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="chinese">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-<meta name="referrer" content="no-referrer">
-
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>精细Zookeeper  - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
   
     
-      
-    
-    
-      
-    
-  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
-  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="一、简介ZooKeeper主要的使用场景就是分布式协同服务，保证分布式信息的一致性。 1. 基本概念Zookeeper是一个典型的分布式数据一致性解决方案，分布式应用可以基于它实现数据订阅/发布、负载均衡、命名服务、集群服务、分布式锁和分布式队列等功能。  集群角色：在zk中，没有沿用Master/Slave(主备)概念，而是引入了Leader、Follwer、Observer三种角色。通过Lea">
-<meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="精细Zookeeper ">
-<meta property="og:url" content="http://yoursite.com/2020/07/09/精细Zookeeper/index.html">
-<meta property="og:site_name" content="190呐">
-<meta property="og:description" content="一、简介ZooKeeper主要的使用场景就是分布式协同服务，保证分布式信息的一致性。 1. 基本概念Zookeeper是一个典型的分布式数据一致性解决方案，分布式应用可以基于它实现数据订阅/发布、负载均衡、命名服务、集群服务、分布式锁和分布式队列等功能。  集群角色：在zk中，没有沿用Master/Slave(主备)概念，而是引入了Leader、Follwer、Observer三种角色。通过Lea">
-<meta property="og:locale" content="chinese">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/4/1731a27cd31b8034?w=1124&h=656&f=png&s=188105">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/4/1731a36e04586466?w=1326&h=676&f=png&s=482701">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/4/1731a38b6156c9ee?w=866&h=492&f=png&s=100924">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/4/1731a4bcf9da16e3?w=1218&h=1142&f=png&s=714898">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731ceccd77199ad?w=666&h=654&f=png&s=136671">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731cfe54d39a3f1?w=686&h=460&f=png&s=53614">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731d2622e1222b9?w=666&h=694&f=png&s=81526">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731d3aa818f6c95?w=1058&h=974&f=png&s=445385">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731d46a923785e7?w=726&h=602&f=png&s=198338">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731d4ed5678a5c9?w=880&h=690&f=png&s=188691">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731d6378f954ff4?w=1224&h=494&f=png&s=83797">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e548fcfee4e0?w=1446&h=292&f=png&s=110564">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e62dce0de73e?w=1268&h=430&f=png&s=99390">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e66e90da3b4c?w=1192&h=148&f=png&s=40865">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e6ac3b89545a?w=1358&h=1000&f=png&s=253217">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e6c0e7bf0ba9?w=1406&h=1074&f=png&s=307315">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/7/5/1731e747a193db8f?w=876&h=720&f=png&s=417301">
-<meta property="og:updated_time" content="2020-07-09T05:31:54.405Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="精细Zookeeper ">
-<meta name="twitter:description" content="一、简介ZooKeeper主要的使用场景就是分布式协同服务，保证分布式信息的一致性。 1. 基本概念Zookeeper是一个典型的分布式数据一致性解决方案，分布式应用可以基于它实现数据订阅/发布、负载均衡、命名服务、集群服务、分布式锁和分布式队列等功能。  集群角色：在zk中，没有沿用Master/Slave(主备)概念，而是引入了Leader、Follwer、Observer三种角色。通过Lea">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/7/4/1731a27cd31b8034?w=1124&h=656&f=png&s=188105">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '190coder'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/07/09/精细Zookeeper/">
-
-
-
-
-
-  <title>精细Zookeeper  | 190呐</title>
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-
-
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
 
-  
-  
-    
-  
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">190呐</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
   </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/09/精细Zookeeper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="190coder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="190呐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">精细Zookeeper </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-09T13:31:19+08:00">
-                2020-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
-                    <span itemprop="name">Zookeeper</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-07-09 13:31" pubdate>
+      2020年7月9日 下午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      70
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>ZooKeeper主要的使用场景就是分布式协同服务，保证分布式信息的一致性。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">精细Zookeeper </h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>ZooKeeper主要的使用场景就是分布式协同服务，保证分布式信息的一致性。</p>
 <h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><p>Zookeeper是一个典型的分布式数据一致性解决方案，分布式应用可以基于它实现数据订阅/发布、负载均衡、命名服务、集群服务、分布式锁和分布式队列等功能。</p>
 <ul>
 <li>集群角色：在zk中，没有沿用Master/Slave(主备)概念，而是引入了Leader、Follwer、Observer三种角色。通过Leader选举来选定一台Leader机器,Leader机器为客户端提供读写服务，其他角色提供读服务，<strong>唯一区别就是Observer不参与Leader选举过程、写操作过半成功策略</strong>，因此Oberver可以在不影响写性能情况下提高集群性能。</li>
@@ -386,19 +224,23 @@
 <li><p>下载地址：<a href="https://zookeeper.apache.org/releases.html" target="_blank" rel="noopener">https://zookeeper.apache.org/releases.html</a></p>
 </li>
 <li><p>解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.14.tar.gz</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">tar</span> <span class="hljs-selector-tag">-zxvf</span> <span class="hljs-selector-tag">zookeeper-3</span><span class="hljs-selector-class">.4</span><span class="hljs-selector-class">.14</span><span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.gz</span></code></pre></div>
 </li>
 <li><p>创建data文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd zookeeper-3.4.14</span><br><span class="line">mkdir data</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">cd</span> <span class="hljs-selector-tag">zookeeper-3</span><span class="hljs-selector-class">.4</span><span class="hljs-selector-class">.14</span>
+<span class="hljs-selector-tag">mkdir</span> <span class="hljs-selector-tag">data</span></code></pre></div>
 </li>
 <li><p>修改配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd conf</span><br><span class="line">mv zoo_sample.cfg zoo.cfg</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">cd</span> <span class="hljs-selector-tag">conf</span>
+<span class="hljs-selector-tag">mv</span> <span class="hljs-selector-tag">zoo_sample</span><span class="hljs-selector-class">.cfg</span> <span class="hljs-selector-tag">zoo</span><span class="hljs-selector-class">.cfg</span></code></pre></div>
 </li>
 <li><p>修改zoo.cfg 中data属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/root/zookeeper-3.4.14/data</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-title">dataDir</span>=/root/zookeeper<span class="hljs-number">-3.4</span><span class="hljs-number">.14</span>/<span class="hljs-class"><span class="hljs-keyword">data</span></span></code></pre></div>
 </li>
 <li><p>服务启动、看状态、停止</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh start</span><br><span class="line">./zkServer.sh status</span><br><span class="line">./zkServer.sh stop</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">./zkServer<span class="hljs-selector-class">.sh</span> start
+./zkServer<span class="hljs-selector-class">.sh</span> status
+./zkServer<span class="hljs-selector-class">.sh</span> stop</code></pre></div>
 
 </li>
 </ol>
@@ -411,27 +253,34 @@
 <p>前几步与单机一样，主要是复制多个zk和配置变动：</p>
 <ul>
 <li><p>server 1:</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clientPort=2181 </span><br><span class="line">dataDir=/zkcluster/zookeeper01/data </span><br><span class="line">dataLogDir=/zkcluster/zookeeper01/data/logs</span><br></pre></td></tr></table></figure>
+  <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">clientPort</span>=<span class="hljs-number">2181</span> 
+<span class="hljs-attr">dataDir</span>=/zkcluster/zookeeper01/data 
+<span class="hljs-attr">dataLogDir</span>=/zkcluster/zookeeper01/data/logs</code></pre></div>
 </li>
 <li><p>server 2:</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clientPort=21812</span><br><span class="line">dataDir=/zkcluster/zookeeper02/data </span><br><span class="line">dataLogDir=/zkcluster/zookeeper02/data/logs</span><br></pre></td></tr></table></figure>
+  <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">clientPort</span>=<span class="hljs-number">21812</span>
+<span class="hljs-attr">dataDir</span>=/zkcluster/zookeeper02/data 
+<span class="hljs-attr">dataLogDir</span>=/zkcluster/zookeeper02/data/logs</code></pre></div>
 </li>
 <li><p>更多服务配置…</p>
 </li>
 <li><p>配置集群：在每个zk的data下创建myid，分别是1，2，3，记录服务ID</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch myid</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">touch myid</span></code></pre></div>
 
 <ul>
 <li>在每个zk的zoo.cfg 配置端口访问和集群服务IP列表</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server.1=10.211.55.4:2881:3881</span><br><span class="line">server.2=10.211.55.4:2882:3882</span><br><span class="line">server.3=10.211.55.4:2883:3883</span><br><span class="line">#server.服务器ID=服务器IP地址:服务器之间通信端口:服务器之间投票选举端口</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">server<span class="hljs-meta">.1</span>=<span class="hljs-number">10.211</span><span class="hljs-meta">.55</span><span class="hljs-meta">.4</span>:<span class="hljs-number">2881</span>:<span class="hljs-number">3881</span>
+server<span class="hljs-meta">.2</span>=<span class="hljs-number">10.211</span><span class="hljs-meta">.55</span><span class="hljs-meta">.4</span>:<span class="hljs-number">2882</span>:<span class="hljs-number">3882</span>
+server<span class="hljs-meta">.3</span>=<span class="hljs-number">10.211</span><span class="hljs-meta">.55</span><span class="hljs-meta">.4</span>:<span class="hljs-number">2883</span>:<span class="hljs-number">3883</span>
+#server.服务器ID=服务器<span class="hljs-built_in">IP</span>地址:服务器之间通信端口:服务器之间投票选举端口</code></pre></div>
 
 <ul>
 <li>启动实例，完成集群</li>
 </ul>
-<h2 id="三、基本使用"><a href="#三、基本使用" class="headerlink" title="三、基本使用"></a>三、基本使用</h2><h3 id="1-系统模型"><a href="#1-系统模型" class="headerlink" title="1. 系统模型"></a>1. 系统模型</h3><p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a27cd31b8034?w=1124&h=656&f=png&s=188105" alt><br>根据斜杠分割表示路径。</p>
+<h2 id="三、基本使用"><a href="#三、基本使用" class="headerlink" title="三、基本使用"></a>三、基本使用</h2><h3 id="1-系统模型"><a href="#1-系统模型" class="headerlink" title="1. 系统模型"></a>1. 系统模型</h3><p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a27cd31b8034?w=1124&h=656&f=png&s=188105" srcset="/img/loading.gif" alt><br>根据斜杠分割表示路径。</p>
 <h4 id="1-1-ZNode节点可分为三大类："><a href="#1-1-ZNode节点可分为三大类：" class="headerlink" title="1.1 ZNode节点可分为三大类："></a>1.1 ZNode节点可分为三大类：</h4><ul>
 <li>持久性节点：一直存在，直到删除主动清除</li>
 <li>持久顺序性节点：+ 顺序</li>
@@ -440,11 +289,22 @@
 </ul>
 <p>不同类型有不同类型的生命周期</p>
 <h4 id="1-2-事务ID"><a href="#1-2-事务ID" class="headerlink" title="1.2 事务ID"></a>1.2 事务ID</h4><p>用ZXID表示，通常是一个64位数字，每一次ZXID对应一次新操作，间接直到zk处理更新操作的全局顺序</p>
-<h4 id="1-3-ZNode-状态信息"><a href="#1-3-ZNode-状态信息" class="headerlink" title="1.3 ZNode 状态信息"></a>1.3 ZNode 状态信息</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a36e04586466?w=1326&h=676&f=png&s=482701" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">cZxid 就是 Create ZXID，表示节点被创建时的事务ID。</span><br><span class="line">ctime 就是 Create Time，表示节点创建时间。</span><br><span class="line">mZxid 就是 Modified ZXID，表示节点最后一次被修改时的事务ID。</span><br><span class="line">mtime 就是 Modified Time，表示节点最后一次被修改的时间。</span><br><span class="line">pZxid 表示该节点的子节点列表最后一次被修改时的事务 ID。只有子节点列表变更才会更新 pZxid，</span><br><span class="line">子节点内容变更不会更新。</span><br><span class="line">cversion 表示子节点的版本号。</span><br><span class="line">dataVersion 表示内容版本号。</span><br><span class="line">aclVersion 标识acl版本</span><br><span class="line">ephemeralOwner 表示创建该临时节点时的会话 sessionID，如果是持久性节点那么值为 0 dataLength 表示数据⻓度。</span><br><span class="line">numChildren 表示直系子节点数。</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-ZNode-状态信息"><a href="#1-3-ZNode-状态信息" class="headerlink" title="1.3 ZNode 状态信息"></a>1.3 ZNode 状态信息</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a36e04586466?w=1326&h=676&f=png&s=482701" srcset="/img/loading.gif" alt></p>
+<div class="hljs"><pre><code class="hljs undefined"> 
+cZxid 就是 <span class="hljs-keyword">Create</span> ZXID，表示节点被创建时的事务<span class="hljs-keyword">ID</span>。
+ctime 就是 <span class="hljs-keyword">Create</span> <span class="hljs-built_in">Time</span>，表示节点创建时间。
+mZxid 就是 Modified ZXID，表示节点最后一次被修改时的事务<span class="hljs-keyword">ID</span>。
+mtime 就是 Modified <span class="hljs-built_in">Time</span>，表示节点最后一次被修改的时间。
+pZxid 表示该节点的子节点列表最后一次被修改时的事务 <span class="hljs-keyword">ID</span>。只有子节点列表变更才会更新 pZxid，
+子节点内容变更不会更新。
+cversion 表示子节点的版本号。
+dataVersion 表示内容版本号。
+aclVersion 标识acl版本
+ephemeralOwner 表示创建该临时节点时的会话 sessionID，如果是持久性节点那么值为 <span class="hljs-number">0</span> <span class="hljs-keyword">dataLength</span> 表示数据⻓度。
+numChildren 表示直系子节点数。</code></pre></div>
 
 <h4 id="1-4-Watcher-gt-数据变更通知"><a href="#1-4-Watcher-gt-数据变更通知" class="headerlink" title="1.4 Watcher-&gt; 数据变更通知"></a>1.4 Watcher-&gt; 数据变更通知</h4><p>zk使用Watcher实现发布/订阅，流程如下：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a38b6156c9ee?w=866&h=492&f=png&s=100924" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a38b6156c9ee?w=866&h=492&f=png&s=100924" srcset="/img/loading.gif" alt></p>
 <h4 id="1-5-ACL-gt-保证数据安全"><a href="#1-5-ACL-gt-保证数据安全" class="headerlink" title="1.5 ACL -&gt;保证数据安全"></a>1.5 ACL -&gt;保证数据安全</h4><p>从三方面理解ACL机制，权限模式 Scheme 、授权对象ID、权限Permission,通常使用<strong>scheme: id : permission 标识有效的ACL信息</strong> :</p>
 <ul>
 <li><p>权限模式 Scheme </p>
@@ -459,47 +319,65 @@
 </li>
 </ul>
 <h3 id="2-命令行操作"><a href="#2-命令行操作" class="headerlink" title="2. 命令行操作"></a>2. 命令行操作</h3><ul>
-<li>进入客户端：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./zkCli.sh 连接本地的zookeeper服务器</span><br><span class="line">./zkCli.sh -server ip:port 连接指定的服务器</span><br></pre></td></tr></table></figure>
+<li>进入客户端：<div class="hljs"><pre><code class="hljs undefined">./zkCli<span class="hljs-selector-class">.sh</span> 连接本地的zookeeper服务器
+./zkCli<span class="hljs-selector-class">.sh</span> -server ip:port 连接指定的服务器</code></pre></div>
 
 </li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a4bcf9da16e3?w=1218&h=1142&f=png&s=714898" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/4/1731a4bcf9da16e3?w=1218&h=1142&f=png&s=714898" srcset="/img/loading.gif" alt></p>
 <ul>
 <li>创建节点：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create [-s][-e] path data acl</span><br><span class="line">//其中，-s或-e分别指定节点特性，顺序或临时节点，若不指定，则创建持久节点;acl用来进行权限控制。</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">create [<span class="hljs-string">-s</span>][<span class="hljs-symbol">-e</span>] path data acl
+//其中，-s或-e分别指定节点特性，顺序或临时节点，若不指定，则创建持久节点;acl用来进行权限控制。</code></pre></div>
 
 <ul>
 <li><p>创建永久节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /zk-permanent 123</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">create</span> /zk-<span class="hljs-literal">permanent</span> <span class="hljs-number">123</span></code></pre></div>
 </li>
 <li><p>读取节点</p>
 </li>
 </ul>
 <p>path表示的是指定数据节点的节点路径，例：get /zk-permanent</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls path // ls 列出所有子节点、只能查看下一级子节点</span><br><span class="line">get path // 可获取指定节点数据内容和属性信息</span><br><span class="line">ls/  // 获取根节点所有子节点</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">ls</span> path <span class="hljs-string">//</span> <span class="hljs-keyword">ls</span> 列出所有子节点、只能查看下一级子节点
+get path <span class="hljs-string">//</span> 可获取指定节点数据内容和属性信息
+<span class="hljs-keyword">ls</span>/  <span class="hljs-string">//</span> 获取根节点所有子节点</code></pre></div>
 
 <ul>
 <li>更新节点/删除节点 例：set /zk-test0000000000 4567 ，返回更新后信息，其中dataVersion 自增</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set path data [version]</span><br><span class="line">delete path [version]</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">set</span> <span class="hljs-keyword">path</span> <span class="hljs-keyword">data</span> [<span class="hljs-keyword">version</span>]
+<span class="hljs-keyword">delete</span> <span class="hljs-keyword">path</span> [<span class="hljs-keyword">version</span>]</code></pre></div>
 
 <h3 id="3-api-使用"><a href="#3-api-使用" class="headerlink" title="3. api 使用"></a>3. api 使用</h3><p>引入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.4.14&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.zookeeper<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>zookeeper<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.14<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 
 <p>剩下的crud，直接交给搜索引擎…</p>
-<h3 id="4-zk-开源客户端"><a href="#4-zk-开源客户端" class="headerlink" title="4. zk 开源客户端"></a>4. zk 开源客户端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">    &lt;groupId&gt;com.101tec&lt;/groupId&gt; </span><br><span class="line">    &lt;artifactId&gt;zkclient&lt;/artifactId&gt; </span><br><span class="line">    &lt;version&gt;0.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="4-zk-开源客户端"><a href="#4-zk-开源客户端" class="headerlink" title="4. zk 开源客户端"></a>4. zk 开源客户端</h3><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.101tec<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>zkclient<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 
 <p>api使用更加方便简洁，剩下的，直接交给搜索引擎…</p>
 <h3 id="5-Curator-客户端"><a href="#5-Curator-客户端" class="headerlink" title="5. Curator 客户端"></a>5. Curator 客户端</h3><p>提供了Fluent 编程风格支持，封装zk底层的细节开发工作，包括重连、反复注册Watcher。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; </span><br><span class="line">    &lt;artifactId&gt;curator-framework&lt;/artifactId&gt; </span><br><span class="line">    &lt;version&gt;2.12.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.curator<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>curator-framework<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.12.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 
 <p>剩下的，直接交给搜索引擎…</p>
 <h2 id="四、应用场景"><a href="#四、应用场景" class="headerlink" title="四、应用场景"></a>四、应用场景</h2><h3 id="1-数据发布-订阅"><a href="#1-数据发布-订阅" class="headerlink" title="1. 数据发布/订阅"></a>1. 数据发布/订阅</h3><p>发布/订阅有2种设计模式，推Push &amp; 拉Pull。在推模中，服务端将所有数据更新发给订阅的客户端，而拉是由客户端主动发起请求获取最新数据。通常采用轮寻。</p>
 <p>zk采用推拉结合，客户端向服务端注册自己需要关注的节点，一旦该节点数据发生变更，服务器像客户端发送Watcher事件通知，收到消息主动向服务端获取最新数据。<strong>这种模式主要用于配置信息获取同步。</strong></p>
 <h3 id="2-命名服务"><a href="#2-命名服务" class="headerlink" title="2. 命名服务"></a>2. 命名服务</h3><p>通常客户端能够根据指定名字获取资源实体、服务地址和提供者信息。来实现提供全局唯一ID的分配机制。其中比较常见的RPC就是使用这种机制。</p>
 <p><strong>由于zk可以创建顺序节点，保证了同一节点下子节点是唯一的</strong>，所以直接按照存放文件的方法，设置节点，比如一个路径下不可能存在两个相同的文件名，这种定义创建节点，就是全局唯一ID，如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZkClient zkClient = <span class="keyword">new</span> ZkClient(<span class="string">"127.0.0.1:2181"</span>, <span class="number">5000</span>);</span><br><span class="line">zkClient.createPersistentSequential(<span class="string">"/home/zjn/wyid"</span>,<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs java">ZkClient zkClient = <span class="hljs-keyword">new</span> ZkClient(<span class="hljs-string">"127.0.0.1:2181"</span>, <span class="hljs-number">5000</span>);
+zkClient.createPersistentSequential(<span class="hljs-string">"/home/zjn/wyid"</span>,<span class="hljs-keyword">null</span>);</code></pre></div>
 
 <p>获取节点直接拼接所定义的路径，方可得到全局唯一ID</p>
 <h3 id="3-集群管理"><a href="#3-集群管理" class="headerlink" title="3. 集群管理"></a>3. 集群管理</h3><p>根据zk的<strong>watcher机制和会话结束临时节点自动删除</strong>两大特性可实现实时监控机器活动，实现集群管理。</p>
@@ -516,11 +394,106 @@
 </li>
 </ul>
 <p>释放后，重新获取锁，整个流程如下：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731ceccd77199ad?w=666&h=654&f=png&s=136671" alt></p>
-<h4 id="5-2-实现共享锁（读锁）"><a href="#5-2-实现共享锁（读锁）" class="headerlink" title="5.2 实现共享锁（读锁）"></a>5.2 实现共享锁（读锁）</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731cfe54d39a3f1?w=686&h=460&f=png&s=53614" alt><br>其实就是与写锁区分开，单独创建一个读的节点 例如 ：”/shared_lock/host1-R-0000000001”。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731ceccd77199ad?w=666&h=654&f=png&s=136671" srcset="/img/loading.gif" alt></p>
+<h4 id="5-2-实现共享锁（读锁）"><a href="#5-2-实现共享锁（读锁）" class="headerlink" title="5.2 实现共享锁（读锁）"></a>5.2 实现共享锁（读锁）</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731cfe54d39a3f1?w=686&h=460&f=png&s=53614" srcset="/img/loading.gif" alt><br>其实就是与写锁区分开，单独创建一个读的节点 例如 ：”/shared_lock/host1-R-0000000001”。</p>
 <p><strong>这里说明下，在同一节点下创建任何带顺序子节点，都会使序号递增。</strong></p>
 <p>下面摘抄下网络上的共享锁demo，方便配合解释理解：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.itcast.bigdata.zklock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.CreateMode;</span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.WatchedEvent;</span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.Watcher;</span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.Watcher.Event.EventType;</span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.ZooDefs.Ids;</span><br><span class="line"><span class="keyword">import</span> org.apache.zookeeper.ZooKeeper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ZookeeperShareLock</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 会话超时</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SESSION_TIMEOUT = <span class="number">2000</span>;</span><br><span class="line">    <span class="comment">// zookeeper集群地址</span></span><br><span class="line">    <span class="keyword">private</span> String hosts = <span class="string">"mini1:2181,mini2:2181,mini3:2181"</span>;</span><br><span class="line">    <span class="keyword">private</span> String groupNode = <span class="string">"locks"</span>;</span><br><span class="line">    <span class="keyword">private</span> String subNode = <span class="string">"sub"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> haveLock = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ZooKeeper zk;</span><br><span class="line">    <span class="comment">// 记录自己创建的子节点路径</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> String thisPath;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 连接zookeeper</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectZookeeper</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        zk = <span class="keyword">new</span> ZooKeeper(hosts, SESSION_TIMEOUT, <span class="keyword">new</span> Watcher() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(WatchedEvent event)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 判断事件类型，此处只处理子节点变化事件</span></span><br><span class="line">                    <span class="keyword">if</span> (event.getType() == EventType.NodeChildrenChanged &amp;&amp; event.getPath().equals(<span class="string">"/"</span> + groupNode)) &#123;</span><br><span class="line">                        <span class="comment">//获取子节点，并对父节点进行监听</span></span><br><span class="line">                        List&lt;String&gt; childrenNodes = zk.getChildren(<span class="string">"/"</span> + groupNode, <span class="keyword">true</span>);</span><br><span class="line">                        String thisNode = thisPath.substring((<span class="string">"/"</span> + groupNode + <span class="string">"/"</span>).length());</span><br><span class="line">                        <span class="comment">// 去比较是否自己是最小id</span></span><br><span class="line">                        Collections.sort(childrenNodes);</span><br><span class="line">                        <span class="keyword">if</span> (childrenNodes.indexOf(thisNode) == <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="comment">//访问共享资源处理业务，并且在处理完成之后删除锁</span></span><br><span class="line">                            doSomething();</span><br><span class="line">                            <span class="comment">//重新注册一把新的锁</span></span><br><span class="line">                            thisPath = zk.create(<span class="string">"/"</span> + groupNode + <span class="string">"/"</span> + subNode, <span class="keyword">null</span>, Ids.OPEN_ACL_UNSAFE,</span><br><span class="line">                                    CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1、程序一进来就先注册一把锁到zk上</span></span><br><span class="line">        thisPath = zk.create(<span class="string">"/"</span> + groupNode + <span class="string">"/"</span> + subNode, <span class="keyword">null</span>, Ids.OPEN_ACL_UNSAFE,</span><br><span class="line">                CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// wait一小会，便于观察</span></span><br><span class="line">        Thread.sleep(<span class="keyword">new</span> Random().nextInt(<span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从zk的锁父目录下，获取所有子节点，并且注册对父节点的监听</span></span><br><span class="line">        List&lt;String&gt; childrenNodes = zk.getChildren(<span class="string">"/"</span> + groupNode, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果争抢资源的程序就只有自己，则可以直接去访问共享资源</span></span><br><span class="line">        <span class="keyword">if</span> (childrenNodes.size() == <span class="number">1</span>) &#123;</span><br><span class="line">            doSomething();</span><br><span class="line">            thisPath = zk.create(<span class="string">"/"</span> + groupNode + <span class="string">"/"</span> + subNode, <span class="keyword">null</span>, Ids.OPEN_ACL_UNSAFE,</span><br><span class="line">                    CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理业务逻辑，并且在最后释放锁</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"gain lock: "</span> + thisPath);</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"finished: "</span> + thisPath);</span><br><span class="line">            <span class="comment">// 将thisPath删除, 监听thisPath的client将获得通知</span></span><br><span class="line">            <span class="comment">// 相当于释放锁</span></span><br><span class="line">            zk.delete(<span class="keyword">this</span>.thisPath, -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ZookeeperShareLock dl = <span class="keyword">new</span> ZookeeperShareLock();</span><br><span class="line">        dl.connectZookeeper();</span><br><span class="line">        Thread.sleep(Long.MAX_VALUE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.itcast.bigdata.zklock;
+
+<span class="hljs-keyword">import</span> java.util.Collections;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Random;
+
+<span class="hljs-keyword">import</span> org.apache.zookeeper.CreateMode;
+<span class="hljs-keyword">import</span> org.apache.zookeeper.WatchedEvent;
+<span class="hljs-keyword">import</span> org.apache.zookeeper.Watcher;
+<span class="hljs-keyword">import</span> org.apache.zookeeper.Watcher.Event.EventType;
+<span class="hljs-keyword">import</span> org.apache.zookeeper.ZooDefs.Ids;
+<span class="hljs-keyword">import</span> org.apache.zookeeper.ZooKeeper;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ZookeeperShareLock</span> </span>&#123;
+    <span class="hljs-comment">// 会话超时</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> SESSION_TIMEOUT = <span class="hljs-number">2000</span>;
+    <span class="hljs-comment">// zookeeper集群地址</span>
+    <span class="hljs-keyword">private</span> String hosts = <span class="hljs-string">"mini1:2181,mini2:2181,mini3:2181"</span>;
+    <span class="hljs-keyword">private</span> String groupNode = <span class="hljs-string">"locks"</span>;
+    <span class="hljs-keyword">private</span> String subNode = <span class="hljs-string">"sub"</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> haveLock = <span class="hljs-keyword">false</span>;
+
+    <span class="hljs-keyword">private</span> ZooKeeper zk;
+    <span class="hljs-comment">// 记录自己创建的子节点路径</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> String thisPath;
+
+    <span class="hljs-comment">/**
+     * 连接zookeeper
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">connectZookeeper</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        zk = <span class="hljs-keyword">new</span> ZooKeeper(hosts, SESSION_TIMEOUT, <span class="hljs-keyword">new</span> Watcher() &#123;
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(WatchedEvent event)</span> </span>&#123;
+                <span class="hljs-keyword">try</span> &#123;
+
+                    <span class="hljs-comment">// 判断事件类型，此处只处理子节点变化事件</span>
+                    <span class="hljs-keyword">if</span> (event.getType() == EventType.NodeChildrenChanged &amp;&amp; event.getPath().equals(<span class="hljs-string">"/"</span> + groupNode)) &#123;
+                        <span class="hljs-comment">//获取子节点，并对父节点进行监听</span>
+                        List&lt;String&gt; childrenNodes = zk.getChildren(<span class="hljs-string">"/"</span> + groupNode, <span class="hljs-keyword">true</span>);
+                        String thisNode = thisPath.substring((<span class="hljs-string">"/"</span> + groupNode + <span class="hljs-string">"/"</span>).length());
+                        <span class="hljs-comment">// 去比较是否自己是最小id</span>
+                        Collections.sort(childrenNodes);
+                        <span class="hljs-keyword">if</span> (childrenNodes.indexOf(thisNode) == <span class="hljs-number">0</span>) &#123;
+                            <span class="hljs-comment">//访问共享资源处理业务，并且在处理完成之后删除锁</span>
+                            doSomething();
+                            <span class="hljs-comment">//重新注册一把新的锁</span>
+                            thisPath = zk.create(<span class="hljs-string">"/"</span> + groupNode + <span class="hljs-string">"/"</span> + subNode, <span class="hljs-keyword">null</span>, Ids.OPEN_ACL_UNSAFE,
+                                    CreateMode.EPHEMERAL_SEQUENTIAL);
+                        &#125;
+                    &#125;
+                &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;);
+
+        <span class="hljs-comment">// 1、程序一进来就先注册一把锁到zk上</span>
+        thisPath = zk.create(<span class="hljs-string">"/"</span> + groupNode + <span class="hljs-string">"/"</span> + subNode, <span class="hljs-keyword">null</span>, Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL);
+
+        <span class="hljs-comment">// wait一小会，便于观察</span>
+        Thread.sleep(<span class="hljs-keyword">new</span> Random().nextInt(<span class="hljs-number">1000</span>));
+
+        <span class="hljs-comment">// 从zk的锁父目录下，获取所有子节点，并且注册对父节点的监听</span>
+        List&lt;String&gt; childrenNodes = zk.getChildren(<span class="hljs-string">"/"</span> + groupNode, <span class="hljs-keyword">true</span>);
+
+        <span class="hljs-comment">//如果争抢资源的程序就只有自己，则可以直接去访问共享资源</span>
+        <span class="hljs-keyword">if</span> (childrenNodes.size() == <span class="hljs-number">1</span>) &#123;
+            doSomething();
+            thisPath = zk.create(<span class="hljs-string">"/"</span> + groupNode + <span class="hljs-string">"/"</span> + subNode, <span class="hljs-keyword">null</span>, Ids.OPEN_ACL_UNSAFE,
+                    CreateMode.EPHEMERAL_SEQUENTIAL);
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">/**
+     * 处理业务逻辑，并且在最后释放锁
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doSomething</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        <span class="hljs-keyword">try</span> &#123;
+            System.out.println(<span class="hljs-string">"gain lock: "</span> + thisPath);
+            Thread.sleep(<span class="hljs-number">2000</span>);
+            <span class="hljs-comment">// do something</span>
+        &#125; <span class="hljs-keyword">finally</span> &#123;
+            System.out.println(<span class="hljs-string">"finished: "</span> + thisPath);
+            <span class="hljs-comment">// 将thisPath删除, 监听thisPath的client将获得通知</span>
+            <span class="hljs-comment">// 相当于释放锁</span>
+            zk.delete(<span class="hljs-keyword">this</span>.thisPath, -<span class="hljs-number">1</span>);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        ZookeeperShareLock dl = <span class="hljs-keyword">new</span> ZookeeperShareLock();
+        dl.connectZookeeper();
+        Thread.sleep(Long.MAX_VALUE);
+    &#125;
+
+&#125;</code></pre></div>
 
 <p>以上就是实现最简单的共享锁的逻辑。<br>如果升级为读写锁都有，其实实现读写锁核心就是判断读写顺序就可以 ，如下：</p>
 <ol>
@@ -530,21 +503,22 @@
 <li>接收到Watcher通知后，重复步骤1</li>
 </ol>
 <h4 id="5-3-羊群效应"><a href="#5-3-羊群效应" class="headerlink" title="5.3 羊群效应"></a>5.3 羊群效应</h4><p>以上实现可以满足一般分布式集群竞争锁的需求（一般集群为10台机器以内），并且性能都还可以。但是机器规模扩大后，会出现问题，如下图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d2622e1222b9?w=666&h=694&f=png&s=81526" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d2622e1222b9?w=666&h=694&f=png&s=81526" srcset="/img/loading.gif" alt></p>
 <p>以上会出现的问题，就是如果 host1完成读操作，并将节点删除，会通知所有节点，但是你如果理解上面讲的判断读写顺序，其实可以分析出，host1移除只影响host2，对其他机器并没有产生影响。<strong>如果同一时间有多个节点完成事务给大量节点进行通知，会对网络开销和性能造成巨大影响，这就是所谓的羊群效应。</strong></p>
 <p>问题根源就是没有找准客户端真正关注的点，其实分布式锁的竞争核心是<strong>只需要关注比自己序号小的那个节点的变更情况</strong>就可以，不需要关注所有节点。</p>
 <p>改进：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d3aa818f6c95?w=1058&h=974&f=png&s=445385" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d3aa818f6c95?w=1058&h=974&f=png&s=445385" srcset="/img/loading.gif" alt></p>
 <p><strong>核心：只对比自己小的节点注册Watcher机制</strong></p>
 <p>至于demo就不放上来了，这么实现还是比较复杂的，合理运用搜索引擎…<br>最后建议在实际生产环境中，尽量去缩小锁的范围。能简化开发则简化。毕竟一般公司达不到大规模集群…</p>
 <h3 id="6-分布式队列"><a href="#6-分布式队列" class="headerlink" title="6. 分布式队列"></a>6. 分布式队列</h3><h4 id="6-1-FIFO-先入先出"><a href="#6-1-FIFO-先入先出" class="headerlink" title="6.1 FIFO 先入先出"></a>6.1 FIFO 先入先出</h4><p>和创建共享锁差不多，判断自己序号是不是最小，是就等，不是就dosomeing…</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d46a923785e7?w=726&h=602&f=png&s=198338" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d46a923785e7?w=726&h=602&f=png&s=198338" srcset="/img/loading.gif" alt></p>
 <h4 id="6-2-Barrier-分布式屏障"><a href="#6-2-Barrier-分布式屏障" class="headerlink" title="6.2 Barrier: 分布式屏障"></a>6.2 Barrier: 分布式屏障</h4><p><strong>可以理解成分布式闭锁</strong>，特指分布式一个协调条件，规定了一个队列元素必须聚焦后才能统一进行安排，否则一直等待。一般应用在大规模分布式计算应用场景。</p>
 <p>设计思想如下：</p>
 <p>设置一个/queue_barrier 节点，其数据内容赋值为一个数字n来代表Barrier 值，步骤如下：</p>
 <ol>
 <li><p>创建并设置值</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create /queue_barrier 10</span><br><span class="line">get /queue_barrier // 得到10</span><br></pre></td></tr></table></figure>
+ <div class="hljs"><pre><code class="hljs undefined">create <span class="hljs-string">/queue_barrier</span> 10
+get <span class="hljs-string">/queue_barrier</span> <span class="hljs-string">//</span> 得到10</code></pre></div>
 </li>
 <li><p>通过 getChildren 获取所有子节点，同时对注册子节点变更的Watcher监听。</p>
 </li>
@@ -553,11 +527,11 @@
 <li><p>接受Watch通知，重复步骤2</p>
 </li>
 </ol>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d4ed5678a5c9?w=880&h=690&f=png&s=188691" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d4ed5678a5c9?w=880&h=690&f=png&s=188691" srcset="/img/loading.gif" alt></p>
 <h2 id="五、深入进阶"><a href="#五、深入进阶" class="headerlink" title="五、深入进阶"></a>五、深入进阶</h2><h3 id="1-ZAB协议"><a href="#1-ZAB协议" class="headerlink" title="1. ZAB协议"></a>1. ZAB协议</h3><p>Zab协议是为分布式协调服务Zookeeper专门设计的一种支持崩溃恢复的原子广播协议，是Zookeeper保证数据一致性的核心算法。Zab借鉴了Paxos算法，但又不像Paxos那样，是一种通用的分布式一致性算法。它是特别为Zookeeper设计的支持<strong>崩溃恢复的原子广播协议</strong>。</p>
 <p>ZAB核心是定义对于改变zk服务数据状态的事务请求的处理方式：</p>
 <p>即:所有事务请求必须由一个全局唯一的服务器来协调处理，这样的服务器被称为Leader服务器，余下的 服务器则称为Follower服务器，Leader服务器负责将一个客户端事务请求转化成一个事务Proposal(提 议)，并将该Proposal分发给集群中所有的Follower服务器，之后Leader服务器需要等待所有 Follower服务器的反馈，一旦超过半数的Follower服务器进行了正确的反馈后，那么Leader就会再次向 所有的Follower服务器分发Commit消息，要求其将前一个Proposal进行提交，类似2pc</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d6378f954ff4?w=1224&h=494&f=png&s=83797" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731d6378f954ff4?w=1224&h=494&f=png&s=83797" srcset="/img/loading.gif" alt></p>
 <p><strong>协议内容</strong></p>
 <p>当整个集群启动过程中，或者当 Leader 服务器出现网络中弄断、崩溃退出或重启等异常时，Zab协议就会 进入崩溃恢复模式，选举产生新的Leader。当新的Leader出来了，同时，已有过半机器完成同步之后，ZAB协议将退出恢复模式。<strong>进入消息广播模式</strong>。这时，如果有一台遵守Zab协议的服务器加入集群，因为此时集群中已经存在一个Leader服务器在广播消息，那么该新加入的服务器自动进入恢复模式：找到Leader服务器，并且完成数据同步。同步完成后，作为新的Follower一起参与到消息广播流程中。如果集群中其他机器收到客户端事务请求后，那么会先转发Leader服务器，由Leader统一处理。</p>
 <ul>
@@ -595,9 +569,9 @@
 <p><strong>ZAB与Paxos联系&amp;区别</strong></p>
 <p>两者设计目标不一样，ZAB主要用于构建高可用分布式系统，Paxos 算法用于构建一致性状态机器。所有会有细微差别。但是ZAB就是在Paxos保证一致性基础上设计出高可用的协议。</p>
 <h3 id="2-服务器角色"><a href="#2-服务器角色" class="headerlink" title="2. 服务器角色"></a>2. 服务器角色</h3><h4 id="Leader"><a href="#Leader" class="headerlink" title="Leader"></a>Leader</h4><p>zk的核心，主要工作如下：</p>
-<pre><code>1. 事务请求的唯一调度和处理者，保证集群的顺序性。
-2. 集群各服务调度者。</code></pre><p><strong>请求处理链：</strong></p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e548fcfee4e0?w=1446&h=292&f=png&s=110564" alt></p>
+<div class="hljs"><pre><code>1. 事务请求的唯一调度和处理者，保证集群的顺序性。
+2. 集群各服务调度者。</code></pre></div><p><strong>请求处理链：</strong></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e548fcfee4e0?w=1446&h=292&f=png&s=110564" srcset="/img/loading.gif" alt></p>
 <ul>
 <li>PrepRequestProcessor：请求预处理器。如创建请求事务头、事务体、会话检查、ACL检查和版本检查</li>
 <li>ProposalRequestProcessor ：事务日志记录处理器。事务处理发起者，非事务请求直接转发CommitProcessor，对于事务请求还需要创建Proposal提议，并发送给所有Follower，进行一次集群内事务投票。同时ProposalRequestProcessor还会将事务请求交给SyncRequestProcessor进行事务日志记录。</li>
@@ -608,16 +582,16 @@
 <li>FinalRequestProcessor ：用来进行对客户端请求的返回之前的操作，针对事务操作，直接应用到内存数据库。</li>
 </ul>
 <h4 id="Follower"><a href="#Follower" class="headerlink" title="Follower"></a>Follower</h4><p>跟随者，主要工作如下：</p>
-<pre><code>1. 处理非事务请求（读请求），转发事务请求给Leader
+<div class="hljs"><pre><code>1. 处理非事务请求（读请求），转发事务请求给Leader
 2. 参与事务请求Proposal投票
-3. 参与Leader选举</code></pre><p>Follower也采用了责任链模式处理客户端请求。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e62dce0de73e?w=1268&h=430&f=png&s=99390" alt></p>
+3. 参与Leader选举</code></pre></div><p>Follower也采用了责任链模式处理客户端请求。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e62dce0de73e?w=1268&h=430&f=png&s=99390" srcset="/img/loading.gif" alt></p>
 <ul>
 <li>FollowerRequestProcessor ： 事务请求转发器</li>
 <li>SendAckRequestProcessor ： 事务日志记录反馈，完成日志记录后，向Leader发送ACK消息表面完成工作。</li>
 </ul>
 <h4 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h4><p>zk3.3开始引入的角色，观察最新状态，并变更。与Follower不同只是不参与投票、选举，只提供非事务服务。<br>处理链如下：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e66e90da3b4c?w=1192&h=148&f=png&s=40865" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e66e90da3b4c?w=1192&h=148&f=png&s=40865" srcset="/img/loading.gif" alt></p>
 <p>SyncRequestProcessor 只是在初始化 记录日志、快照。运行中Leader不会将请求投票发给Observer</p>
 <h3 id="3-服务启动"><a href="#3-服务启动" class="headerlink" title="3. 服务启动"></a>3. 服务启动</h3><h4 id="五个步骤："><a href="#五个步骤：" class="headerlink" title="五个步骤："></a>五个步骤：</h4><ol>
 <li>配置文件解析</li>
@@ -629,22 +603,22 @@
 <ul>
 <li><strong>单机服务器启动流程</strong>：</li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e6ac3b89545a?w=1358&h=1000&f=png&s=253217" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e6ac3b89545a?w=1358&h=1000&f=png&s=253217" srcset="/img/loading.gif" alt></p>
 <hr>
 <ul>
 <li><strong>集群服务器启动流程</strong>：</li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e6c0e7bf0ba9?w=1406&h=1074&f=png&s=307315" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e6c0e7bf0ba9?w=1406&h=1074&f=png&s=307315" srcset="/img/loading.gif" alt></p>
 <h4 id="Leader-选举"><a href="#Leader-选举" class="headerlink" title="Leader 选举"></a>Leader 选举</h4><ol>
 <li>初始化Leader选举。集群模式特有，Zookeeper首先会根据自身的服务器ID(SID)、最新的 ZXID(lastLoggedZxid)和当前的服务器epoch(currentEpoch)来生成一个初始化投票，在 初始化过程中，每个服务器都会给自己投票。然后，根据zoo.cfg的配置，创建相应Leader选举算法 实现，Zookeeper提供了三种默认算法(LeaderElection、AuthFastLeaderElection、 FastLeaderElection)，可通过zoo.cfg中的electionAlg属性来指定，但现只支持 FastLeaderElection选举算法。在初始化阶段，Zookeeper会创建Leader选举所需的网络I/O层 QuorumCnxManager，同时启动对Leader选举端口的监听，等待集群中其他服务器创建连接。</li>
 <li>注册JMX服务。</li>
 <li>检测当前服务器状态<br>运行期间，QuorumPeer会不断检测当前服务器状态。在正常情况下，Zookeeper服务器的状态 在LOOKING、LEADING、FOLLOWING/OBSERVING之间进行切换。在启动阶段，QuorumPeer的初始 状态是LOOKING，因此开始进行Leader选举。</li>
 <li>Leader选举<br>ZooKeeper的Leader选举过程，简单地讲，就是一个集群中所有的机器相互之间进行一系列投 票，选举产生最合适的机器成为Leader，同时其余机器成为Follower或是Observer的集群机器⻆ 色初始化过程。关于Leader选举算法，简而言之，就是集群中哪个机器处理的数据越新(通常我们根 据每个服务器处理过的最大ZXID来比较确定其数据是否更新)，其越有可能成为Leader。当然，如 果集群中的所有机器处理的ZXID一致的话，那么SID最大的服务器成为Leader，其余机器称为 Follower和Observer</li>
 </ol>
-<h4 id="Leader-Follower-启动期交互过程"><a href="#Leader-Follower-启动期交互过程" class="headerlink" title="Leader Follower 启动期交互过程"></a>Leader Follower 启动期交互过程</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e747a193db8f?w=876&h=720&f=png&s=417301" alt></p>
+<h4 id="Leader-Follower-启动期交互过程"><a href="#Leader-Follower-启动期交互过程" class="headerlink" title="Leader Follower 启动期交互过程"></a>Leader Follower 启动期交互过程</h4><p><img src="https://user-gold-cdn.xitu.io/2020/7/5/1731e747a193db8f?w=876&h=720&f=png&s=417301" srcset="/img/loading.gif" alt></p>
 <h3 id="4-Leader选举"><a href="#4-Leader选举" class="headerlink" title="4. Leader选举"></a>4. Leader选举</h3><p>当zk集群一台服务器出现以下2种情况之一时候，需要进入Leader选举。</p>
-<pre><code>1. 服务器初始化启动
-2. 服务器运行无法和Leader保持连接。</code></pre><p>分析以上两种情况：</p>
+<div class="hljs"><pre><code>1. 服务器初始化启动
+2. 服务器运行无法和Leader保持连接。</code></pre></div><p>分析以上两种情况：</p>
 <ol>
 <li><p>启动时期选举：</p>
 <ul>
@@ -667,916 +641,281 @@
 </li>
 </ol>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/07/01/分布式理论-自定义RPC/" rel="next" title="分布式理论&自定义RPC">
-                <i class="fa fa-chevron-left"></i> 分布式理论&自定义RPC
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/17/Dubbo从实战-源码分析/" rel="prev" title="Dubbo从实战->源码分析">
-                Dubbo从实战->源码分析 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
-            
-              <p class="site-author-name" itemprop="name">190coder</p>
-              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">62</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Zookeeper/">Zookeeper</a>
+                    
+                  </div>
+                
+                
               </div>
-            
-
-            
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/17/Dubbo从实战-源码分析/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Dubbo从实战->源码分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/01/分布式理论-自定义RPC/">
+                        <span class="hidden-mobile">分布式理论&自定义RPC</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
             
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+          </article>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-text">一、简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本概念"><span class="nav-text">1. 基本概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-环境搭建"><span class="nav-text">二、 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-单机部署"><span class="nav-text">1. 单机部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-伪集群部署"><span class="nav-text">2. 伪集群部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、基本使用"><span class="nav-text">三、基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-系统模型"><span class="nav-text">1. 系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-ZNode节点可分为三大类："><span class="nav-text">1.1 ZNode节点可分为三大类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-事务ID"><span class="nav-text">1.2 事务ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-ZNode-状态信息"><span class="nav-text">1.3 ZNode 状态信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-Watcher-gt-数据变更通知"><span class="nav-text">1.4 Watcher-&gt; 数据变更通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-ACL-gt-保证数据安全"><span class="nav-text">1.5 ACL -&gt;保证数据安全</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-命令行操作"><span class="nav-text">2. 命令行操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-api-使用"><span class="nav-text">3. api 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-zk-开源客户端"><span class="nav-text">4. zk 开源客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Curator-客户端"><span class="nav-text">5. Curator 客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、应用场景"><span class="nav-text">四、应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据发布-订阅"><span class="nav-text">1. 数据发布/订阅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-命名服务"><span class="nav-text">2. 命名服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-集群管理"><span class="nav-text">3. 集群管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Master-选举"><span class="nav-text">4. Master 选举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-分布式锁"><span class="nav-text">5. 分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-实现排他锁"><span class="nav-text">5.1 实现排他锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-实现共享锁（读锁）"><span class="nav-text">5.2 实现共享锁（读锁）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-羊群效应"><span class="nav-text">5.3 羊群效应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-分布式队列"><span class="nav-text">6. 分布式队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-FIFO-先入先出"><span class="nav-text">6.1 FIFO 先入先出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-Barrier-分布式屏障"><span class="nav-text">6.2 Barrier: 分布式屏障</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、深入进阶"><span class="nav-text">五、深入进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ZAB协议"><span class="nav-text">1. ZAB协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-服务器角色"><span class="nav-text">2. 服务器角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Leader"><span class="nav-text">Leader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Follower"><span class="nav-text">Follower</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer"><span class="nav-text">Observer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-服务启动"><span class="nav-text">3. 服务启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#五个步骤："><span class="nav-text">五个步骤：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Leader-选举"><span class="nav-text">Leader 选举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Leader-Follower-启动期交互过程"><span class="nav-text">Leader Follower 启动期交互过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Leader选举"><span class="nav-text">4. Leader选举</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-	
-           
-         
-         <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+      </div>
     </div>
-  </aside>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
 
-
-        
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">190coder</span>
-
-  
+    
+  </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
+<!-- Custom -->
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-
-<div>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+  </main>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
       
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
       
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
 
 
+    
+  </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  
+<!-- Plugins -->
 
 
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
-
-	
-
-
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "精细Zookeeper &nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
@@ -1589,26 +928,13 @@ if(canvas.getContext){
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

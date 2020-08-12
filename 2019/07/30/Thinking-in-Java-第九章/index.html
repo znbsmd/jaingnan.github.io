@@ -1,1306 +1,935 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN" >
 
 
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="chinese">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-<meta name="referrer" content="no-referrer">
-
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>Thinking in Java 第九章 - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
   
     
-      
-    
-    
-      
-    
-  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
-  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="第九章 接口接口和内部类为我们踢动了一种将接口与实现分离的更加结构化的方法。 9.1 抽象类和抽象方法&amp;emsp;&amp;emsp;在第八章关于多态的例子中，基类方法往往没有具体的实现，它存在的目的是为不同的子类提供统一的方法，通过动态绑定以及向上转型来完成子类需要的功能。为此，我们可以创建一个这样的类，只为子类提供接口，并且不允许这个类实例化对象，我们可以让这个类中的方法返回一个错误信息，但是这样存在">
-<meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Thinking in Java 第九章">
-<meta property="og:url" content="http://yoursite.com/2019/07/30/Thinking-in-Java-第九章/index.html">
-<meta property="og:site_name" content="190呐">
-<meta property="og:description" content="第九章 接口接口和内部类为我们踢动了一种将接口与实现分离的更加结构化的方法。 9.1 抽象类和抽象方法&amp;emsp;&amp;emsp;在第八章关于多态的例子中，基类方法往往没有具体的实现，它存在的目的是为不同的子类提供统一的方法，通过动态绑定以及向上转型来完成子类需要的功能。为此，我们可以创建一个这样的类，只为子类提供接口，并且不允许这个类实例化对象，我们可以让这个类中的方法返回一个错误信息，但是这样存在">
-<meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-06-04T02:30:22.243Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thinking in Java 第九章">
-<meta name="twitter:description" content="第九章 接口接口和内部类为我们踢动了一种将接口与实现分离的更加结构化的方法。 9.1 抽象类和抽象方法&amp;emsp;&amp;emsp;在第八章关于多态的例子中，基类方法往往没有具体的实现，它存在的目的是为不同的子类提供统一的方法，通过动态绑定以及向上转型来完成子类需要的功能。为此，我们可以创建一个这样的类，只为子类提供接口，并且不允许这个类实例化对象，我们可以让这个类中的方法返回一个错误信息，但是这样存在">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '190coder'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/07/30/Thinking-in-Java-第九章/">
-
-
-
-
-
-  <title>Thinking in Java 第九章 | 190呐</title>
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-
-
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
 
-  
-  
-    
-  
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">190呐</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
   </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/Thinking-in-Java-第九章/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="190coder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="190呐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Thinking in Java 第九章</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-30T23:33:32+08:00">
-                2019-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-07-30 23:33" pubdate>
+      2019年7月30日 晚上
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      54
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <h1 id="第九章-接口"><a href="#第九章-接口" class="headerlink" title="第九章 接口"></a>第九章 接口</h1><p>接口和内部类为我们踢动了一种将接口与实现分离的更加结构化的方法。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Thinking in Java 第九章</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="第九章-接口"><a href="#第九章-接口" class="headerlink" title="第九章 接口"></a>第九章 接口</h1><p>接口和内部类为我们踢动了一种将接口与实现分离的更加结构化的方法。</p>
 <h2 id="9-1-抽象类和抽象方法"><a href="#9-1-抽象类和抽象方法" class="headerlink" title="9.1 抽象类和抽象方法"></a>9.1 抽象类和抽象方法</h2><p>&emsp;&emsp;在第八章关于多态的例子中，基类方法往往没有具体的实现，它存在的目的是为不同的子类提供统一的方法，通过动态绑定以及向上转型来完成子类需要的功能。为此，我们可以创建一个这样的类，只为子类提供接口，并且不允许这个类实例化对象，我们可以让这个类中的方法返回一个错误信息，但是这样存在一个问题，错误只能在运行时产生并且带来的影响不可预估。Java为我们提供了一个更加明确的方法，称为抽象方法，抽象方法顾名思义它是虚拟存在的，也就是它不能够被执行。这种方法是不完整的，它只有方法的声明，没有方法的实现，为了区分，使用abstract关键字表示一个方法是抽象方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract void f();</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span>(<span class="hljs-params"></span>)</span>;</code></pre></div>
 
 <p>&emsp;&emsp;包含抽象方法的类叫做抽象类，如果一个类包含一个或多个抽象方法，那么这个类叫做抽象类，同样使用abstract关键字修饰。抽象类是不安全的，因为它不完整，所以当试图用它实例化一个对象时，编译器会报错。如果一个类继承自一个抽象类，那么它必须为基类中所有的抽象方法提供一个具体的实现，否则这个子类也必须被定义为抽象类。我们也可以定义一个没有任何方法（包括没有抽象方法）的抽象类，这样做的目的是，这个类没有什么实际的意义，同时也不想让它能够创建对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">abstract class Instrument&#123;</span><br><span class="line">	private int i;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;Instrumet&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public abstract void play(String s);</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class Wind extends Instrument&#123;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;Wind&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void play(String s)&#123;</span><br><span class="line">		System.out.println(&quot;Wind.play&quot; + s);</span><br><span class="line">	&#125;</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class Percussion extends Instrument&#123;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;Percussion&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void play(String s)&#123;</span><br><span class="line">		System.out.println(&quot;Percussion.play&quot; + s);</span><br><span class="line">	&#125;</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class Stringed extends Instrument&#123;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;Stringed&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void play(String s)&#123;</span><br><span class="line">		System.out.println(&quot;Stringed.play&quot; + s);</span><br><span class="line">	&#125;</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class Brass extends Instrument&#123;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;Brass&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void play(String s)&#123;</span><br><span class="line">		System.out.println(&quot;Brass.play&quot; + s);</span><br><span class="line">	&#125;</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class WoodWind extends Instrument&#123;</span><br><span class="line">	public String what()&#123;</span><br><span class="line">		return &quot;WoodWind&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void play(String s)&#123;</span><br><span class="line">		System.out.println(&quot;WoodWind.play&quot; + s);</span><br><span class="line">	&#125;</span><br><span class="line">	public void adjust()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public class Music&#123;</span><br><span class="line">	static void tune(Instrument i )&#123;</span><br><span class="line">		i.play(&quot;finish&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	static void tuneAll(Instrument[] e)&#123;</span><br><span class="line">		for(Instrument i:e)&#123;</span><br><span class="line">			tune(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Instrument[] iArray = &#123;</span><br><span class="line">				new Wind(),new Percussion(),new Brass(),new Stringed(),new WoodWind()</span><br><span class="line">		&#125;;</span><br><span class="line">		tuneAll(iArray);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//output </span><br><span class="line">Wind.playfinish</span><br><span class="line">Percussion.playfinish</span><br><span class="line">Brass.playfinish</span><br><span class="line">Stringed.playfinish</span><br><span class="line">WoodWind.playfinish</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> i;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Instrumet"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Wind</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Wind"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>&#123;
+		System.out.println(<span class="hljs-string">"Wind.play"</span> + s);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Percussion</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Percussion"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>&#123;
+		System.out.println(<span class="hljs-string">"Percussion.play"</span> + s);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Stringed</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Stringed"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>&#123;
+		System.out.println(<span class="hljs-string">"Stringed.play"</span> + s);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Brass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Brass"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>&#123;
+		System.out.println(<span class="hljs-string">"Brass.play"</span> + s);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WoodWind</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Instrument</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">what</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"WoodWind"</span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">play</span><span class="hljs-params">(String s)</span></span>&#123;
+		System.out.println(<span class="hljs-string">"WoodWind.play"</span> + s);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">adjust</span><span class="hljs-params">()</span></span>&#123;&#125;;
+&#125;
+ 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Music</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tune</span><span class="hljs-params">(Instrument i )</span></span>&#123;
+		i.play(<span class="hljs-string">"finish"</span>);
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tuneAll</span><span class="hljs-params">(Instrument[] e)</span></span>&#123;
+		<span class="hljs-keyword">for</span>(Instrument i:e)&#123;
+			tune(i);
+		&#125;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		Instrument[] iArray = &#123;
+				<span class="hljs-keyword">new</span> Wind(),<span class="hljs-keyword">new</span> Percussion(),<span class="hljs-keyword">new</span> Brass(),<span class="hljs-keyword">new</span> Stringed(),<span class="hljs-keyword">new</span> WoodWind()
+		&#125;;
+		tuneAll(iArray);
+	&#125;
+&#125;
+<span class="hljs-comment">//output </span>
+Wind.playfinish
+Percussion.playfinish
+Brass.playfinish
+Stringed.playfinish
+WoodWind.playfinish</code></pre></div>
 
 <p>&emsp;&emsp;创建抽象类和抽象方法非常的有用，因为他们使类的抽象性更加明确，并告诉用户和编译器打算怎么样使用他们。抽象类还是一个很有用的重构工具，因为他们使得我们可以很容易的将公共方法沿着继承的层次向上移动。但是除了框架这么用 一般鞋业务很少设计这么复杂。</p>
 <h2 id="9-2-接口"><a href="#9-2-接口" class="headerlink" title="9.2 接口"></a>9.2 接口</h2><p>&emsp;&emsp;使抽象的概念更加深入了一步。抽象类中可以允许抽象方法和普通方法共存，普通方法存在的目的是为所有继承的子类提供一个相同实现的方法。而接口创建了一个完全抽象的概念，接口内部不存在任何方法具体的实现。所有的实现都交由到实现这个接口的类完成。<br><br>&emsp;&emsp;接口使用interface关键字代替class关键字，访问权限控制与一个class相同，接口中可以包含域，但是这些域被隐式的定义为static和final型。<br><br>&emsp;&emsp;要想实现一个接口，就需要使用implements关键字显示的指明要实现哪个接口。接口中的方法必须被定义为public方法。实现接口的类要显示的编写实现接口中的所有方法，即便有些方法不需要实现，那也要如同接口一样写一个空的方法体。</p>
 <h2 id="9-3-完全解耦"><a href="#9-3-完全解耦" class="headerlink" title="9.3 完全解耦"></a>9.3 完全解耦</h2><p>只要一个方法操作的是类而非接口，那么你就只能使用这个类及其子类。如果你想将这个方法应用在不在此继承结构中的某个类，那么使用接口将很大程度的放宽这种限制。因此，它可以使我们编写可复用性更好的代码。<br>    例如，有一个Processor类，它有一个name（）方法，还有一个process（）方法，该方法接受输入参数，修改输入的值然后进行输出。这个类作为基类被扩展，子类创建各种不同类型的Processor，在本例中，Processor子类通过process（）方法修改String对象的值，返回类型可以是协变类型，而非参数类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line">class Processor&#123;</span><br><span class="line">    public String name()&#123;</span><br><span class="line">        return getClass().getSimpleName();</span><br><span class="line">    &#125;</span><br><span class="line">    Object process(Object input)&#123;</span><br><span class="line">        return input;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class UpCase extends Processor&#123;</span><br><span class="line">    String process(Object input)&#123;</span><br><span class="line">        return input.toString().toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class DownCase extends Processor&#123;</span><br><span class="line">    String process(Object input)&#123;</span><br><span class="line">        return input.toString().toLowerCase();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Splitter extends Processor&#123;</span><br><span class="line">    String process(Object input)&#123;</span><br><span class="line">        return Arrays.toString(input.toString().split(&quot; &quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class test&#123;</span><br><span class="line">    public static void process(Processor p,Object s)&#123;</span><br><span class="line">        System.out.println(&quot;Using Processor:&quot; + p.name());</span><br><span class="line">        System.out.println(p.process(s));</span><br><span class="line">    &#125;</span><br><span class="line">    public static final String S = &quot;Disagreement with beliefs is by definition incorrect&quot;;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        process(new UpCase(), S);</span><br><span class="line">        process(new DownCase(), S);</span><br><span class="line">        process(new Splitter(), S);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//output </span><br><span class="line">Using Processor:UpCase</span><br><span class="line">DISAGREEMENT WITH BELIEFS IS BY DEFINITION INCORRECT</span><br><span class="line">Using Processor:DownCase</span><br><span class="line">disagreement with beliefs is by definition incorrect</span><br><span class="line">Using Processor:Splitter</span><br><span class="line">[Disagreement, with, beliefs, is, by, definition, incorrect]</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">import</span> java.util.<span class="hljs-type">Arrays</span>;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span></span>&#123;
+    public <span class="hljs-type">String</span> name()&#123;
+        <span class="hljs-keyword">return</span> getClass().getSimpleName();
+    &#125;
+    <span class="hljs-type">Object</span> process(<span class="hljs-type">Object</span> input)&#123;
+        <span class="hljs-keyword">return</span> input;
+    &#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UpCase</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processor</span></span>&#123;
+    <span class="hljs-type">String</span> process(<span class="hljs-type">Object</span> input)&#123;
+        <span class="hljs-keyword">return</span> input.toString().toUpperCase();
+    &#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DownCase</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processor</span></span>&#123;
+    <span class="hljs-type">String</span> process(<span class="hljs-type">Object</span> input)&#123;
+        <span class="hljs-keyword">return</span> input.toString().toLowerCase();
+    &#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Splitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processor</span></span>&#123;
+    <span class="hljs-type">String</span> process(<span class="hljs-type">Object</span> input)&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">Arrays</span>.toString(input.toString().split(<span class="hljs-string">" "</span>));
+    &#125;
+&#125;
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">test</span></span>&#123;
+    public static void process(<span class="hljs-type">Processor</span> p,<span class="hljs-type">Object</span> s)&#123;
+        <span class="hljs-type">System</span>.out.println(<span class="hljs-string">"Using Processor:"</span> + p.name());
+        <span class="hljs-type">System</span>.out.println(p.process(s));
+    &#125;
+    public static <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-type">S</span> = <span class="hljs-string">"Disagreement with beliefs is by definition incorrect"</span>;
+    public static void main(<span class="hljs-type">String</span>[] args) &#123;
+        process(<span class="hljs-keyword">new</span> <span class="hljs-type">UpCase</span>(), <span class="hljs-type">S</span>);
+        process(<span class="hljs-keyword">new</span> <span class="hljs-type">DownCase</span>(), <span class="hljs-type">S</span>);
+        process(<span class="hljs-keyword">new</span> <span class="hljs-type">Splitter</span>(), <span class="hljs-type">S</span>);
+    &#125;
+&#125;
+<span class="hljs-comment">//output </span>
+<span class="hljs-type">Using</span> <span class="hljs-type">Processor</span>:<span class="hljs-type">UpCase</span>
+<span class="hljs-type">DISAGREEMENT</span> <span class="hljs-type">WITH</span> <span class="hljs-type">BELIEFS</span> <span class="hljs-type">IS</span> <span class="hljs-type">BY</span> <span class="hljs-type">DEFINITION</span> <span class="hljs-type">INCORRECT</span>
+<span class="hljs-type">Using</span> <span class="hljs-type">Processor</span>:<span class="hljs-type">DownCase</span>
+disagreement <span class="hljs-keyword">with</span> beliefs is by definition incorrect
+<span class="hljs-type">Using</span> <span class="hljs-type">Processor</span>:<span class="hljs-type">Splitter</span>
+[<span class="hljs-type">Disagreement</span>, <span class="hljs-keyword">with</span>, beliefs, is, by, definition, incorrect]</code></pre></div>
 
 <p>Apply.process()方法可以接收Processor类型跟它的子类，并将它应用到了Object对象，然后打印。像这种，根据继承关系，创建一个能够根据所传递的参数对象不同而具有不同行为的方法，称为策略设计模式。这类方法包含索要执行的方法中固定不变的部分（如本例的name（）方法），而“策略”包含变化的部分（如本例的process（））方法。策略就是传递的参数对象，它包含要执行的代码。这类Processor对象就是一个策略，在main（）方法中可以看到三种不同类型的策略应用到Obejct对象上。</p>
 <p>如果操作的是接口而不是类的时候，那么这些限制就会变得松动，使得你可以复用接口的Apply.process()方法，下面是修改为接口的版本。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package com.chenxyt.java.practice;</span><br><span class="line">public interface Processor&#123;</span><br><span class="line">	String name();</span><br><span class="line">	Object process (Object input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">package com.chenxyt.java.practice;
+public<span class="hljs-built_in"> interface </span>Processor&#123;
+	String name();
+	Object process (Object input);
+&#125;</code></pre></div>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package com.chenxyt.java.practice;</span><br><span class="line">class FilterAdapter implements Processor&#123;</span><br><span class="line">	Filter filter;</span><br><span class="line">	public FilterAdapter(Filter filter)&#123;</span><br><span class="line">		this.filter = filter;</span><br><span class="line">	&#125;</span><br><span class="line">	public String name()&#123;</span><br><span class="line">		return filter.name();</span><br><span class="line">	&#125;</span><br><span class="line">	public WaveForm process(Object input)&#123;</span><br><span class="line">		return filter.process((WaveForm)input)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class FilterProcessor&#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		WaveForm w = new WaveForm();</span><br><span class="line">		Apply.process(new FilterAdapter(new LowPass(1.0)),w);</span><br><span class="line">		Apply.process(new FilterAdapter(new HighPass(2.0)),w);</span><br><span class="line">		Apply.process(new FilterAdapter(new BandPass(3.0,4.0)),w);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> com.chenxyt.java.practice;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FilterAdapter</span> <span class="hljs-keyword"><span class="hljs-keyword">implements</span> <span class="hljs-type">Processor</span></span></span>&#123;
+	Filter filter;
+	<span class="hljs-keyword">public</span> FilterAdapter(Filter filter)&#123;
+		<span class="hljs-built_in">this</span>.filter = filter;
+	&#125;
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">String</span> name()&#123;
+		<span class="hljs-keyword">return</span> filter.name();
+	&#125;
+	<span class="hljs-keyword">public</span> WaveForm process(Object input)&#123;
+		<span class="hljs-keyword">return</span> filter.process((WaveForm)input)
+	&#125;
+&#125;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FilterProcessor</span></span>&#123;
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void main(<span class="hljs-keyword">String</span>[] args) &#123;
+		WaveForm w = <span class="hljs-keyword">new</span> <span class="hljs-type">WaveForm</span>();
+		Apply.process(<span class="hljs-keyword">new</span> <span class="hljs-type">FilterAdapter</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">LowPass</span>(<span class="hljs-number">1.0</span>)),w);
+		Apply.process(<span class="hljs-keyword">new</span> <span class="hljs-type">FilterAdapter</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">HighPass</span>(<span class="hljs-number">2.0</span>)),w);
+		Apply.process(<span class="hljs-keyword">new</span> <span class="hljs-type">FilterAdapter</span>(<span class="hljs-keyword">new</span> <span class="hljs-type">BandPass</span>(<span class="hljs-number">3.0</span>,<span class="hljs-number">4.0</span>)),w);
+	&#125;
+&#125;</code></pre></div>
 
 <p> 在这种使用适配器的方式中，FilterAdapter的构造器接受了Filter参数，然后生成对应接口Processor的对象。<br>本节主要的内容是使用接口的方式将只有基类和其子类的使用方法解耦出来，便于程序更好的进行复用。</p>
 <h2 id="9-4-Java中的多重继承"><a href="#9-4-Java中的多重继承" class="headerlink" title="9.4 Java中的多重继承"></a>9.4 Java中的多重继承</h2><p>C++中允许多重继承，并且每一个继承的类都可以有一个实现，Java中是不允许的，Java中可以实现多个接口，每个接口名字在implements后边用逗号隔开，并且，Java中只能继承一个类。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">interface CanFight&#123;</span><br><span class="line">	void Fight();</span><br><span class="line">&#125;</span><br><span class="line">interface CanSwim&#123;</span><br><span class="line">	void Swim();</span><br><span class="line">&#125;</span><br><span class="line">interface CanFly&#123;</span><br><span class="line">	void Fly();</span><br><span class="line">&#125;</span><br><span class="line">class ActionChracter&#123;</span><br><span class="line">	public void Fight()&#123;</span><br><span class="line">		//---</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line">class Hero extends ActionChracter implements CanFight,CanSwim,CanFly&#123;</span><br><span class="line">	public void Fly()&#123;</span><br><span class="line">		//---</span><br><span class="line">	&#125;;</span><br><span class="line">	public void Swim()&#123;</span><br><span class="line">		//--</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line">public class Adventure&#123;</span><br><span class="line">	public static void t(CanFight x)&#123;</span><br><span class="line">		x.Fight();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void u(CanSwim x)&#123;</span><br><span class="line">		x.Swim();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void v(CanFly x)&#123;</span><br><span class="line">		x.Fly();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void w(ActionChracter x)&#123;</span><br><span class="line">		x.Fight();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Hero h = new Hero();</span><br><span class="line">		t(h);</span><br><span class="line">		u(h);</span><br><span class="line">		v(h);</span><br><span class="line">		w(h);	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CanFight</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Fight</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CanSwim</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Swim</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CanFly</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Fly</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ActionChracter</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fight</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-comment">//---</span>
+	&#125;;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hero</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ActionChracter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CanFight</span>,<span class="hljs-title">CanSwim</span>,<span class="hljs-title">CanFly</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fly</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-comment">//---</span>
+	&#125;;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Swim</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-comment">//--</span>
+	&#125;;
+&#125;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Adventure</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">t</span><span class="hljs-params">(CanFight x)</span></span>&#123;
+		x.Fight();
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">u</span><span class="hljs-params">(CanSwim x)</span></span>&#123;
+		x.Swim();
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">v</span><span class="hljs-params">(CanFly x)</span></span>&#123;
+		x.Fly();
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">w</span><span class="hljs-params">(ActionChracter x)</span></span>&#123;
+		x.Fight();
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		Hero h = <span class="hljs-keyword">new</span> Hero();
+		t(h);
+		u(h);
+		v(h);
+		w(h);	
+	&#125;
+&#125;</code></pre></div>
 
 <p> 可以看到Hero类组合具体类ActionChracter和另外的三个接口，当通过这种方式将类和接口组合在一起时，这个类必须放在前边，接口放在后边，否则编译器会报错。同时我们注意到，CanFight接口与ActionChracter类中的Fight（）方法相同，而且Hero中并没有提供Fight（）的具体定义。可以扩展接口，当想要创建对象的时候，所有的定义必须都存在，即使Hero没有显示的定义Fight（）方法，由于其继承了ActionChracter类，所以定义随之而来，这使创建对象变成了可能。这里的意思是说，一个类实现了某些接口，这些接口中所有的定义在这个类中必须要有相关的实现（编译器会主动提示），然后因为这个类继承了一个类（ActionChracter），所以如果基类有实现了接口中的方法，那么子类就可以不显示的实现这个方法。</p>
 <p>这个例子中，给出的四个方法分别使用接口作为了参数，所以在Hero作为参数传递的时候，它被依次进行了向上转型，Java中的接口设计，使得这项功能并不复杂。这个例子所展示的是使用接口的核心原因：为了能够向上转型为多个基本类型，提升程序的灵活性。使用接口的第二个原因与抽象类相同，防止程序员在使用的过程中创建该类的对象。当然关于这一点是使用抽象类还是接口，当要创建的类中没有任何方法定义和成员变量的定义是，选择接口是合适的，并且当知道某事物应当成为一个基类的时候，那么第一选择是应当使它成为接口。</p>
 <h2 id="9-5-通过继承来扩展接口"><a href="#9-5-通过继承来扩展接口" class="headerlink" title="9.5 通过继承来扩展接口"></a>9.5 通过继承来扩展接口</h2><p>接口也可以继承，通过继承可以很容易的在接口中添加新的方法声明，还可以通过继承在新接口中组合数个接口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">interface Monster&#123;</span><br><span class="line">	void menace();</span><br><span class="line">&#125;</span><br><span class="line">//新接口继承原来的接口</span><br><span class="line">interface DangerousMonster extends Monster&#123;</span><br><span class="line">	void destroy();</span><br><span class="line">&#125;</span><br><span class="line">interface Lethal&#123;</span><br><span class="line">	void kill();</span><br><span class="line">&#125;</span><br><span class="line">//实现接口 要依次定义这个接口的方法以及它继承接口的方法  编译器自动补充</span><br><span class="line">class DragonZill implements DangerousMonster&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void menace() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public void destroy() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//接口可以多重继承</span><br><span class="line">interface Vampire extends DangerousMonster ,Lethal&#123;</span><br><span class="line">	void drinkblood();</span><br><span class="line">&#125;</span><br><span class="line">//继承多个接口 都要把定义实现</span><br><span class="line">class VeryBadVampire implements Vampire&#123;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public void destroy() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public void menace() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public void kill() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public void drinkblood() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">interface</span> <span class="hljs-selector-tag">Monster</span>&#123;
+	<span class="hljs-selector-tag">void</span> <span class="hljs-selector-tag">menace</span>();
+&#125;
+<span class="hljs-comment">//新接口继承原来的接口</span>
+<span class="hljs-selector-tag">interface</span> <span class="hljs-selector-tag">DangerousMonster</span> <span class="hljs-selector-tag">extends</span> <span class="hljs-selector-tag">Monster</span>&#123;
+	<span class="hljs-selector-tag">void</span> <span class="hljs-selector-tag">destroy</span>();
+&#125;
+<span class="hljs-selector-tag">interface</span> <span class="hljs-selector-tag">Lethal</span>&#123;
+	<span class="hljs-selector-tag">void</span> <span class="hljs-selector-tag">kill</span>();
+&#125;
+<span class="hljs-comment">//实现接口 要依次定义这个接口的方法以及它继承接口的方法  编译器自动补充</span>
+<span class="hljs-selector-tag">class</span> <span class="hljs-selector-tag">DragonZill</span> <span class="hljs-selector-tag">implements</span> <span class="hljs-selector-tag">DangerousMonster</span>&#123;
+	<span class="hljs-variable">@Override</span>
+	public void menace() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+	&#125;
+	<span class="hljs-variable">@Override</span>
+	public void destroy() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+	&#125;
+&#125;
+<span class="hljs-comment">//接口可以多重继承</span>
+<span class="hljs-selector-tag">interface</span> <span class="hljs-selector-tag">Vampire</span> <span class="hljs-selector-tag">extends</span> <span class="hljs-selector-tag">DangerousMonster</span> ,<span class="hljs-selector-tag">Lethal</span>&#123;
+	<span class="hljs-selector-tag">void</span> <span class="hljs-selector-tag">drinkblood</span>();
+&#125;
+<span class="hljs-comment">//继承多个接口 都要把定义实现</span>
+<span class="hljs-selector-tag">class</span> <span class="hljs-selector-tag">VeryBadVampire</span> <span class="hljs-selector-tag">implements</span> <span class="hljs-selector-tag">Vampire</span>&#123;
+ 
+	<span class="hljs-variable">@Override</span>
+	public void destroy() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		
+	&#125;
+ 
+	<span class="hljs-variable">@Override</span>
+	public void menace() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		
+	&#125;
+ 
+	<span class="hljs-variable">@Override</span>
+	public void kill() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		
+	&#125;
+ 
+	<span class="hljs-variable">@Override</span>
+	public void drinkblood() &#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		
+	&#125;
+&#125;</code></pre></div>
 
 <p><strong>组合不同的接口中避免使用相同的方法名。</strong></p>
 <h2 id="9-6-适配接口"><a href="#9-6-适配接口" class="headerlink" title="9.6 适配接口"></a>9.6 适配接口</h2><p>&emsp;&emsp;接口最吸引人的地方，就是允许同一个接口具有多个不同的实现。简单来说，就是一个接受接口类型的方法，而该接口的实现和向该接口传递的对象取决于方法的使用者。因此常用的方式就是前边的策略模式，此时你编写一个执行某些操作的方法，该方法接受一个同样是你指定的接口，你主要就是声明”你可以用任何你想要的对象来调用我的方法，只要你的对象遵循我的接口“这使你的方法更加灵活。</p>
 <h2 id="9-7-接口中的域"><a href="#9-7-接口中的域" class="headerlink" title="9.7 接口中的域"></a>9.7 接口中的域</h2><p>&emsp;&emsp;在接口中的域，会被自动的隐式转换为static final类型，所以接口就可以很便捷的创建一组常量值，也就是枚举。在JavaSE5之前，没有枚举的概念之前，可以使用接口来创建常量组。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface Months&#123;</span><br><span class="line">	int JANUARY = 1,FEBRUARY=2,MARCH=3,APRIL=4,</span><br><span class="line">			MAY=5,JUNE=6,JULY=7,AUGUST=8,SEPTEMBER=9,OCTOBER=10,</span><br><span class="line">			NOVEMBER=11,DECEMBER=12;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">public<span class="hljs-built_in"> interface </span>Months&#123;
+	int JANUARY = 1,<span class="hljs-attribute">FEBRUARY</span>=2,MARCH=3,APRIL=4,
+			<span class="hljs-attribute">MAY</span>=5,JUNE=6,JULY=7,AUGUST=8,SEPTEMBER=9,OCTOBER=10,
+			<span class="hljs-attribute">NOVEMBER</span>=11,DECEMBER=12;
+&#125;</code></pre></div>
 
 <p>&emsp;&emsp;这种形式在后来已经被enum取代了。因为是final类型，所以必须显示的指定初始化的值，同时因为是static域，所以它们在第一次访问的时候被初始化，并且这些域不属于接口的一部分，它们的值存储在接口的静态存储区域。</p>
 <h2 id="9-8-嵌套接口"><a href="#9-8-嵌套接口" class="headerlink" title="9.8 嵌套接口"></a>9.8 嵌套接口</h2><p>接口可以嵌套在类或者其它的接口中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">class A&#123;</span><br><span class="line">	interface B&#123;</span><br><span class="line">		void f();</span><br><span class="line">	&#125;</span><br><span class="line">	public class BImp implements B&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public class BImp2 implements B&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public interface C&#123;</span><br><span class="line">		void f();</span><br><span class="line">	&#125;</span><br><span class="line">	class CImp implements C&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	private class CImp2 implements C&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	private interface D&#123;</span><br><span class="line">		void f();</span><br><span class="line">	&#125;</span><br><span class="line">	private class DImp implements D&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	private class DImp2 implements D&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public D getD()&#123;</span><br><span class="line">		return new DImp();</span><br><span class="line">	&#125;</span><br><span class="line">	private D dRef;</span><br><span class="line">	public void reveiveD(D d)&#123;</span><br><span class="line">		dRef = d;</span><br><span class="line">		dRef.f();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">interface E&#123;</span><br><span class="line">	interface G&#123;</span><br><span class="line">		void f();</span><br><span class="line">	&#125;</span><br><span class="line">	public interface H&#123;</span><br><span class="line">		void f();</span><br><span class="line">	&#125;</span><br><span class="line">	void g();</span><br><span class="line">	//强制必须为public</span><br><span class="line">	//private interface I&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public class NestingInterfaces&#123;</span><br><span class="line">	public class BImp implements A.B&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	class CImp implements A.C&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//因为接口D是私有的 所以不能被实现</span><br><span class="line">	//class DImp implements A.D&#123;);</span><br><span class="line">	class EImp implements E&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void g() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	class EGImp implements E.G&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void f() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	class EImp2 implements E&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void g() &#123;</span><br><span class="line">			// TODO Auto-generated method stub</span><br><span class="line">		&#125;</span><br><span class="line">		class EG implements E.G&#123;</span><br><span class="line">			@Override</span><br><span class="line">			public void f() &#123;</span><br><span class="line">				// TODO Auto-generated method stub</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		A a = new A();</span><br><span class="line">		//D是private 不能实例化</span><br><span class="line">		//A.D ad = new A.D();</span><br><span class="line">		//getD()方法只能返回D</span><br><span class="line">		//A.DImp2 di2 = a.getD();</span><br><span class="line">		//private接口的域不能被访问</span><br><span class="line">		//a.getD().f();</span><br><span class="line">		//可以通过内部返回域的方法获取</span><br><span class="line">		A a2 = new A();</span><br><span class="line">		a2.reveiveD(a.getD());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span>&#123;
+	<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">B</span></span>&#123;
+		<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+	&#125;
+	<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">B</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BImp2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">B</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">C</span></span>&#123;
+		<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+	&#125;
+	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">C</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CImp2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">C</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">D</span></span>&#123;
+		<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+	&#125;
+	<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">D</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DImp2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">D</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> D <span class="hljs-title">getD</span><span class="hljs-params">()</span></span>&#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DImp();
+	&#125;
+	<span class="hljs-keyword">private</span> D dRef;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reveiveD</span><span class="hljs-params">(D d)</span></span>&#123;
+		dRef = d;
+		dRef.f();
+	&#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">E</span></span>&#123;
+	<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">G</span></span>&#123;
+		<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+	&#125;
+	<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">H</span></span>&#123;
+		<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;
+	<span class="hljs-comment">//强制必须为public</span>
+	<span class="hljs-comment">//private interface I&#123;&#125;;</span>
+&#125;
+ 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NestingInterfaces</span></span>&#123;
+	<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">A</span>.<span class="hljs-title">B</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">A</span>.<span class="hljs-title">C</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-comment">//因为接口D是私有的 所以不能被实现</span>
+	<span class="hljs-comment">//class DImp implements A.D&#123;);</span>
+	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">E</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EGImp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">E</span>.<span class="hljs-title">G</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+	&#125;
+	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EImp2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">E</span></span>&#123;
+		<span class="hljs-meta">@Override</span>
+		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span> </span>&#123;
+			<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		&#125;
+		<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EG</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">E</span>.<span class="hljs-title">G</span></span>&#123;
+			<span class="hljs-meta">@Override</span>
+			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;
+				<span class="hljs-comment">// TODO Auto-generated method stub</span>
+			&#125;
+		&#125;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		A a = <span class="hljs-keyword">new</span> A();
+		<span class="hljs-comment">//D是private 不能实例化</span>
+		<span class="hljs-comment">//A.D ad = new A.D();</span>
+		<span class="hljs-comment">//getD()方法只能返回D</span>
+		<span class="hljs-comment">//A.DImp2 di2 = a.getD();</span>
+		<span class="hljs-comment">//private接口的域不能被访问</span>
+		<span class="hljs-comment">//a.getD().f();</span>
+		<span class="hljs-comment">//可以通过内部返回域的方法获取</span>
+		A a2 = <span class="hljs-keyword">new</span> A();
+		a2.reveiveD(a.getD());
+	&#125;
+&#125;</code></pre></div>
 
 <p>理解不太透彻，不做解析了。。。 自己看书把。</p>
 <h2 id="9-9-接口与工厂"><a href="#9-9-接口与工厂" class="headerlink" title="9.9 接口与工厂"></a>9.9 接口与工厂</h2><p>&emsp;&emsp;接口是实现多重继承的重要途径，而生成遵循某个接口对象的典型方式就是工厂方法设计模式。<br>&emsp;&emsp;使用工厂方法与直接调用构造器不同，我们在工厂对象上调用的是创建方法，而该工厂对象将生成接口的某个实现的对象。理论上来说，我们通过这种方式可以将我们的代码与接口的实现完全分离，这就使我们可以透明的将某个实现替换成另一个实现。使用工厂方法设计模式的原因是想要创建框架，提高代码的复用性。如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">interface Game&#123;</span><br><span class="line">	boolean move();</span><br><span class="line">&#125;</span><br><span class="line">interface GameFactory&#123;</span><br><span class="line">	Game getGame();</span><br><span class="line">&#125;</span><br><span class="line">class Checkers implements Game&#123;</span><br><span class="line">	private int moves = 0;</span><br><span class="line">	private static final int MOVES = 3;</span><br><span class="line">	@Override</span><br><span class="line">	public boolean move() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		System.out.println(&quot;Checkers moves&quot; + moves);</span><br><span class="line">		return ++moves != MOVES;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class CheckersFactory implements GameFactory&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Game getGame() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		return new Checkers();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class Chess implements Game&#123;</span><br><span class="line">	private int moves = 0;</span><br><span class="line">	private static final int MOVES = 4;</span><br><span class="line">	@Override</span><br><span class="line">	public boolean move() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		System.out.println(&quot;Chess move&quot; + moves);</span><br><span class="line">		return ++moves != MOVES;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class ChessFactory implements GameFactory&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Game getGame() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		return new Chess();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class Games &#123;</span><br><span class="line">	public static void PlayGame(GameFactory fact)&#123;</span><br><span class="line">		Game s = fact.getGame();</span><br><span class="line">		while(s.move())&#123;</span><br><span class="line">			//--</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		PlayGame(new CheckersFactory());</span><br><span class="line">		PlayGame(new ChessFactory());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Game</span></span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">move</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">GameFactory</span></span>&#123;
+	<span class="hljs-function">Game <span class="hljs-title">getGame</span><span class="hljs-params">()</span></span>;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Checkers</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Game</span></span>&#123;
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> moves = <span class="hljs-number">0</span>;
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MOVES = <span class="hljs-number">3</span>;
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">move</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		System.out.println(<span class="hljs-string">"Checkers moves"</span> + moves);
+		<span class="hljs-keyword">return</span> ++moves != MOVES;
+	&#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CheckersFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">GameFactory</span></span>&#123;
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> Game <span class="hljs-title">getGame</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Checkers();
+	&#125;
+&#125;
+ 
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Chess</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Game</span></span>&#123;
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> moves = <span class="hljs-number">0</span>;
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MOVES = <span class="hljs-number">4</span>;
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">move</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		System.out.println(<span class="hljs-string">"Chess move"</span> + moves);
+		<span class="hljs-keyword">return</span> ++moves != MOVES;
+	&#125;
+&#125;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChessFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">GameFactory</span></span>&#123;
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> Game <span class="hljs-title">getGame</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// TODO Auto-generated method stub</span>
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Chess();
+	&#125;
+&#125;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Games</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">PlayGame</span><span class="hljs-params">(GameFactory fact)</span></span>&#123;
+		Game s = fact.getGame();
+		<span class="hljs-keyword">while</span>(s.move())&#123;
+			<span class="hljs-comment">//--</span>
+		&#125;
+	&#125;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		PlayGame(<span class="hljs-keyword">new</span> CheckersFactory());
+		PlayGame(<span class="hljs-keyword">new</span> ChessFactory());
+	&#125;
+&#125;</code></pre></div>
 
 <p>如果Games类表示一段复杂的代码，那么这种方式就允许你在不同的游戏类型中复用这段代码。<strong>工厂设计模式主要是框架饿设计。</strong></p>
 <h2 id="9-10-总结"><a href="#9-10-总结" class="headerlink" title="9.10 总结"></a>9.10 总结</h2><p>&emsp;&emsp;抽象类跟接口是将具体方法更加抽象的一种形式。这一章节主要讲了抽象类、抽象方法的形式以及使用场景，比较重要的一点是关于接口的使用，如何解耦，接口可以多重继承，接口可以嵌套等应用场景。任何抽象性设计都应该真正的需求而产生的。需要时候应该重构接口 而不是导出添加额外的类来增加复杂性。</p>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/07/27/Thinking-in-Java-第八章/" rel="next" title="Thinking in Java 第八章">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 第八章
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/05/Thinking-in-Java-第十章/" rel="prev" title="Thinking in Java 第十章">
-                Thinking in Java 第十章 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
-            
-              <p class="site-author-name" itemprop="name">190coder</p>
-              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">62</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
               </div>
-            
-
-            
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/08/05/Thinking-in-Java-第十章/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Thinking in Java 第十章</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/27/Thinking-in-Java-第八章/">
+                        <span class="hidden-mobile">Thinking in Java 第八章</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
             
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+          </article>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-接口"><span class="nav-text">第九章 接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-抽象类和抽象方法"><span class="nav-text">9.1 抽象类和抽象方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-接口"><span class="nav-text">9.2 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-完全解耦"><span class="nav-text">9.3 完全解耦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-4-Java中的多重继承"><span class="nav-text">9.4 Java中的多重继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-5-通过继承来扩展接口"><span class="nav-text">9.5 通过继承来扩展接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-适配接口"><span class="nav-text">9.6 适配接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-7-接口中的域"><span class="nav-text">9.7 接口中的域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-嵌套接口"><span class="nav-text">9.8 嵌套接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-9-接口与工厂"><span class="nav-text">9.9 接口与工厂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-10-总结"><span class="nav-text">9.10 总结</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-	
-           
-         
-         <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+      </div>
     </div>
-  </aside>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
 
-
-        
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">190coder</span>
-
-  
+    
+  </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
+<!-- Custom -->
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-
-<div>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+  </main>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
       
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
       
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
 
 
+    
+  </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  
+<!-- Plugins -->
 
 
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
-
-	
-
-
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Thinking in Java 第九章&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
@@ -1313,26 +942,13 @@ if(canvas.getContext){
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

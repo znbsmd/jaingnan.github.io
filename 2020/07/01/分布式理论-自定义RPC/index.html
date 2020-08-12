@@ -1,366 +1,210 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN" >
 
 
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="chinese">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-<meta name="referrer" content="no-referrer">
-
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>分布式理论&amp;自定义RPC - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
   
     
-      
-    
-    
-      
-    
-  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
-  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
-<meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="分布式理论&amp;自定义RPC">
-<meta property="og:url" content="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/index.html">
-<meta property="og:site_name" content="190呐">
-<meta property="og:description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
-<meta property="og:locale" content="chinese">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006e24830b3cb?w=1716&h=548&f=png&s=100496">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/1730074d1bbb5eb6?w=1402&h=926&f=png&s=214892">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300a6f1d49072a?w=1184&h=1072&f=png&s=323220">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300bece0339a47?w=1592&h=986&f=png&s=1062631">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300bfae56b636a?w=1358&h=1266&f=png&s=162833">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300c83441ecbe2?w=1292&h=1144&f=png&s=185479">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/29/17300cb6896dad24?w=762&h=590&f=png&s=89755">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17300d384577a4e1?w=1544&h=932&f=png&s=284577">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17302ae16e332c98?w=1632&h=1018&f=png&s=263790">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/30/17302c2217871f50?w=1400&h=690&f=png&s=649514">
-<meta property="og:updated_time" content="2020-07-01T14:13:39.468Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式理论&amp;自定义RPC">
-<meta name="twitter:description" content="一、分布式理论1. 分布式架构1.1 概念就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。 分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。 1.2 发展阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？  升级单机处理能力的性价比越来越低 单机处理能力存在瓶颈 稳定性和可用性这两">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '190coder'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/">
-
-
-
-
-
-  <title>分布式理论&自定义RPC | 190呐</title>
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-
-
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
 
-  
-  
-    
-  
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">190呐</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
   </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/01/分布式理论-自定义RPC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="190coder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="190呐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">分布式理论&自定义RPC</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-01T22:09:19+08:00">
-                2020-07-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-07-01 22:09" pubdate>
+      2020年7月1日 晚上
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      47
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <h2 id="一、分布式理论"><a href="#一、分布式理论" class="headerlink" title="一、分布式理论"></a>一、分布式理论</h2><h3 id="1-分布式架构"><a href="#1-分布式架构" class="headerlink" title="1. 分布式架构"></a>1. 分布式架构</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">分布式理论&amp;自定义RPC</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="一、分布式理论"><a href="#一、分布式理论" class="headerlink" title="一、分布式理论"></a>一、分布式理论</h2><h3 id="1-分布式架构"><a href="#1-分布式架构" class="headerlink" title="1. 分布式架构"></a>1. 分布式架构</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>就是业务拆分，与集群的区别是：前者是 做不同的事，后者是做相同的事。</p>
 <p>分布式系统的特点：分布性、对等性、并发性、缺乏全局时钟、故障总发生。</p>
 <h4 id="1-2-发展"><a href="#1-2-发展" class="headerlink" title="1.2 发展"></a>1.2 发展</h4><p>阿里巴巴发起的”去 IOE”运动(IOE 指的是 IBM 小型机、Oracle 数据库、EMC 的高端存储)。为什么要去IOE？</p>
 <ol>
@@ -418,11 +262,11 @@
 <li>Eventually consistent（最终一致性）： 最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此最终<br>一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。</li>
 </ul>
 <h3 id="6-分布式事务"><a href="#6-分布式事务" class="headerlink" title="6. 分布式事务"></a>6. 分布式事务</h3><p>事务的基本特性：ACID，分布式事务就是微服务时代也要像单机时代一样，保证ACID。</p>
-<h3 id="7-一致性协议-2PC"><a href="#7-一致性协议-2PC" class="headerlink" title="7. 一致性协议 2PC"></a>7. 一致性协议 2PC</h3><h4 id="1-2PC"><a href="#1-2PC" class="headerlink" title="1.  2PC"></a>1.  2PC</h4><p>2是指两个阶段，P是指准备阶段，C是指提交阶段。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085" alt><br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006e24830b3cb?w=1716&h=548&f=png&s=100496" alt></p>
+<h3 id="7-一致性协议-2PC"><a href="#7-一致性协议-2PC" class="headerlink" title="7. 一致性协议 2PC"></a>7. 一致性协议 2PC</h3><h4 id="1-2PC"><a href="#1-2PC" class="headerlink" title="1.  2PC"></a>1.  2PC</h4><p>2是指两个阶段，P是指准备阶段，C是指提交阶段。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006d858d987b9?w=1734&h=1422&f=png&s=254085" srcset="/img/loading.gif" alt><br><img src="https://user-gold-cdn.xitu.io/2020/6/29/173006e24830b3cb?w=1716&h=548&f=png&s=100496" srcset="/img/loading.gif" alt></p>
 <p>优点： 简单 </p>
 <p>缺点：同步阻塞，单点问题，数据不一致（整个过程都不是原子性，任何一步失败都可能导致不一致），过于保守（出现故障而导致协调者始终无法获取到所有参与者的响应信息的话，这时协调者只能依靠其自身的超时机制来判断是否需要中断事务）</p>
 <h3 id="8-一致性协议-3PC"><a href="#8-一致性协议-3PC" class="headerlink" title="8. 一致性协议 3PC"></a>8. 一致性协议 3PC</h3><p>3PC，全称 “three phase commit”，是 2PC 的改进版，将 2PC 的 “提交事务请求” 过程一分为二，共形成了由CanCommit、PreCommit和doCommit三个阶段组成的事务处理协议。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/1730074d1bbb5eb6?w=1402&h=926&f=png&s=214892" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/1730074d1bbb5eb6?w=1402&h=926&f=png&s=214892" srcset="/img/loading.gif" alt></p>
 <p>2PC对比3PC </p>
 <ol>
 <li>首先对于<strong>协调者和参与者都设置了超时机制</strong>（在2PC中，只有协调者拥有超时机制，即如果在一定时间内没有收到参与者的消息则默认失败）,主要是避免了参与者在长时间无法与协调者节点通讯（协调者挂掉了）的情况下，无法释放资源的问题，因为参与者自身拥有超时机制会在超时后，自动进行本地commit从而进行释放资源。而这种机制也侧面降低了整个事务的阻塞时间和范围。 </li>
@@ -448,7 +292,7 @@
 </ol>
 <p>Raft算法分为两个阶段，首先是选举过程，然后在选举出来的领导人带领进行正常操作，比如日志复制等。</p>
 <p>这里的两个算法就不过多阐述…</p>
-<h2 id="二、分布式系统设计策略"><a href="#二、分布式系统设计策略" class="headerlink" title="二、分布式系统设计策略"></a>二、分布式系统设计策略</h2><h3 id="1-心跳检测"><a href="#1-心跳检测" class="headerlink" title="1. 心跳检测"></a>1. 心跳检测</h3><p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300a6f1d49072a?w=1184&h=1072&f=png&s=323220" alt></p>
+<h2 id="二、分布式系统设计策略"><a href="#二、分布式系统设计策略" class="headerlink" title="二、分布式系统设计策略"></a>二、分布式系统设计策略</h2><h3 id="1-心跳检测"><a href="#1-心跳检测" class="headerlink" title="1. 心跳检测"></a>1. 心跳检测</h3><p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300a6f1d49072a?w=1184&h=1072&f=png&s=323220" srcset="/img/loading.gif" alt></p>
 <ul>
 <li>周期检测心跳机制（设定超时时间）</li>
 <li>累计失效检测机制（在周期检测心跳机制的基础上，统计一定周期内节点的返回情况，以此计算节点的“死亡”概率。另外，对于宣告“濒临死亡”的节点可以发起有限次数的重试，以作进一步判断。）**</li>
@@ -463,20 +307,20 @@
 <li>客户端(Client)，服务的调用方。</li>
 <li>客户端存根(Client Stub)，存放服务端的地址消息，再将客户端的请求参数打包成网络消息，然后通过网络远程发送给服务方。</li>
 <li>服务端(Server)，真正的服务提供者。</li>
-<li>服务端存根(Server Stub)，接收客户端发送过来的消息，将消息解包，并调用本地的方法。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bece0339a47?w=1592&h=986&f=png&s=1062631" alt></li>
+<li>服务端存根(Server Stub)，接收客户端发送过来的消息，将消息解包，并调用本地的方法。<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bece0339a47?w=1592&h=986&f=png&s=1062631" srcset="/img/loading.gif" alt></li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bfae56b636a?w=1358&h=1266&f=png&s=162833" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300bfae56b636a?w=1358&h=1266&f=png&s=162833" srcset="/img/loading.gif" alt></p>
 <h3 id="3-RMI"><a href="#3-RMI" class="headerlink" title="3. RMI"></a>3. RMI</h3><p>Java RMI 指的是远程方法调用 (Remote Method Invocation),是java原生支持的远程调用 ,采用JRMP（Java Remote Messageing protocol）作为通信协议，可以认为是纯java版本的分布式远程调用解决方案，这里的通信可以理解为一个虚拟机上的对象调用另一个虚拟机上对象的方法。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300c83441ecbe2?w=1292&h=1144&f=png&s=185479" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300c83441ecbe2?w=1292&h=1144&f=png&s=185479" srcset="/img/loading.gif" alt></p>
 <h3 id="4-BIO、NIO、AIO"><a href="#4-BIO、NIO、AIO" class="headerlink" title="4. BIO、NIO、AIO"></a>4. BIO、NIO、AIO</h3><ul>
 <li>BIO：一个socket连接一个线程。简单易用但资源开销太高。</li>
-<li>NIO：<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300cb6896dad24?w=762&h=590&f=png&s=89755" alt><br>  当一个连接创建后，不会需要对应一个线程，这个连接会被注册到多路复用器，所以一个连接只需要一个线程即可，所有的连接需要一个线程就可以操作，该线程的多路复用器会轮训，发现连接有请求时，才开启一个线程处理。<strong>大多数情况下，1w个连接里面同一时刻只有少量的连接有数据可读。</strong></li>
+<li>NIO：<br><img src="https://user-gold-cdn.xitu.io/2020/6/29/17300cb6896dad24?w=762&h=590&f=png&s=89755" srcset="/img/loading.gif" alt><br>  当一个连接创建后，不会需要对应一个线程，这个连接会被注册到多路复用器，所以一个连接只需要一个线程即可，所有的连接需要一个线程就可以操作，该线程的多路复用器会轮训，发现连接有请求时，才开启一个线程处理。<strong>大多数情况下，1w个连接里面同一时刻只有少量的连接有数据可读。</strong></li>
 <li>AIO：异步非阻塞IO。A代表asynchronize，主动通知，完成后会调用回调函数。使用场景：连接数目多且连接比较长（重操作）的架构，比如相册服务器。重点调用了OS参与并发操作，编程比较复杂。Java7开始支持</li>
 </ul>
 <h3 id="5-Netty"><a href="#5-Netty" class="headerlink" title="5. Netty"></a>5. Netty</h3><p>简化和流程化了 NIO 的开发过程，NIO 的 Bug。例如 Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU 100%。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17300d384577a4e1?w=1544&h=932&f=png&s=284577" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17300d384577a4e1?w=1544&h=932&f=png&s=284577" srcset="/img/loading.gif" alt></p>
 <p>Netty模型：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302ae16e332c98?w=1632&h=1018&f=png&s=263790" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302ae16e332c98?w=1632&h=1018&f=png&s=263790" srcset="/img/loading.gif" alt></p>
 <p>Netty 抽象出两组线程池， BossGroup 专门负责接收客 户端连接， WorkerGroup 专门负责网络读写操作。NioEventLoop 表示一个不断循环执行处理 任务的线程， <strong>每个NioEventLoop 都有一个selector</strong>，用于监听绑定在其上的socket网络通道。NioEventLoop内部采用串行化设计，从消息的读取-&gt;解码-&gt;处理-&gt;编码-&gt;发送， 始终由 IO 线 程 NioEventLoop 负责。</p>
 <h3 id="6-Netty核心组件"><a href="#6-Netty核心组件" class="headerlink" title="6. Netty核心组件"></a>6. Netty核心组件</h3><h4 id="6-1-ChannelHandler-及其实现类"><a href="#6-1-ChannelHandler-及其实现类" class="headerlink" title="6.1 ChannelHandler 及其实现类"></a>6.1 ChannelHandler 及其实现类</h4><p>ChannelHandler 接口定义了许多事件处理的方法，我们可以通过重写这些方法去实现具 体的业务逻辑。我们经常需要自定义一个Handler类去继承ChannelInboundHandlerAdapter， 然后通过 重写相应方法实现业务逻辑，我们接下来看看一般都需要重写哪些方法：</p>
 <ul>
@@ -490,7 +334,7 @@
 <li>ChannelPipeline addFirst(ChannelHandler…handlers)，把一个业务处理类（handler） 添加到链中的第一个位置</li>
 <li>ChannelPipeline addLast(ChannelHandler…handlers)，把一个业务处理类（handler） 添加到链中的最后一个位置</li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302c2217871f50?w=1400&h=690&f=png&s=649514" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/30/17302c2217871f50?w=1400&h=690&f=png&s=649514" srcset="/img/loading.gif" alt></p>
 <h4 id="6-3-ChannelHandlerContext"><a href="#6-3-ChannelHandlerContext" class="headerlink" title="6.3 ChannelHandlerContext"></a>6.3 ChannelHandlerContext</h4><p>这 是 事 件 处 理 器 上 下 文 对 象 ， Pipeline 链 中 的 实 际 处 理 节 点 。 每 个 处 理 节 点ChannelHandlerContext 中 包 含 一 个 具 体 的 事 件 处 理 器 ChannelHandler ， 同 时ChannelHandlerContext 中也绑定了对应的 pipeline 和 Channel 的信息，方便对 ChannelHandler 进行调用。常用方法如下所示：</p>
 <ul>
 <li>ChannelFuture close()， 关闭通道</li>
@@ -525,916 +369,281 @@
 <p><em>《lagouedu》分布式原理总结</em></p>
 </blockquote>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/06/27/分布式集群架构场景化解决⽅案/" rel="next" title="分布式集群架构场景化解决⽅案">
-                <i class="fa fa-chevron-left"></i> 分布式集群架构场景化解决⽅案
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/09/精细Zookeeper/" rel="prev" title="精细Zookeeper ">
-                精细Zookeeper  <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
-            
-              <p class="site-author-name" itemprop="name">190coder</p>
-              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">62</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/分布式/">分布式</a>
+                    
+                  </div>
+                
+                
               </div>
-            
-
-            
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/09/精细Zookeeper/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">精细Zookeeper </span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/27/分布式集群架构场景化解决⽅案/">
+                        <span class="hidden-mobile">分布式集群架构场景化解决⽅案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
             
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+          </article>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、分布式理论"><span class="nav-text">一、分布式理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-分布式架构"><span class="nav-text">1. 分布式架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概念"><span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-发展"><span class="nav-text">1.2 发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-演变"><span class="nav-text">1.3 演变</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-分布式问题"><span class="nav-text">2. 分布式问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-一致性"><span class="nav-text">3. 一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-一致性分类"><span class="nav-text">3.1 一致性分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-CAP定理"><span class="nav-text">4. CAP定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-BASE-理论"><span class="nav-text">5. BASE 理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-分布式事务"><span class="nav-text">6. 分布式事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-一致性协议-2PC"><span class="nav-text">7. 一致性协议 2PC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2PC"><span class="nav-text">1.  2PC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-一致性协议-3PC"><span class="nav-text">8. 一致性协议 3PC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-一致性算法-Paxos"><span class="nav-text">9. 一致性算法 Paxos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-一致性算法-Raft"><span class="nav-text">10. 一致性算法 Raft</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、分布式系统设计策略"><span class="nav-text">二、分布式系统设计策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-心跳检测"><span class="nav-text">1. 心跳检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-高可用设计"><span class="nav-text">2. 高可用设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-容错性"><span class="nav-text">3. 容错性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-负载均衡"><span class="nav-text">4. 负载均衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、分布式架构网络通信"><span class="nav-text">三、分布式架构网络通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本原理"><span class="nav-text">1. 基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-RPC"><span class="nav-text">2. RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RMI"><span class="nav-text">3. RMI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-BIO、NIO、AIO"><span class="nav-text">4. BIO、NIO、AIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Netty"><span class="nav-text">5. Netty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Netty核心组件"><span class="nav-text">6. Netty核心组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-ChannelHandler-及其实现类"><span class="nav-text">6.1 ChannelHandler 及其实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-ChannelPipeline"><span class="nav-text">6.2 ChannelPipeline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-ChannelHandlerContext"><span class="nav-text">6.3 ChannelHandlerContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4-ChannelFuture"><span class="nav-text">6.4 ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-EventLoopGroup-和其实现类-NioEventLoopGroup"><span class="nav-text">6.5 EventLoopGroup 和其实现类 NioEventLoopGroup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-6-ServerBootstrap-和-Bootstrap"><span class="nav-text">6.6 ServerBootstrap 和 Bootstrap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-实现基础RPC"><span class="nav-text">7. 实现基础RPC</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-	
-           
-         
-         <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+      </div>
     </div>
-  </aside>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
 
-
-        
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">190coder</span>
-
-  
+    
+  </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
+<!-- Custom -->
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-
-<div>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+  </main>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
       
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
       
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
 
 
+    
+  </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  
+<!-- Plugins -->
 
 
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
-
-	
-
-
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "分布式理论&自定义RPC&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
@@ -1447,26 +656,13 @@ if(canvas.getContext){
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

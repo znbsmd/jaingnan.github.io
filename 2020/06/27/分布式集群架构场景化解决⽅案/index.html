@@ -1,366 +1,210 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN" >
 
 
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="chinese">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-<meta name="referrer" content="no-referrer">
-
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>分布式集群架构场景化解决⽅案 - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
   
     
-      
-    
-    
-      
-    
-  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
-  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="一、一致性Hash算法 简单介绍下Hash算法，⽐如说在安全加密领域MD5、SHA等加密算法，在数据存储和查找⽅⾯有Hash表等, 以上都应⽤到了Hash算法。  查找效率(时间&amp;amp;空间，时间优先) ：  顺序查找法（for遍历） &amp;lt; ⼆分查找（折半查找） &amp;lt; 直接寻址法（数组） &amp;lt;  开放寻址法（简单hash） &amp;lt; 拉链法(hash+链表)。  如果Hash算法设计">
-<meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="分布式集群架构场景化解决⽅案">
-<meta property="og:url" content="http://yoursite.com/2020/06/27/分布式集群架构场景化解决⽅案/index.html">
-<meta property="og:site_name" content="190呐">
-<meta property="og:description" content="一、一致性Hash算法 简单介绍下Hash算法，⽐如说在安全加密领域MD5、SHA等加密算法，在数据存储和查找⽅⾯有Hash表等, 以上都应⽤到了Hash算法。  查找效率(时间&amp;amp;空间，时间优先) ：  顺序查找法（for遍历） &amp;lt; ⼆分查找（折半查找） &amp;lt; 直接寻址法（数组） &amp;lt;  开放寻址法（简单hash） &amp;lt; 拉链法(hash+链表)。  如果Hash算法设计">
-<meta property="og:locale" content="chinese">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3c8a682f68ed?w=1238&h=162&f=png&s=27861">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3eb9ae372df0?w=1282&h=782&f=png&s=224279">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3ed78ddd6cc3?w=1090&h=738&f=png&s=207431">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3ef40628a0dd?w=1068&h=708&f=png&s=180428">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3f7be3fab24d?w=1340&h=568&f=png&s=153215">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&h=346&f=png&s=61019">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&h=602&f=png&s=125139">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&h=526&f=png&s=89997">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&h=740&f=png&s=144419">
-<meta property="og:updated_time" content="2020-07-01T14:10:03.197Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式集群架构场景化解决⽅案">
-<meta name="twitter:description" content="一、一致性Hash算法 简单介绍下Hash算法，⽐如说在安全加密领域MD5、SHA等加密算法，在数据存储和查找⽅⾯有Hash表等, 以上都应⽤到了Hash算法。  查找效率(时间&amp;amp;空间，时间优先) ：  顺序查找法（for遍历） &amp;lt; ⼆分查找（折半查找） &amp;lt; 直接寻址法（数组） &amp;lt;  开放寻址法（简单hash） &amp;lt; 拉链法(hash+链表)。  如果Hash算法设计">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/6/27/172f3c8a682f68ed?w=1238&h=162&f=png&s=27861">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '190coder'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/06/27/分布式集群架构场景化解决⽅案/">
-
-
-
-
-
-  <title>分布式集群架构场景化解决⽅案 | 190呐</title>
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-
-
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
 
-  
-  
-    
-  
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">190呐</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
   </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/27/分布式集群架构场景化解决⽅案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="190coder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="190呐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">分布式集群架构场景化解决⽅案</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-27T22:31:17+08:00">
-                2020-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-06-27 22:31" pubdate>
+      2020年6月27日 晚上
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <h1 id="一、一致性Hash算法"><a href="#一、一致性Hash算法" class="headerlink" title="一、一致性Hash算法"></a>一、一致性Hash算法</h1><ul>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">分布式集群架构场景化解决⽅案</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="一、一致性Hash算法"><a href="#一、一致性Hash算法" class="headerlink" title="一、一致性Hash算法"></a>一、一致性Hash算法</h1><ul>
 <li><p>简单介绍下Hash算法，⽐如说在安全加密领域MD5、SHA等加密算法，在数据存储和查找⽅⾯有Hash表等, 以上<br>都应⽤到了Hash算法。</p>
 </li>
 <li><p>查找效率(时间&amp;空间，时间优先) ：<br>  顺序查找法（for遍历） &lt; ⼆分查找（折半查找） &lt; 直接寻址法（数组） &lt;  开放寻址法（简单hash） &lt; 拉链法(hash+链表)。</p>
@@ -383,16 +227,16 @@
 </ul>
 <h2 id="2-普通Hash存在的问题"><a href="#2-普通Hash存在的问题" class="headerlink" title="2. 普通Hash存在的问题"></a>2. 普通Hash存在的问题</h2><p>以ip_hash为例，如果一个服务宕机了，需要重新求模重新计算。服务器多了，缩容和扩容都会出现问题，比如⽤户在原来服务器中的会话都会丢失。</p>
 <h2 id="3-⼀致性Hash算法"><a href="#3-⼀致性Hash算法" class="headerlink" title="3. ⼀致性Hash算法"></a>3. ⼀致性Hash算法</h2><h4 id="3-1-设计思路"><a href="#3-1-设计思路" class="headerlink" title="3.1 设计思路"></a>3.1 设计思路</h4><p>思路如下：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3c8a682f68ed?w=1238&h=162&f=png&s=27861" alt><br>1-&gt;2的32次⽅减1，把它想成一个闭环（hash环）我们把服务器的ip或者主机名求<br>hash值然后对应到hash环上，那么针对客户端⽤户，也根据它的ip进⾏hash求值，对应到环上某个位<br>置，然后如何确定⼀个客户端路由到哪个服务器处理呢？按照顺时针⽅向找最近的服务器节点。（<strong>简单理解为双方同时hash，找最近的节点）</strong><br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3eb9ae372df0?w=1282&h=782&f=png&s=224279" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3c8a682f68ed?w=1238&h=162&f=png&s=27861" srcset="/img/loading.gif" alt><br>1-&gt;2的32次⽅减1，把它想成一个闭环（hash环）我们把服务器的ip或者主机名求<br>hash值然后对应到hash环上，那么针对客户端⽤户，也根据它的ip进⾏hash求值，对应到环上某个位<br>置，然后如何确定⼀个客户端路由到哪个服务器处理呢？按照顺时针⽅向找最近的服务器节点。（<strong>简单理解为双方同时hash，找最近的节点）</strong><br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3eb9ae372df0?w=1282&h=782&f=png&s=224279" srcset="/img/loading.gif" alt></p>
 <p>假如 3下线了，原来打到3的请求重新路由到4，对其他客户端没有影响。<strong>避免大量请求迁移</strong>，如下图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3ed78ddd6cc3?w=1090&h=738&f=png&s=207431" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3ed78ddd6cc3?w=1090&h=738&f=png&s=207431" srcset="/img/loading.gif" alt></p>
 <p>假如 增加了服务器5，原来到3 的路由到5，也是迁移了一小部分，<strong>避免了大量请求迁移</strong>。如下图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3ef40628a0dd?w=1068&h=708&f=png&s=180428" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3ef40628a0dd?w=1068&h=708&f=png&s=180428" srcset="/img/loading.gif" alt></p>
 <p>综上，，每⼀台服务器负责⼀段，⼀致性哈希算法对于节点的增减都只需重定位环空间中的⼀⼩<br>部分数据，具有较好的容错性和可扩展性。</p>
 <h4 id="3-2-数据倾斜问题"><a href="#3-2-数据倾斜问题" class="headerlink" title="3.2 数据倾斜问题"></a>3.2 数据倾斜问题</h4><p>但是节点太少的情况下，会产生数据倾斜问题。例如只有2台服务器，根据一致性hash，大量请求会打到节点1，节点2 负责的非常少。这就是<strong>数据倾斜问题</strong>。</p>
 <h4 id="3-3-虚拟节点解决方案"><a href="#3-3-虚拟节点解决方案" class="headerlink" title="3.3 虚拟节点解决方案"></a>3.3 虚拟节点解决方案</h4><p>此时，虚拟节点解决方案就来了：将每一个节点计算多个hash，每个hash计算结果都设置成当前节点，成为<strong>虚拟节点</strong>。</p>
 <p>具体做法：在服务器ip后面增加编号来实现，比如，可以为每台服务器计算三个虚拟节点， 如下图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3f7be3fab24d?w=1340&h=568&f=png&s=153215" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f3f7be3fab24d?w=1340&h=568&f=png&s=153215" srcset="/img/loading.gif" alt></p>
 <h2 id="4-手写一致性hash-帮助理解"><a href="#4-手写一致性hash-帮助理解" class="headerlink" title="4. 手写一致性hash 帮助理解"></a>4. 手写一致性hash 帮助理解</h2><p>github地址-&gt; <a href="https://github.com/znbsmd/handwriting_framework/tree/master/ConsistentHash" target="_blank" rel="noopener">https://github.com/znbsmd/handwriting_framework/tree/master/ConsistentHash</a></p>
 <h2 id="5-Nginx-配置⼀致性Hash负载均衡策略"><a href="#5-Nginx-配置⼀致性Hash负载均衡策略" class="headerlink" title="5. Nginx 配置⼀致性Hash负载均衡策略"></a>5. Nginx 配置⼀致性Hash负载均衡策略</h2><p>ngx_http_upstream_consistent_hash 模块是⼀个负载均衡器，使⽤⼀个内部⼀致性hash算法来选择<br>合适的后端节点。<br>该模块可以根据配置参数采取不同的⽅式将请求均匀映射到后端机器，</p>
 <ul>
@@ -411,7 +255,11 @@
 <li><p>make install</p>
 </li>
 <li><p>在nginx.conf⽂件中配置</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream zjnServer &#123;</span><br><span class="line">    consistent_hash $request_uri;// 根据客户端请求的uri映射</span><br><span class="line">    server 127.0.0.1:8080;</span><br><span class="line">    server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <div class="hljs"><pre><code class="hljs undefined">upstream zjnServer &#123;
+    consistent_hash <span class="hljs-variable">$request_uri</span>;<span class="hljs-comment">// 根据客户端请求的uri映射</span>
+    server 127<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.1</span>:<span class="hljs-number">8080</span>;
+    server 127<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.1</span>:<span class="hljs-number">8081</span>;
+&#125;</code></pre></div>
 
 </li>
 </ul>
@@ -419,21 +267,29 @@
 <h2 id="2-集群时钟同步配置"><a href="#2-集群时钟同步配置" class="headerlink" title="2. 集群时钟同步配置"></a>2. 集群时钟同步配置</h2><ul>
 <li><p>集群时钟同步思路</p>
 <ul>
-<li><p>分布式集群中各个服务器节点都可以连接互联⽹<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#使⽤ ntpdate ⽹络时间同步命令</span><br><span class="line">ntpdate -u ntp.api.bz #从⼀个时间服务器同步时间</span><br></pre></td></tr></table></figure>
+<li><p>分布式集群中各个服务器节点都可以连接互联⽹<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f4334602d0f58?w=1070&h=330&f=png&s=62511" srcset="/img/loading.gif" alt></p>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-comment">#使⽤ ntpdate ⽹络时间同步命令</span>
+ntpdate -u ntp.api.<span class="hljs-keyword">bz </span><span class="hljs-comment">#从⼀个时间服务器同步时间</span></code></pre></div>
 
 <p>最后使用crontab 定时任务去同步</p>
 </li>
 <li><p>分布式集群中某⼀个服务器节点可以访问互联⽹或者所有节点都不能够访问互联⽹</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&h=346&f=png&s=61019" alt><br>选node1 作为主时间服务器，（如果这台服务器能够访问互联⽹，可以让这台服务器和⽹络时间保持同步，如果不能就⼿动设置⼀个时间）</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f436632770682?w=1146&h=346&f=png&s=61019" srcset="/img/loading.gif" alt><br>选node1 作为主时间服务器，（如果这台服务器能够访问互联⽹，可以让这台服务器和⽹络时间保持同步，如果不能就⼿动设置⼀个时间）</p>
 </li>
 <li><p>设置好node1 时间</p>
 </li>
 <li><p>把A配置为时间服务器（修改/etc/ntp.conf⽂件）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1、如果有 restrict default ignore，注释掉它</span><br><span class="line"># 2、添加如下⼏⾏内容</span><br><span class="line">restrict 172.17.0.0 mask 255.255.255.0 nomodify notrap #放开局域⽹同步功能,172.17.0.0是你的局域⽹⽹段</span><br><span class="line">server 127.127.1.0 # local clock</span><br><span class="line">fudge 127.127.1.0 stratum 10</span><br><span class="line"># 3、重启⽣效并配置ntpd服务开机⾃启动</span><br><span class="line">service ntpd restart</span><br><span class="line">chkconfig ntpd on</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-comment"># 1、如果有 restrict default ignore，注释掉它</span>
+<span class="hljs-comment"># 2、添加如下⼏⾏内容</span>
+restrict 172.17.0.0 mask 255.255.255.0 nomodify notrap #放开局域⽹同步功能,172.17.0.0是你的局域⽹⽹段<span class="hljs-built_in">
+server </span>127.127.1.0 # local<span class="hljs-built_in"> clock
+</span>fudge 127.127.1.0 stratum 10
+<span class="hljs-comment"># 3、重启⽣效并配置ntpd服务开机⾃启动</span><span class="hljs-built_in">
+service </span>ntpd restart
+chkconfig ntpd on</code></pre></div>
 </li>
 <li><p>集群中其他节点就可以从A服务器同步时间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate 172.17.0.17</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">ntpdate</span> 172<span class="hljs-selector-class">.17</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.17</span></code></pre></div>
 
 </li>
 </ul>
@@ -442,22 +298,39 @@
 <h1 id="三、分布式ID解决⽅案"><a href="#三、分布式ID解决⽅案" class="headerlink" title="三、分布式ID解决⽅案"></a>三、分布式ID解决⽅案</h1><p>分表后，ID不能重复</p>
 <ul>
 <li><p>UUID(可以⽤)</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">         System.out.println(java.util.UUID.randomUUID().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyTest</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+         System.out.println(java.util.UUID.randomUUID().toString());
+    &#125;
+&#125;</code></pre></div>
 </li>
 <li><p>独⽴数据库的⾃增ID,设置单独的数据库，在插入前优先插入，单独维护（不推荐）</p>
 </li>
 <li><p>SnowFlake 雪花算法（可以⽤，推荐）</p>
 </li>
 <li><p>雪花算法是⼀个算法，基于这个算法可以⽣成ID，⽣成的ID是⼀个long型，那么在Java中⼀个long<br>型是8个字节，算下来是64bit，如下是使⽤雪花算法⽣成的⼀个ID的⼆进制形式示意：</p>
-<p>  <img src="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350" alt><br>  ⼀些互联⽹公司也基于上述的⽅案封装了⼀些分布式ID⽣成器，⽐如滴滴的tinyid（基于数据库实现）、百度的uidgenerator（基于SnowFlake）和美团的leaf（基于数据库和SnowFlake）等</p>
+<p>  <img src="https://user-gold-cdn.xitu.io/2020/6/27/172f447b62d8b2a1?w=1134&h=536&f=png&s=150350" srcset="/img/loading.gif" alt><br>  ⼀些互联⽹公司也基于上述的⽅案封装了⼀些分布式ID⽣成器，⽐如滴滴的tinyid（基于数据库实现）、百度的uidgenerator（基于SnowFlake）和美团的leaf（基于数据库和SnowFlake）等</p>
 </li>
 <li><p>redis.incr (推荐)</p>
 <ul>
 <li><p>引入jedis jar</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.9.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>redis.clients<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jedis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 </li>
 <li><p>编写测试类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Jedis jedis = new Jedis(&quot;127.0.0.1&quot;,6379);</span><br><span class="line">    try &#123;</span><br><span class="line">        long id = jedis.incr(&quot;id&quot;);</span><br><span class="line">        System.out.println(&quot;从redis中获取的分布式id为：&quot; + id);</span><br><span class="line">        &#125; </span><br><span class="line">    finally &#123;</span><br><span class="line">        if (null != jedis) &#123;</span><br><span class="line">        jedis.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">Jedis jedis = <span class="hljs-keyword">new</span> Jedis(<span class="hljs-string">"127.0.0.1"</span>,<span class="hljs-number">6379</span>);
+    <span class="hljs-keyword">try</span> &#123;
+        <span class="hljs-keyword">long</span> id = jedis.incr(<span class="hljs-string">"id"</span>);
+        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"从redis中获取的分布式id为："</span> + id);
+        &#125; 
+    <span class="hljs-keyword">finally</span> &#123;
+        <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != jedis) &#123;
+        jedis.close();
+    &#125;
+&#125;</code></pre></div>
 
 </li>
 </ul>
@@ -486,7 +359,11 @@
 <li><p>安装配置zk</p>
 </li>
 <li><p>引入jar</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.dangdang&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;elastic-job-lite-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+  <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.dangdang<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>elastic-job-lite-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.1.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 </li>
 <li><p>定时任务实例…</p>
 </li>
@@ -497,8 +374,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="4-2-Elastic-Job-Lite轻量级去中⼼化的特点"><a href="#4-2-Elastic-Job-Lite轻量级去中⼼化的特点" class="headerlink" title="4.2 Elastic-Job-Lite轻量级去中⼼化的特点"></a>4.2 Elastic-Job-Lite轻量级去中⼼化的特点</h4><p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&h=602&f=png&s=125139" alt></p>
-<h4 id="4-2-任务分⽚"><a href="#4-2-任务分⽚" class="headerlink" title="4.2 任务分⽚"></a>4.2 任务分⽚</h4><p>ElasticJob可以把作业分为多个的task（每⼀个task就是⼀个任务分⽚），每<br>⼀个task交给具体的⼀个机器实例去处理（⼀个机器实例是可以处理多个task的），但是具体每个task<br>执⾏什么逻辑由我们⾃⼰来指定。<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&h=526&f=png&s=89997" alt></p>
+<h4 id="4-2-Elastic-Job-Lite轻量级去中⼼化的特点"><a href="#4-2-Elastic-Job-Lite轻量级去中⼼化的特点" class="headerlink" title="4.2 Elastic-Job-Lite轻量级去中⼼化的特点"></a>4.2 Elastic-Job-Lite轻量级去中⼼化的特点</h4><p><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f469538f1b30c?w=1276&h=602&f=png&s=125139" srcset="/img/loading.gif" alt></p>
+<h4 id="4-2-任务分⽚"><a href="#4-2-任务分⽚" class="headerlink" title="4.2 任务分⽚"></a>4.2 任务分⽚</h4><p>ElasticJob可以把作业分为多个的task（每⼀个task就是⼀个任务分⽚），每<br>⼀个task交给具体的⼀个机器实例去处理（⼀个机器实例是可以处理多个task的），但是具体每个task<br>执⾏什么逻辑由我们⾃⼰来指定。<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f46ad0e00d4cf?w=1024&h=526&f=png&s=89997" srcset="/img/loading.gif" alt></p>
 <p>Strategy策略定义这些分⽚项怎么去分配到各个机器上去，<strong>默认是平均分配</strong>，可以定制，⽐如某⼀个机<br>器负载 ⽐较⾼或者预配置⽐较⾼，那么就可以写策略。分⽚和作业本身是通过⼀个注册中⼼协调的，因<br>为在分布式环境下，状态数据肯定集中到⼀点，才可以在分布式中沟通。</p>
 <h4 id="4-3-弹性扩容"><a href="#4-3-弹性扩容" class="headerlink" title="4.3 弹性扩容"></a>4.3 弹性扩容</h4><p>新增加⼀个运⾏实例app3，它会⾃动注册到注册中⼼，注册中⼼发现新的服务上线，注册中⼼会通知<br>ElasticJob 进⾏重新分⽚，那么总得分⽚项有多少，那么就可以搞多少个实例机器，⽐如完全可以分1000⽚<br>最多就可以有多少app实例，完全可以分1000⽚，那么就可以搞1000台机器⼀起执⾏作业</p>
 <p>注意：</p>
@@ -530,937 +407,311 @@
 <li><p>唯一缺点：对应⽤有⼊侵，引⼊了和Redis的交互代码（有专门jar包，暂无缺点）</p>
 </li>
 <li><p>引入jar</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.session<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-session-data-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 
 </li>
 </ul>
 <ul>
 <li><p>配置redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring.redis.database=0</span><br><span class="line">spring.redis.host=127.0.0.1</span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">spring<span class="hljs-selector-class">.redis</span><span class="hljs-selector-class">.database</span>=<span class="hljs-number">0</span>
+spring<span class="hljs-selector-class">.redis</span><span class="hljs-selector-class">.host</span>=<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>
+spring<span class="hljs-selector-class">.redis</span><span class="hljs-selector-class">.port</span>=<span class="hljs-number">6379</span></code></pre></div>
 
 <ul>
 <li>主run方法添加注解</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@EnableRedisHttpSession</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-meta">@EnableRedisHttpSession</span></code></pre></div>
 
 <ul>
-<li>原理：主要是在过滤器进行请求拦截<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&h=740&f=png&s=144419" alt></li>
+<li>原理：主要是在过滤器进行请求拦截<br><img src="https://user-gold-cdn.xitu.io/2020/6/27/172f626e4c83c2ba?w=1146&h=740&f=png&s=144419" srcset="/img/loading.gif" alt></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/06/23/Nginx-使用-剖析/" rel="next" title="Nginx 使用& 剖析">
-                <i class="fa fa-chevron-left"></i> Nginx 使用& 剖析
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/01/分布式理论-自定义RPC/" rel="prev" title="分布式理论&自定义RPC">
-                分布式理论&自定义RPC <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
-            
-              <p class="site-author-name" itemprop="name">190coder</p>
-              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">62</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/分布式/">分布式</a>
+                    
+                  </div>
+                
+                
               </div>
-            
-
-            
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/01/分布式理论-自定义RPC/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">分布式理论&自定义RPC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/23/Nginx-使用-剖析/">
+                        <span class="hidden-mobile">Nginx 使用& 剖析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
             
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+          </article>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、一致性Hash算法"><span class="nav-text">一、一致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hash算法应⽤场景"><span class="nav-text">1. Hash算法应⽤场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-普通Hash存在的问题"><span class="nav-text">2. 普通Hash存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-⼀致性Hash算法"><span class="nav-text">3. ⼀致性Hash算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-设计思路"><span class="nav-text">3.1 设计思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-数据倾斜问题"><span class="nav-text">3.2 数据倾斜问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-虚拟节点解决方案"><span class="nav-text">3.3 虚拟节点解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-手写一致性hash-帮助理解"><span class="nav-text">4. 手写一致性hash 帮助理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Nginx-配置⼀致性Hash负载均衡策略"><span class="nav-text">5. Nginx 配置⼀致性Hash负载均衡策略</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#二、集群时钟同步问题"><span class="nav-text">二、集群时钟同步问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-时钟不同步导致的问题"><span class="nav-text">1. 时钟不同步导致的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集群时钟同步配置"><span class="nav-text">2. 集群时钟同步配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、分布式ID解决⽅案"><span class="nav-text">三、分布式ID解决⽅案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、分布式调度问题"><span class="nav-text">四、分布式调度问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-分布式调度有两层含义"><span class="nav-text">1. 分布式调度有两层含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-定时任务与消息队列的区别"><span class="nav-text">2. 定时任务与消息队列的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-定时任务的实现⽅式"><span class="nav-text">3. 定时任务的实现⽅式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-分布式调度框架Elastic-Job"><span class="nav-text">4. 分布式调度框架Elastic-Job</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Elastic-Job-Lite应⽤"><span class="nav-text">4.1 Elastic-Job-Lite应⽤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Elastic-Job-Lite轻量级去中⼼化的特点"><span class="nav-text">4.2 Elastic-Job-Lite轻量级去中⼼化的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-任务分⽚"><span class="nav-text">4.2 任务分⽚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-弹性扩容"><span class="nav-text">4.3 弹性扩容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Session共享问题"><span class="nav-text">五、Session共享问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Session问题原因分析"><span class="nav-text">1. Session问题原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-解决Session⼀致性的⽅案"><span class="nav-text">2. 解决Session⼀致性的⽅案</span></a></li></ol></li></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-	
-           
-         
-         <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+      </div>
     </div>
-  </aside>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
 
-
-        
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">190coder</span>
-
-  
+    
+  </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
+<!-- Custom -->
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-
-<div>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+  </main>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
       
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
       
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
 
 
+    
+  </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  
+<!-- Plugins -->
 
 
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
-
-	
-
-
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "分布式集群架构场景化解决⽅案&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
@@ -1473,26 +724,13 @@ if(canvas.getContext){
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

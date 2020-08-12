@@ -1,354 +1,210 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN" >
 
 
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="chinese">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-<meta name="referrer" content="no-referrer">
-
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>Thinking in Java 第二十一章 - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
   
     
-      
-    
-    
-      
-    
-  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
-  <link href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="第二十一章 并发目前为止，你学到的都是顺序编程知识，即程序重的所有事物在任意时刻都只能执行一个步骤。 21.1 并发的多面性用并发解决问题大体上分为：“速度”和“设计可管理性”两种。 21.1.1 更快的执行多处理器可以将大量用户的需求分不到多个CPU中，但是并发通常是提高运行在单处理器上的程序。在单处理器上运行的并发程序开销确实应该比大部分顺序执行开销大。因为增加了上下文切换的代价。如果没有阻塞">
-<meta name="keywords" content="Java Php hexo Thinking in Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Thinking in Java 第二十一章">
-<meta property="og:url" content="http://yoursite.com/2020/03/03/Thinking-in-Java-第二十一章/index.html">
-<meta property="og:site_name" content="190呐">
-<meta property="og:description" content="第二十一章 并发目前为止，你学到的都是顺序编程知识，即程序重的所有事物在任意时刻都只能执行一个步骤。 21.1 并发的多面性用并发解决问题大体上分为：“速度”和“设计可管理性”两种。 21.1.1 更快的执行多处理器可以将大量用户的需求分不到多个CPU中，但是并发通常是提高运行在单处理器上的程序。在单处理器上运行的并发程序开销确实应该比大部分顺序执行开销大。因为增加了上下文切换的代价。如果没有阻塞">
-<meta property="og:locale" content="chinese">
-<meta property="og:updated_time" content="2020-03-12T04:23:37.245Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thinking in Java 第二十一章">
-<meta name="twitter:description" content="第二十一章 并发目前为止，你学到的都是顺序编程知识，即程序重的所有事物在任意时刻都只能执行一个步骤。 21.1 并发的多面性用并发解决问题大体上分为：“速度”和“设计可管理性”两种。 21.1.1 更快的执行多处理器可以将大量用户的需求分不到多个CPU中，但是并发通常是提高运行在单处理器上的程序。在单处理器上运行的并发程序开销确实应该比大部分顺序执行开销大。因为增加了上下文切换的代价。如果没有阻塞">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":14,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '190coder'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/03/03/Thinking-in-Java-第二十一章/">
-
-
-
-
-
-  <title>Thinking in Java 第二十一章 | 190呐</title>
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-
-
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="chinese">
 
-  
-  
-    
-  
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">190呐</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
   </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/Thinking-in-Java-第二十一章/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="190coder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="190呐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Thinking in Java 第二十一章</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-03T10:24:28+08:00">
-                2020-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-03-03 10:24" pubdate>
+      2020年3月3日 上午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      80
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-eye"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <h1 id="第二十一章-并发"><a href="#第二十一章-并发" class="headerlink" title="第二十一章 并发"></a>第二十一章 并发</h1><p>目前为止，你学到的都是顺序编程知识，即程序重的所有事物在任意时刻都只能执行一个步骤。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Thinking in Java 第二十一章</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="第二十一章-并发"><a href="#第二十一章-并发" class="headerlink" title="第二十一章 并发"></a>第二十一章 并发</h1><p>目前为止，你学到的都是顺序编程知识，即程序重的所有事物在任意时刻都只能执行一个步骤。</p>
 <h2 id="21-1-并发的多面性"><a href="#21-1-并发的多面性" class="headerlink" title="21.1 并发的多面性"></a>21.1 并发的多面性</h2><p>用并发解决问题大体上分为：“速度”和“设计可管理性”两种。</p>
 <h4 id="21-1-1-更快的执行"><a href="#21-1-1-更快的执行" class="headerlink" title="21.1.1 更快的执行"></a>21.1.1 更快的执行</h4><p>多处理器可以将大量用户的需求分不到多个CPU中，但是并发通常是提高运行在单处理器上的程序。在<strong>单处理器上运行的并发程序开销确实应该比大部分顺序执行开销大</strong>。因为增加了上下文切换的代价。<strong>如果没有阻塞，那么在单处理机器上使用并发就没有任何意义。</strong><br>在单处理系统中的性能提高的常见示例是事件驱动编程。通过创建单独的执行线程来响应用户的输入，即使这个线程在大多数时间里都是阻塞的，但是程序可以保证具有一定程度的可响应性。<br>java 不支持多任务，Java 添加多线程机制。</p>
 <h4 id="21-1-2-改进代码设计"><a href="#21-1-2-改进代码设计" class="headerlink" title="21.1.2 改进代码设计"></a>21.1.2 改进代码设计</h4><ul>
@@ -357,16 +213,52 @@
 <li>协作式系统的优势：上下文切换的开销通常比抢占式系统要低廉许多，并且对可以同时执行的线程数量在理论上没有任何限制。</li>
 </ul>
 <h2 id="21-2-基本的线程机制"><a href="#21-2-基本的线程机制" class="headerlink" title="21.2 基本的线程机制"></a>21.2 基本的线程机制</h2><p>使用线程机制是一种建立透明的、可扩展的程序方法，如果程序运行太慢，为机器添加cpu。多任务和多线程往往是多处理器系统的最合理方式。</p>
-<h4 id="21-2-1-定义任务"><a href="#21-2-1-定义任务" class="headerlink" title="21.2.1 定义任务"></a>21.2.1 定义任务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package Thread;</span><br><span class="line"></span><br><span class="line">public class LiftOff implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    protected int CountDown = 10;</span><br><span class="line">    private static int taskCount = 0;</span><br><span class="line">    private final int id = taskCount++;</span><br><span class="line"></span><br><span class="line">    public LiftOff()&#123;&#125;</span><br><span class="line">    public LiftOff(int countDown) &#123;</span><br><span class="line">        CountDown = countDown;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String status()&#123;</span><br><span class="line">        return &quot;#&quot; + id + &quot;(&quot; + (CountDown &gt; 0 ? CountDown : &quot;off&quot;) + &quot;), &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        while (CountDown-- &gt;0)&#123;</span><br><span class="line"></span><br><span class="line">            System.out.println(status());</span><br><span class="line">            Thread.yield();// 线程调度器，一个线程转移到另一个线程</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="21-2-1-定义任务"><a href="#21-2-1-定义任务" class="headerlink" title="21.2.1 定义任务"></a>21.2.1 定义任务</h4><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> Thread;
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package Thread;</span><br><span class="line"></span><br><span class="line">public class MainThread &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        LiftOff liftOff = new LiftOff();</span><br><span class="line">        liftOff.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LiftOff</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">int</span> CountDown = <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> taskCount = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> id = taskCount++;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LiftOff</span><span class="hljs-params">()</span></span>&#123;&#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LiftOff</span><span class="hljs-params">(<span class="hljs-keyword">int</span> countDown)</span> </span>&#123;
+        CountDown = countDown;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">status</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"#"</span> + id + <span class="hljs-string">"("</span> + (CountDown &gt; <span class="hljs-number">0</span> ? CountDown : <span class="hljs-string">"off"</span>) + <span class="hljs-string">"), "</span>;
+    &#125;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">while</span> (CountDown-- &gt;<span class="hljs-number">0</span>)&#123;
+
+            System.out.println(status());
+            Thread.yield();<span class="hljs-comment">// 线程调度器，一个线程转移到另一个线程</span>
+        &#125;
+    &#125;
+&#125;</code></pre></div>
+
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> Thread;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainThread</span> </span>&#123;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void main(<span class="hljs-keyword">String</span>[] args) &#123;
+        LiftOff liftOff = <span class="hljs-keyword">new</span> <span class="hljs-type">LiftOff</span>();
+        liftOff.run();
+    &#125;
+&#125;</code></pre></div>
 
 <h4 id="21-2-2-Thread-类"><a href="#21-2-2-Thread-类" class="headerlink" title="21.2.2 Thread 类"></a>21.2.2 Thread 类</h4><p>Thread构造器只需要一个Runnable对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Thread thread = new Thread(new LiftOff());</span><br><span class="line">thread.start();</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">Thread</span> <span class="hljs-keyword">thread</span> = <span class="hljs-keyword">new</span> <span class="hljs-keyword">Thread</span>(<span class="hljs-keyword">new</span> LiftOff())<span class="hljs-comment">;</span>
+<span class="hljs-keyword">thread</span>.start()<span class="hljs-comment">;</span></code></pre></div>
 
 <p><strong>main()方法也是一个线程，所以main()和LiftOff()是同时执行的。</strong><br>线程调度机制是非确定性的，不可以依赖线程的代码，尽可能的保守使用线程。<br>线程虽然没有捕获对象的引用，但是注册了自己，所以start()之后仍然不会被垃圾回收。<br><strong>thread的run方法还在执行时候不管这个thread对象处在什么状态下，thread对象都不会被回收，因为Thread的run()方法的局部变量this保持了对线程对象Thread的引用.</strong><br>所以start()仅仅是线程的开始。</p>
 <h4 id="21-2-3-使用Executor"><a href="#21-2-3-使用Executor" class="headerlink" title="21.2.3 使用Executor"></a>21.2.3 使用Executor</h4><p>Java SE5的java.util.concurrent中的执行器（Executor）将为你管理Thread对象，从而简化了并发编程。 （线程池）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService exec = Executors.newFixedThreadPool(10);</span><br><span class="line">for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">    exec.execute(new LiftOff());</span><br><span class="line">&#125;</span><br><span class="line">exec.shutdown();</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined">ExecutorService exec = Executors.<span class="hljs-keyword">new</span><span class="hljs-type">FixedThreadPool</span>(<span class="hljs-number">10</span>);
+<span class="hljs-keyword">for</span> (int i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;
+    exec.execute(<span class="hljs-keyword">new</span> <span class="hljs-type">LiftOff</span>());
+&#125;
+exec.shutdown();</code></pre></div>
 
 <ul>
 <li>FixedThreadPool使用了固定的线程集来执行所提交的任务。</li>
@@ -374,9 +266,66 @@
 <li>SingleThreadExecutor 顺序执行 只会创建一个线程执行 单例线程。</li>
 </ul>
 <h4 id="21-2-4-从任务中产生返回值"><a href="#21-2-4-从任务中产生返回值" class="headerlink" title="21.2.4 从任务中产生返回值"></a>21.2.4 从任务中产生返回值</h4><p>实现Callable接口 可从任务中产生返回值，submit()会产生Future对象，用Future 对象接收返回参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package Thread;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Callable;</span><br><span class="line"></span><br><span class="line">public class TaskWithResult implements Callable &#123;</span><br><span class="line">    private int id;</span><br><span class="line"></span><br><span class="line">    public TaskWithResult(int id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object call() throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;asd&quot;);</span><br><span class="line">        return &quot;result of TaskWithResult&quot; + id;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> Thread;
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package Thread;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.concurrent.ExecutionException;</span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">public class CallableDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Future&lt;String&gt;&gt; futures = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Future s = executorService.submit(new TaskWithResult(2));</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            System.out.println(s.get());</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        s.isCancelled();</span><br><span class="line">//        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">//            futures.add(executorService.submit(new TaskWithResult(i)));</span><br><span class="line">//        &#125;</span><br><span class="line">//</span><br><span class="line">//        for (Future&lt;String&gt; fs: futures)&#123;</span><br><span class="line">//            try &#123;</span><br><span class="line">//                System.out.println(fs.get());</span><br><span class="line">//            &#125; catch (InterruptedException e)&#123;</span><br><span class="line">//                System.out.println(e);</span><br><span class="line">//            &#125; catch (ExecutionException e) &#123;</span><br><span class="line">//                e.printStackTrace();</span><br><span class="line">//            &#125; finally &#123;</span><br><span class="line">//                executorService.shutdown();</span><br><span class="line">//            &#125;</span><br><span class="line">//        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="hljs-keyword">import</span> java.util.concurrent.Callable;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TaskWithResult</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Callable</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TaskWithResult</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.id = id;
+    &#125;
+
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        System.out.println(<span class="hljs-string">"asd"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"result of TaskWithResult"</span> + id;
+    &#125;
+&#125;</code></pre></div>
+
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> Thread;
+
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.concurrent.ExecutionException;
+<span class="hljs-keyword">import</span> java.util.concurrent.ExecutorService;
+<span class="hljs-keyword">import</span> java.util.concurrent.Executors;
+<span class="hljs-keyword">import</span> java.util.concurrent.Future;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CallableDemo</span> </span>&#123;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void main(<span class="hljs-keyword">String</span>[] args) &#123;
+        ExecutorService executorService = Executors.<span class="hljs-keyword">new</span><span class="hljs-type">CachedThreadPool</span>();
+
+        ArrayList&lt;Future&lt;<span class="hljs-keyword">String</span>&gt;&gt; futures = <span class="hljs-keyword">new</span> <span class="hljs-type">ArrayList</span>&lt;&gt;();
+
+        Future s = executorService.submit(<span class="hljs-keyword">new</span> <span class="hljs-type">TaskWithResult</span>(<span class="hljs-number">2</span>));
+
+        <span class="hljs-keyword">try</span> &#123;
+            System.out.println(s.<span class="hljs-keyword">get</span>());
+        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;
+            e.printStackTrace();
+        &#125; <span class="hljs-keyword">catch</span> (ExecutionException e) &#123;
+            e.printStackTrace();
+        &#125;
+        s.isCancelled();
+<span class="hljs-comment">//        for (int i = 0; i &lt; 10; i++) &#123;</span>
+<span class="hljs-comment">//            futures.add(executorService.submit(new TaskWithResult(i)));</span>
+<span class="hljs-comment">//        &#125;</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//        for (Future&lt;String&gt; fs: futures)&#123;</span>
+<span class="hljs-comment">//            try &#123;</span>
+<span class="hljs-comment">//                System.out.println(fs.get());</span>
+<span class="hljs-comment">//            &#125; catch (InterruptedException e)&#123;</span>
+<span class="hljs-comment">//                System.out.println(e);</span>
+<span class="hljs-comment">//            &#125; catch (ExecutionException e) &#123;</span>
+<span class="hljs-comment">//                e.printStackTrace();</span>
+<span class="hljs-comment">//            &#125; finally &#123;</span>
+<span class="hljs-comment">//                executorService.shutdown();</span>
+<span class="hljs-comment">//            &#125;</span>
+<span class="hljs-comment">//        &#125;</span>
+    &#125;
+&#125;</code></pre></div>
 
 <p><strong>execute提交的方式只能提交一个Runnable的对象，且该方法的返回值是void，也即是提交后如果线程运行后，和主线程就脱离了关系了。 submit 接收 Callable 接口的实现类，可用get()接收返回结果</strong></p>
 <h4 id="21-2-5-休眠"><a href="#21-2-5-休眠" class="headerlink" title="21.2.5 休眠"></a>21.2.5 休眠</h4><p>Thread.sleep(1000);</p>
@@ -395,7 +344,21 @@
 <li>join() 定义在Thread.java中。</li>
 <li>join() 的作用：让“主线程”等待“子线程”结束之后才能继续运行。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 主线程</span><br><span class="line">public class Father extends Thread &#123;</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Son s = new Son();</span><br><span class="line">        s.start();</span><br><span class="line">        s.join();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 子线程</span><br><span class="line">public class Son extends Thread &#123;</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-comment">// 主线程</span>
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>&#123;
+    public void run() &#123;
+        <span class="hljs-type">Son</span> s = <span class="hljs-keyword">new</span> <span class="hljs-type">Son</span>();
+        s.start();
+        s.join();
+        ...
+    &#125;
+&#125;
+<span class="hljs-comment">// 子线程</span>
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Son</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>&#123;
+    public void run() &#123;
+        ...
+    &#125;
+&#125;</code></pre></div>
 
 <p>在调用s.join()之后，Father主线程会一直等待，直到“子线程s”运行完毕；在“子线程s”运行完毕之后，Father主线程才能接着运行。 这也就是我们所说的“join()的作用，是让主线程会等待子线程结束之后才能继续运行”！</p>
 <p><strong>wait()的作用是让“当前线程”等待</strong>，而这里的“当前线程”是指当前在CPU上运行的线程。所以，虽然是调用子线程的wait()方法，但是它是通过“主线程”去调用的；所以，休眠的是主线程，而不是“子线程”！</p>
@@ -406,7 +369,28 @@
 <h4 id="21-2-13-线程组"><a href="#21-2-13-线程组" class="headerlink" title="21.2.13 线程组"></a>21.2.13 线程组</h4><p>线程组持有一个线程集合。 ThreadGroup（最好把线程组堪称一次不成功的尝试，直接忽略！<br>！！）</p>
 <h4 id="21-2-14-捕获异常"><a href="#21-2-14-捕获异常" class="headerlink" title="21.2.14 捕获异常"></a>21.2.14 捕获异常</h4><p>当单线程的程序发生一个未捕获的异常时我们可以采用try….catch进行异常的捕获，但是在多线程环境中，线程抛出的异常是不能用try….catch捕获的。<br>Thread.UncaughtExceptionHandler是Java SE5中的接口，允许在每个Thread对象上附着一个异常处理器。</p>
 <p>使用示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.exception;</span><br><span class="line"> </span><br><span class="line">import java.lang.Thread.UncaughtExceptionHandler;</span><br><span class="line"> </span><br><span class="line">public class WitchCaughtThread</span><br><span class="line">&#123;</span><br><span class="line">	public static void main(String args[])</span><br><span class="line">	&#123;</span><br><span class="line">		Thread thread = new Thread(new Task());</span><br><span class="line">		thread.setUncaughtExceptionHandler(new ExceptionHandler());</span><br><span class="line">		thread.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class ExceptionHandler implements UncaughtExceptionHandler</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void uncaughtException(Thread t, Throwable e)</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;==Exception: &quot;+e.getMessage());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> com.exception;
+ 
+<span class="hljs-keyword">import</span> java.lang.Thread.UncaughtExceptionHandler;
+ 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WitchCaughtThread</span>
+</span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+	</span>&#123;
+		Thread thread = <span class="hljs-keyword">new</span> Thread(<span class="hljs-keyword">new</span> Task());
+		thread.setUncaughtExceptionHandler(<span class="hljs-keyword">new</span> ExceptionHandler());
+		thread.start();
+	&#125;
+&#125;
+ 
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionHandler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UncaughtExceptionHandler</span>
+</span>&#123;
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uncaughtException</span><span class="hljs-params">(Thread t, Throwable e)</span>
+	</span>&#123;
+		System.out.println(<span class="hljs-string">"==Exception: "</span>+e.getMessage());
+	&#125;
+&#125;</code></pre></div>
 
 <h2 id="21-3-共享受限资源"><a href="#21-3-共享受限资源" class="headerlink" title="21.3 共享受限资源"></a>21.3 共享受限资源</h2><h4 id="21-3-1-不正确地访问资源"><a href="#21-3-1-不正确地访问资源" class="headerlink" title="21.3.1 不正确地访问资源"></a>21.3.1 不正确地访问资源</h4><p>java 递增也不是原子性的，自身也需要多个步骤，因此不保护任务，单一递增也不是安全的。</p>
 <h4 id="21-3-2-解决共享资源竞争"><a href="#21-3-2-解决共享资源竞争" class="headerlink" title="21.3.2 解决共享资源竞争"></a>21.3.2 解决共享资源竞争</h4><p>基本上所有的并发模式在解决线程冲突问题的时候，都是采用序列化访问共享资源的方案。这意味着在给定时刻只允许一个任务访问共享资源。</p>
@@ -421,11 +405,53 @@
 <p><strong>对基本类型的读取和赋值以及递增操作不是安全的原子性操作。反编译后将看到很多指令，get put 等等。</strong></p>
 <h4 id="21-3-4-原子类"><a href="#21-3-4-原子类" class="headerlink" title="21.3.4 原子类"></a>21.3.4 原子类</h4><p>Atomic类被设计用来构建java.util.concurrent中的类，因此只有在特殊情况下才使用它们。如果涉及多个Atomic对象，可能就应该考虑放弃使用Atomic，通常依赖于锁要更安全一点。（要么是synchronized关键字，要么是显示的Lock对象）</p>
 <h4 id="21-3-5-临界区"><a href="#21-3-5-临界区" class="headerlink" title="21.3.5 临界区"></a>21.3.5 临界区</h4><p>同步控制块 例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(syncObject) &#123;</span><br><span class="line">    // 临界区</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-function"><span class="hljs-title">synchronized</span><span class="hljs-params">(syncObject)</span></span> &#123;
+    <span class="hljs-comment">// 临界区</span>
+&#125;</code></pre></div>
 
-<h4 id="21-3-6-在其它对象上同步"><a href="#21-3-6-在其它对象上同步" class="headerlink" title="21.3.6  在其它对象上同步"></a>21.3.6  在其它对象上同步</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package synchronize;</span><br><span class="line"></span><br><span class="line">public class DualSynch &#123;</span><br><span class="line"></span><br><span class="line">    Object o = new Object();</span><br><span class="line">    public synchronized void f()&#123;</span><br><span class="line">        for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"></span><br><span class="line">            System.out.println(&quot;f()&quot;);</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void g()&#123;</span><br><span class="line">        synchronized (o)&#123;</span><br><span class="line"></span><br><span class="line">            for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"></span><br><span class="line">                System.out.println(&quot;g()&quot;);</span><br><span class="line">                Thread.yield();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="21-3-6-在其它对象上同步"><a href="#21-3-6-在其它对象上同步" class="headerlink" title="21.3.6  在其它对象上同步"></a>21.3.6  在其它对象上同步</h4><div class="hljs"><pre><code class="hljs undefined">package synchronize;
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package synchronize;</span><br><span class="line"></span><br><span class="line">public class SynObject &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        DualSynch dualSynch = new DualSynch();</span><br><span class="line"></span><br><span class="line">        new Thread()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                dualSynch.f();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        dualSynch.g();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DualSynch</span> &#123;
+
+    Object o = <span class="hljs-keyword">new</span> Object();
+    <span class="hljs-function"><span class="hljs-keyword">public</span> synchronized <span class="hljs-keyword">void</span> <span class="hljs-title">f</span>(<span class="hljs-params"></span>)</span>&#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;
+
+            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"f()"</span>);
+            Thread.<span class="hljs-keyword">yield</span>();
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span>(<span class="hljs-params"></span>)</span>&#123;
+        synchronized (o)&#123;
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;
+
+                System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"g()"</span>);
+                Thread.<span class="hljs-keyword">yield</span>();
+            &#125;
+        &#125;
+    &#125;
+
+
+&#125;</code></pre></div>
+
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">package</span> synchronize;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SynObject</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        DualSynch dualSynch = <span class="hljs-keyword">new</span> DualSynch();
+
+        <span class="hljs-keyword">new</span> Thread()&#123;
+            <span class="hljs-meta">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;
+                dualSynch.f();
+            &#125;
+        &#125;.start();
+
+        dualSynch.g();
+    &#125;
+&#125;</code></pre></div>
 
 <p>一个简答的例子验证了   synchronized 锁的内容。如果在this上同步，临界区的效果就会直接缩小在同步的范围内。两个任务可以同时进入同一个对象，只要这个对象上的方法是在不同的锁上同步的即可。<br><strong>synchronized代码块本质上完成的是代码片段的自动上锁和解锁，以确保关键代码片段在多线程中的互斥访问。synchronized既可以加在一段代码上，也可以加在方法上。</strong><br>（幼儿园解析）<br>synchronized 有三种形式 ：</p>
 <ol>
@@ -479,7 +505,22 @@
 <p>try-finally子句使得无论run()循环如何退出，清理都会发生.</p>
 <h2 id="21-5-线程之间的协作"><a href="#21-5-线程之间的协作" class="headerlink" title="21.5 线程之间的协作"></a>21.5 线程之间的协作</h2><p>当一个任务在方法里遇到了对wait()的调用的时候，线程的执行被挂起，<strong>对象上的锁被释放</strong>。<br>wait()、notify()和notifyAll()是基类Object的一部分。实际上，只能在同步控制方法或同步控制块里调用wait()、notify()和notifyAll()。</p>
 <p><strong>错失的信号</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">thread1:</span><br><span class="line">synchronized(sharedMonitor)</span><br><span class="line">&#123;</span><br><span class="line">      someCondition = false;</span><br><span class="line">      sharedMonitor.notify();</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">thread2:</span><br><span class="line">while(someCondition)</span><br><span class="line">&#123;</span><br><span class="line">	//point 1</span><br><span class="line">	synchronized(sharedMonitor)</span><br><span class="line">	&#123;</span><br><span class="line">		sharedMonitor.wait();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-string">thread1:</span>
+<span class="hljs-keyword">synchronized</span>(sharedMonitor)
+&#123;
+      someCondition = <span class="hljs-literal">false</span>;
+      sharedMonitor.notify();
+&#125;
+<span class="hljs-symbol"> 
+thread2:</span>
+<span class="hljs-keyword">while</span>(someCondition)
+&#123;
+	<span class="hljs-comment">//point 1</span>
+	<span class="hljs-keyword">synchronized</span>(sharedMonitor)
+	&#123;
+		sharedMonitor.wait();
+	&#125;
+&#125;</code></pre></div>
 
 <p>先执行thread2，当进入while循环 执行thread1 会出现无限期等待。所以要把thread2代码块都同步。防止在在someCondition变量上产生竞争条件。</p>
 <h4 id="21-5-2-notify-与notifyAll"><a href="#21-5-2-notify-与notifyAll" class="headerlink" title="21.5.2 notify()与notifyAll()"></a>21.5.2 notify()与notifyAll()</h4><p>在技术上，可能会有多个任务在单个Car对象上处于wait（）状态，notifyAll()更加安全。蛋实际上只会有一个任务处于wait(),因此用notify()替代notifyAll()。</p>
@@ -515,7 +556,16 @@
 <p>CopyOnWriteArrayList/CopyOnWriteSet/ConcurrentHashMap 都可称为免锁容器</p>
 <p><strong>只有set使用synchronized，原理是在容器数据结构复制出一个单独的副本，修改结束后与主数据交换。使新读操作可以看到这个修改。容器只有部分内容而不是整个内容可以被复制和修改。</strong></p>
 <p>源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public boolean add(E e) &#123;</span><br><span class="line">        synchronized (lock) &#123;</span><br><span class="line">            Object[] es = getArray();</span><br><span class="line">            int len = es.length;</span><br><span class="line">            es = Arrays.copyOf(es, len + 1);</span><br><span class="line">            es[len] = e;</span><br><span class="line">            setArray(es);</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-meta">public</span> boolean <span class="hljs-keyword">add</span>(E e) &#123;
+        synchronized (<span class="hljs-keyword">lock</span>) &#123;
+            Object[] <span class="hljs-built_in">es</span> = getArray()<span class="hljs-comment">;</span>
+            <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">es</span>.length<span class="hljs-comment">;</span>
+            <span class="hljs-built_in">es</span> = Arrays.copyOf(<span class="hljs-built_in">es</span>, len + <span class="hljs-number">1</span>)<span class="hljs-comment">;</span>
+            <span class="hljs-built_in">es</span>[len] = e<span class="hljs-comment">;</span>
+            setArray(<span class="hljs-built_in">es</span>)<span class="hljs-comment">;</span>
+            return true<span class="hljs-comment">;</span>
+        &#125;
+    &#125;</code></pre></div>
 
 <p>等到修改结束，读操作才能看到。</p>
 <p><strong>乐观锁</strong></p>
@@ -523,7 +573,9 @@
 <p>*<em>比较各种Map实现  *</em></p>
 <p>ConcurrentHashMap 比synchronized HashMap 性能要好很多，因为使用分段锁，每次只锁一个Entry的key值。</p>
 <h4 id="21-9-3-乐观加锁"><a href="#21-9-3-乐观加锁" class="headerlink" title="21.9.3 乐观加锁"></a>21.9.3 乐观加锁</h4><p>Atomic对象的compareAndSet() 比较并交换 不需要互斥锁，性能更高，但是比较失败 需要重续操作，比较消耗性能<br>someone.compareAndSet(false,true)可以理解为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(someone == false)&#123;</span><br><span class="line">    someone=true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">if</span>(<span class="hljs-attr">someone</span> == <span class="hljs-literal">false</span>)&#123;
+    <span class="hljs-attr">someone=true</span>
+&#125;</code></pre></div>
 
 <h4 id="21-9-4-ReadWriteLock"><a href="#21-9-4-ReadWriteLock" class="headerlink" title="21.9.4 ReadWriteLock"></a>21.9.4 ReadWriteLock</h4><p>对向数据结构相对不频繁的写入，但是有多个任务要经常读取这个数据结构的这类情况进行了优化。</p>
 <h2 id="21-10-活动对象"><a href="#21-10-活动对象" class="headerlink" title="21.10 活动对象"></a>21.10 活动对象</h2><p>活动对象的特征：</p>
@@ -553,916 +605,281 @@
 </li>
 </ol>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/03/01/Thinking-in-Java-第二十章/" rel="next" title="Thinking in Java 第二十章">
-                <i class="fa fa-chevron-left"></i> Thinking in Java 第二十章
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/17/Spring-Cloud-简介-Spring-Boot-快速理解使用/" rel="prev" title="Spring Cloud 简介 & Spring Boot 快速理解使用">
-                Spring Cloud 简介 & Spring Boot 快速理解使用 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="190coder">
-            
-              <p class="site-author-name" itemprop="name">190coder</p>
-              <p class="site-description motion-element" itemprop="description">来啦，老弟，这里是 AKA 190</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">62</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
               </div>
-            
-
-            
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/17/Spring-Cloud-简介-Spring-Boot-快速理解使用/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring Cloud 简介 & Spring Boot 快速理解使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/01/Thinking-in-Java-第二十章/">
+                        <span class="hidden-mobile">Thinking in Java 第二十章</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
             
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+          </article>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第二十一章-并发"><span class="nav-text">第二十一章 并发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#21-1-并发的多面性"><span class="nav-text">21.1 并发的多面性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-1-1-更快的执行"><span class="nav-text">21.1.1 更快的执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-1-2-改进代码设计"><span class="nav-text">21.1.2 改进代码设计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-2-基本的线程机制"><span class="nav-text">21.2 基本的线程机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-1-定义任务"><span class="nav-text">21.2.1 定义任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-2-Thread-类"><span class="nav-text">21.2.2 Thread 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-3-使用Executor"><span class="nav-text">21.2.3 使用Executor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-4-从任务中产生返回值"><span class="nav-text">21.2.4 从任务中产生返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-5-休眠"><span class="nav-text">21.2.5 休眠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-6-优先级"><span class="nav-text">21.2.6 优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-7-让步"><span class="nav-text">21.2.7 让步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-8-后台程序"><span class="nav-text">21.2.8 后台程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-9-编码的变体"><span class="nav-text">21.2.9 编码的变体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-10-术语"><span class="nav-text">21.2.10 术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-11-加入一个线程"><span class="nav-text">21.2.11 加入一个线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-12-创建有响应的用户界面"><span class="nav-text">21.2.12 创建有响应的用户界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-13-线程组"><span class="nav-text">21.2.13 线程组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-2-14-捕获异常"><span class="nav-text">21.2.14 捕获异常</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#21-3-共享受限资源"><span class="nav-text">21.3 共享受限资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-1-不正确地访问资源"><span class="nav-text">21.3.1 不正确地访问资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-2-解决共享资源竞争"><span class="nav-text">21.3.2 解决共享资源竞争</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-3-原子性与易变性"><span class="nav-text">21.3.3 原子性与易变性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-4-原子类"><span class="nav-text">21.3.4 原子类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-5-临界区"><span class="nav-text">21.3.5 临界区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-6-在其它对象上同步"><span class="nav-text">21.3.6  在其它对象上同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-3-7-线程本地存储"><span class="nav-text">21.3.7 线程本地存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-4-终结任务"><span class="nav-text">21.4 终结任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-4-1-装饰性花园"><span class="nav-text">21.4.1 装饰性花园</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-4-4-检查中断"><span class="nav-text">21.4.4 检查中断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-5-线程之间的协作"><span class="nav-text">21.5 线程之间的协作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-5-2-notify-与notifyAll"><span class="nav-text">21.5.2 notify()与notifyAll()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-5-3-生产者与消费者"><span class="nav-text">21.5.3 生产者与消费者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-5-4-生产者-消费者队列"><span class="nav-text">21.5.4 生产者-消费者队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-5-5-任务间使用管道进行输入-输出"><span class="nav-text">21.5.5 任务间使用管道进行输入/输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-6-死锁"><span class="nav-text">21.6 死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-7-新类库中的构件"><span class="nav-text">21.7 新类库中的构件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-1-CountDownLatch"><span class="nav-text">21.7.1 CountDownLatch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-1-CyclicBarrier"><span class="nav-text">21.7.1 CyclicBarrier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-3-DelayQueue"><span class="nav-text">21.7.3 DelayQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-4-PriorityBlockingQueue"><span class="nav-text">21.7.4 PriorityBlockingQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-5-使用ScheduleExecutor的温室控制器"><span class="nav-text">21.7.5 使用ScheduleExecutor的温室控制器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-6-Semaphore"><span class="nav-text">21.7.6 Semaphore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-7-7-Exchanger"><span class="nav-text">21.7.7 Exchanger</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-8-仿真"><span class="nav-text">21.8 仿真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-9-性能调优"><span class="nav-text">21.9 性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-9-1-比较各类互斥技术"><span class="nav-text">21.9.1 比较各类互斥技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-9-2-免锁容器"><span class="nav-text">21.9.2 免锁容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-9-3-乐观加锁"><span class="nav-text">21.9.3 乐观加锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-9-4-ReadWriteLock"><span class="nav-text">21.9.4 ReadWriteLock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-10-活动对象"><span class="nav-text">21.10 活动对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-11-总结"><span class="nav-text">21.11 总结</span></a></li></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-	
-           
-         
-         <div style>
-  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
-</div>
-<script>
-(function(){
-
-   var digit=
-    [
-        [
-            [0,0,1,1,1,0,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,0,1,1,0],
-            [0,0,1,1,1,0,0]
-        ],//0
-        [
-            [0,0,0,1,1,0,0],
-            [0,1,1,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [1,1,1,1,1,1,1]
-        ],//1
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,1,1],
-            [1,1,1,1,1,1,1]
-        ],//2
-        [
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//3
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,0],
-            [0,0,1,1,1,1,0],
-            [0,1,1,0,1,1,0],
-            [1,1,0,0,1,1,0],
-            [1,1,1,1,1,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,1,1]
-        ],//4
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,1,1,1,1,0],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//5
-        [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,0,0],
-            [0,1,1,0,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,1,0,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//6
-        [
-            [1,1,1,1,1,1,1],
-            [1,1,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,0,0,1,1,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0],
-            [0,0,1,1,0,0,0]
-        ],//7
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,1,1,0]
-        ],//8
-        [
-            [0,1,1,1,1,1,0],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [1,1,0,0,0,1,1],
-            [0,1,1,1,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,0,1,1],
-            [0,0,0,0,1,1,0],
-            [0,0,0,1,1,0,0],
-            [0,1,1,0,0,0,0]
-        ],//9
-        [
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,1,1,1,0,0],
-            [0,0,0,0,0,0,0]
-        ]//:
-    ];
-
-var canvas = document.getElementById('canvas');
-
-if(canvas.getContext){
-    var cxt = canvas.getContext('2d');
-    //声明canvas的宽高
-    var H = 100,W = 700;
-    canvas.height = H;
-    canvas.width = W;
-    cxt.fillStyle = '#f00';
-    cxt.fillRect(10,10,50,50);
-
-    //存储时间数据
-    var data = [];
-    //存储运动的小球
-    var balls = [];
-    //设置粒子半径
-    var R = canvas.height/20-1;
-    (function(){
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
-        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-    })();
-
-    /*生成点阵数字*/
-    function renderDigit(index,num){
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    cxt.beginPath();
-                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
-                    cxt.closePath();
-                    cxt.fill();
-                }
-            }
-        }
-    }
-
-    /*更新时钟*/
-    function updateDigitTime(){
-        var changeNumArray = [];
-        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
-        var NewData = [];
-        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
-        for(var i = data.length-1; i >=0 ; i--){
-            //时间发生变化
-            if(NewData[i] !== data[i]){
-                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
-                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
-            }
-        }
-        //增加小球
-        for(var i = 0; i< changeNumArray.length; i++){
-            addBalls.apply(this,changeNumArray[i].split('_'));
-        }
-        data = NewData.concat();
-    }
-
-    /*更新小球状态*/
-    function updateBalls(){
-        for(var i = 0; i < balls.length; i++){
-            balls[i].stepY += balls[i].disY;
-            balls[i].x += balls[i].stepX;
-            balls[i].y += balls[i].stepY;
-            if(balls[i].x > W + R || balls[i].y > H + R){
-                balls.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-    /*增加要运动的小球*/
-    function addBalls(index,num){
-        var numArray = [1,2,3];
-        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
-        for(var i = 0; i < digit[num].length; i++){
-            for(var j = 0; j < digit[num][i].length; j++){
-                if(digit[num][i][j] == 1){
-                    var ball = {
-                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
-                        y:i*2*(R+1)+(R+1),
-                        stepX:Math.floor(Math.random() * 4 -2),
-                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
-                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
-                        disY:1
-                    };
-                    balls.push(ball);
-                }
-            }
-        }
-    }
-
-    /*渲染*/
-    function render(){
-        //重置画布宽度，达到清空画布的效果
-        canvas.height = 100;
-        //渲染时钟
-        for(var i = 0; i < data.length; i++){
-            renderDigit(i,data[i]);
-        }
-        //渲染小球
-        for(var i = 0; i < balls.length; i++){
-            cxt.beginPath();
-            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
-            cxt.fillStyle = balls[i].color;
-            cxt.closePath();
-            cxt.fill();
-        }
-    }
-
-    clearInterval(oTimer);
-    var oTimer = setInterval(function(){
-        //更新时钟
-        updateDigitTime();
-        //更新小球状态
-        updateBalls();
-        //渲染
-        render();
-    },50);
-}
-
-})();
-</script>
-
-
-
+      </div>
     </div>
-  </aside>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
 
-
-        
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">190coder</span>
-
-  
+    
+  </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
+<!-- Custom -->
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-
-<div>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+  </main>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
       
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
       
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
 
 
+    
+  </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  
+<!-- Plugins -->
 
 
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
-
-	
-
-
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Thinking in Java 第二十一章&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
@@ -1475,26 +892,13 @@ if(canvas.getContext){
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
