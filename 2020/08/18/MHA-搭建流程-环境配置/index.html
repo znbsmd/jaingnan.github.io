@@ -1,0 +1,789 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="来啦，老弟，这里是 AKA 190">
+  <meta name="author" content="190coder">
+  <meta name="keywords" content="Java Php hexo Thinking in Java">
+  <title>MHA 搭建流程&amp;&amp;环境配置 - 190呐</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+  <link rel="stylesheet" href="/lib/hint/hint.min.css">
+
+  
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
+</head>
+
+
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>190coder</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-08-18 16:56" pubdate>
+      2020年8月18日 下午
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">MHA 搭建流程&amp;&amp;环境配置</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="环境版本："><a href="#环境版本：" class="headerlink" title="环境版本："></a>环境版本：</h2><ul>
+<li>CentOS 7.8 （4台）一主 2 从 一 MNA</li>
+<li>MySQL 5.7.28</li>
+</ul>
+<h2 id="一、环境安装-："><a href="#一、环境安装-：" class="headerlink" title="一、环境安装 ："></a>一、环境安装 ：</h2><h4 id="1-MySQL安装"><a href="#1-MySQL安装" class="headerlink" title="1. MySQL安装"></a>1. MySQL安装</h4><ul>
+<li>下载</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">wegt https://cdn.mysql.com/archives/mysql-5.7/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar</code></pre></div>
+
+<ul>
+<li>解压</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">tar xvf mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar</code></pre></div>
+
+<ul>
+<li>移除系统自带的 mariadb</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">yum -y remove mariadb-libs</code></pre></div>
+
+<ul>
+<li>按顺序安装，因为service服务依赖了common、libs、client</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">rpm -ivh mysql-community-common-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-libs-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-libs-compat-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-client-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-server-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-devel-5.7.28-1.el7.x86_64.rpm</code></pre></div>
+
+<ul>
+<li>初始化用户</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">mysqld --initialize --user=mysql</code></pre></div>
+
+<ul>
+<li>查看初始密码</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">cat /var/log/mysqld.log | grep password</code></pre></div>
+
+<ul>
+<li>启动服务</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl start mysqld</code></pre></div>
+
+<ul>
+<li>开机启动</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl enable mysqld</code></pre></div>
+
+<ul>
+<li>修改密码</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">PASSWORD</span> = <span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">'123456'</span>);</code></pre></div>
+
+<h4 id="2-关闭防火墙-防止外一都关下"><a href="#2-关闭防火墙-防止外一都关下" class="headerlink" title="2. 关闭防火墙 (防止外一都关下)"></a>2. 关闭防火墙 (防止外一都关下)</h4><div class="hljs"><pre><code class="hljs shell">systemctl stop firewalld
+systemctl stop iptables
+systemctl disable firewalld.service</code></pre></div>
+
+<h2 id="二、搭建主从"><a href="#二、搭建主从" class="headerlink" title="二、搭建主从"></a>二、搭建主从</h2><h4 id="1-Master-配置"><a href="#1-Master-配置" class="headerlink" title="1. Master 配置"></a>1. Master 配置</h4><ul>
+<li>修改my.cnf配置</li>
+</ul>
+<div class="hljs"><pre><code class="hljs vi">[mysqld]
+log_bin = mysql-bin # 开启binlog 并命名
+server-id=1 # 服务唯一id
+sync-binlog=1 # 即时同步
+binlog-ignore-db=performance_schema # 忽略不同步的db
+binlog-ignore-db=information_schema
+binlog-ignore-db=sys</code></pre></div>
+
+<ul>
+<li>重启服务</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl restart mysqld</code></pre></div>
+
+<ul>
+<li>授权给从库</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-comment"># 授权给从库复制功能</span>
+<span class="hljs-keyword">grant</span> <span class="hljs-keyword">replication</span> <span class="hljs-keyword">slave</span> <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> root@<span class="hljs-string">'%'</span> <span class="hljs-keyword">identified</span> <span class="hljs-keyword">by</span> <span class="hljs-string">'123456'</span>;
+<span class="hljs-comment"># 加所有权限给 root账号</span>
+<span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> root@<span class="hljs-string">'%'</span> <span class="hljs-keyword">identified</span> <span class="hljs-keyword">by</span> <span class="hljs-string">'123456'</span>;
+<span class="hljs-comment"># 刷新配置</span>
+<span class="hljs-keyword">flush</span> <span class="hljs-keyword">privileges</span>;
+<span class="hljs-comment"># 查看配置</span>
+<span class="hljs-keyword">show</span> <span class="hljs-keyword">master</span> <span class="hljs-keyword">status</span>;</code></pre></div>
+
+<h4 id="2-Slave-配置"><a href="#2-Slave-配置" class="headerlink" title="2. Slave 配置"></a>2. Slave 配置</h4><ul>
+<li>修改my.cnf配置</li>
+</ul>
+<div class="hljs"><pre><code class="hljs vi">[mysqld]
+server-id=2
+sync-binlog=1 # 每次写入都同步到binlog
+binlog-ignore-db=performance_schema # 忽略不同步
+binlog-ignore-db=information_schema
+binlog-ignore-db=sys
+relay_log=mysql-relay-bin  #开启中继日志并设置名字
+relay_log_purge=0
+read_only=1</code></pre></div>
+
+<ul>
+<li>重启服务</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl restart mysqld</code></pre></div>
+
+<ul>
+<li>配置 主库信息，开始同步</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">change</span> <span class="hljs-keyword">master</span> <span class="hljs-keyword">to</span> master_host=<span class="hljs-string">'10.211.55.14'</span>,master_port=<span class="hljs-number">3306</span>,master_user=<span class="hljs-string">'root'</span>,master_password=<span class="hljs-string">'123456'</span>,master_log_file=<span class="hljs-string">'mysql-bin.000010'</span>,master_log_pos=<span class="hljs-number">1864</span>;</code></pre></div>
+
+<ul>
+<li>开启 slave</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">start</span> <span class="hljs-keyword">slave</span>; // 开启同步</code></pre></div>
+
+<h4 id="3-配置半同步复制"><a href="#3-配置半同步复制" class="headerlink" title="3. 配置半同步复制"></a>3. 配置半同步复制</h4><p><strong>Master配置</strong></p>
+<ul>
+<li>安装插件</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">install</span> <span class="hljs-keyword">plugin</span> rpl_semi_sync_master <span class="hljs-keyword">soname</span> <span class="hljs-string">'semisync_master.so'</span>;
+<span class="hljs-keyword">show</span> <span class="hljs-keyword">variables</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'%semi%'</span></code></pre></div>
+
+<ul>
+<li>设置全局变量</li>
+</ul>
+<div class="hljs"><pre><code class="hljs vi">rpl_semi_sync_master_enabled=ON
+rpl_semi_sync_master_timeout=1000</code></pre></div>
+
+<ul>
+<li>重启服务</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl restart mysqld</code></pre></div>
+
+<p><strong>Slave配置</strong></p>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">install</span> <span class="hljs-keyword">plugin</span> rpl_semi_sync_slave <span class="hljs-keyword">soname</span> <span class="hljs-string">'semisync_slave.so'</span>;</code></pre></div>
+
+<ul>
+<li>设置全局变量</li>
+</ul>
+<div class="hljs"><pre><code class="hljs vi"># 开启
+rpl_semi_sync_slave_enabled=ON</code></pre></div>
+
+<ul>
+<li>重启服务</li>
+</ul>
+<div class="hljs"><pre><code class="hljs shell">systemctl restart mysqld</code></pre></div>
+
+<p><strong>检查半同步状态</strong></p>
+<ul>
+<li>查看参数</li>
+</ul>
+<div class="hljs"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">variables</span> <span class="hljs-keyword">like</span> <span class="hljs-string">'%semi%'</span></code></pre></div>
+
+<ul>
+<li>Master主库 MySQL日志确认(查看有 semi-sync 关键字 则启动同步成功)</li>
+</ul>
+<div class="hljs"><pre><code class="hljs vi">tail -f /var/log/mysqld.log
+&gt;&gt;&gt;&gt;
+Start semi-sync binlog_dump to slave (server_id: 3), pos(mysql-bin.000003, 1187)</code></pre></div>
+
+<h2 id="三-、配置MHA"><a href="#三-、配置MHA" class="headerlink" title="三 、配置MHA"></a>三 、配置MHA</h2><h4 id="1-ssh互通"><a href="#1-ssh互通" class="headerlink" title="1. ssh互通"></a>1. ssh互通</h4><ul>
+<li><p>每台机器生成 rsa.pub （一直回车生成）</p>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">ssh-keygen -t rsa</span></code></pre></div>
+</li>
+<li><p>生成到 authorized_keys</p>
+</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">cat id_rsa<span class="hljs-selector-class">.pub</span> &gt; authorized_keys</code></pre></div>
+
+<ul>
+<li>通过scp 复制到各个节点并把自己的ras.pub追加到authorized_keys,保证4台机器上authorized_keys文件包含4个rsa 公钥，使得访问互通</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">scp <span class="hljs-number">10.211</span>.<span class="hljs-number">55.14</span><span class="hljs-symbol">:/root/</span>.ssh/authorized_keys .
+cat id_rsa.pub <span class="hljs-meta">&gt;&gt; </span>authorized_keys</code></pre></div>
+
+<h4 id="2-下载-MHA-Manager-and-Node-rpm-文件"><a href="#2-下载-MHA-Manager-and-Node-rpm-文件" class="headerlink" title="2. 下载 MHA Manager and Node rpm 文件"></a>2. 下载 MHA Manager and Node rpm 文件</h4><ul>
+<li><p>github 搜索 mha4mysql 下载 Manager and Node rpm</p>
+</li>
+<li><p>MHA 节点安装 Manager and Node</p>
+<ul>
+<li>提前安装Manager and Node 所需要的依赖</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">yum <span class="hljs-keyword">install</span> perl-DBD-MySQL
+yum <span class="hljs-keyword">install</span> perl-Config-Tiny
+yum <span class="hljs-keyword">install</span> perl-<span class="hljs-keyword">Parallel</span>-ForkManager
+yum <span class="hljs-keyword">install</span> perl-<span class="hljs-keyword">Log</span>-Dispatch</code></pre></div>
+
+
+</li>
+</ul>
+<ul>
+<li>后两个依赖没有 可以添加eperl源<div class="hljs"><pre><code class="hljs undefined">wget -O /etc/yum<span class="hljs-selector-class">.repos</span><span class="hljs-selector-class">.d</span>/epel<span class="hljs-selector-class">.repo</span> http:<span class="hljs-comment">//mirrors.aliyun.com/repo/epel-7.repo</span></code></pre></div>
+
+
+</li>
+</ul>
+<ul>
+<li>安装MHA<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">rpm</span> <span class="hljs-selector-tag">-ivh</span> <span class="hljs-selector-tag">mha4mysql-node-0</span><span class="hljs-selector-class">.58-0</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.centos</span><span class="hljs-selector-class">.noarch</span><span class="hljs-selector-class">.rpm</span>
+<span class="hljs-selector-tag">rpm</span> <span class="hljs-selector-tag">-ivh</span> <span class="hljs-selector-tag">mha4mysql-manager-0</span><span class="hljs-selector-class">.58-0</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.centos</span><span class="hljs-selector-class">.noarch</span><span class="hljs-selector-class">.rpm</span></code></pre></div>
+
+</li>
+</ul>
+<ul>
+<li>主从 Node 节点安装</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">yum</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">perl-DBD-MySQL</span>
+<span class="hljs-selector-tag">rpm</span> <span class="hljs-selector-tag">-ivh</span> <span class="hljs-selector-tag">mha4mysql-node-0</span><span class="hljs-selector-class">.58-0</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.centos</span><span class="hljs-selector-class">.noarch</span><span class="hljs-selector-class">.rpm</span></code></pre></div>
+
+<ul>
+<li>创建配置文件</li>
+</ul>
+<p><strong>MHA Manager 主节点 配置</strong></p>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-built_in">mkdir</span> -p /usr/<span class="hljs-built_in">local</span>/masterha/app1
+<span class="hljs-built_in">mkdir</span> -p /<span class="hljs-built_in">var</span>/<span class="hljs-built_in">log</span>/masterha/app1</code></pre></div>
+
+<p><strong>另外三个节点 配置</strong></p>
+<div class="hljs"><pre><code class="hljs undefined">mkdir -p <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/masterha/</span>app1</code></pre></div>
+
+<ul>
+<li>Manager 配置 /etc/app1.cnf （使用时候去除注释）</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-section">[server default]</span>
+<span class="hljs-comment"># 主库的mysql 配置</span>
+<span class="hljs-attr">user</span>=root
+<span class="hljs-attr">password</span>=<span class="hljs-number">123456</span>
+<span class="hljs-comment"># ssh 用户名</span>
+<span class="hljs-attr">ssh_user</span>=root
+<span class="hljs-comment"># 从库的mysql 配置</span>
+<span class="hljs-attr">repl_user</span>=root 
+<span class="hljs-attr">repl_password</span>=<span class="hljs-number">123456</span>
+<span class="hljs-comment"># ping间隔，用来检测master是否正常，默认是3秒，尝试三次没有回应的时候自动进行failover</span>
+<span class="hljs-attr">ping_interval</span>=<span class="hljs-number">1</span>
+
+<span class="hljs-attr">manager_workdir</span>=/usr/local/masterha/app1
+<span class="hljs-attr">manager_log</span>=/var/log/masterha/app1/app1.log
+<span class="hljs-attr">remote_workdir</span>=/usr/local/masterha/app1
+<span class="hljs-attr">master_binlog_dir</span>=/var/lib/mysql
+<span class="hljs-section">
+[server1]</span>
+<span class="hljs-attr">hostname</span>=<span class="hljs-number">10.211</span>.<span class="hljs-number">55.14</span>
+<span class="hljs-comment"># 为1 可成为主节点</span>
+<span class="hljs-attr">candidate_master</span>=<span class="hljs-number">1</span>
+<span class="hljs-section">
+[server2]</span>
+<span class="hljs-attr">hostname</span>=<span class="hljs-number">10.211</span>.<span class="hljs-number">55.12</span>
+<span class="hljs-attr">candidate_master</span>=<span class="hljs-number">1</span>
+<span class="hljs-section">
+[server3]</span>
+<span class="hljs-attr">hostname</span>=<span class="hljs-number">10.211</span>.<span class="hljs-number">55.11</span>
+<span class="hljs-comment"># 不会成为主节点</span>
+<span class="hljs-attr">no_master</span>=<span class="hljs-number">1</span></code></pre></div>
+
+<ul>
+<li>Manager 检测SSH </li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">masterha_check_ssh <span class="hljs-attribute">-conf</span>=/etc/app1.cnf</code></pre></div>
+
+<ul>
+<li>检测 复制 功能</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">masterha_check_repl <span class="hljs-attribute">-conf</span>=/etc/app1.cnf</code></pre></div>
+
+<ul>
+<li><p>启动 </p>
+<div class="hljs"><pre><code class="hljs undefined">nohup masterha_manager -<span class="hljs-keyword">conf</span>=/etc/app1.cnf &amp;&gt; /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/masterha/manager.<span class="hljs-keyword">log</span> &amp;</code></pre></div>
+</li>
+<li><p>检测是否启动成功</p>
+</li>
+</ul>
+<div class="hljs"><pre><code class="hljs undefined">masterha_check_status <span class="hljs-attribute">-conf</span>=/etc/app1.cnf</code></pre></div>
+
+<ul>
+<li>出现 app1 (pid:32734) is running(0:PING_OK), master:10.211.55.14,等相关关键字 证明启动成功</li>
+</ul>
+<h2 id="四、注意事项-amp-踩坑（仅代表本人搭建出现的问题）"><a href="#四、注意事项-amp-踩坑（仅代表本人搭建出现的问题）" class="headerlink" title="四、注意事项 &amp; 踩坑（仅代表本人搭建出现的问题）"></a>四、注意事项 &amp; 踩坑（仅代表本人搭建出现的问题）</h2><ul>
+<li><p>修改配置文件切记重启mysql</p>
+</li>
+<li><p>修改 slave change mangager 注意 stop slave;</p>
+</li>
+<li><p>ssh 配置完成后 ，最好 ssh <a href="mailto:root@10.211.55.14" target="_blank" rel="noopener">root@10.211.55.14</a> 互相检测下</p>
+</li>
+<li><p>配置 MHA 要把 slave 节点 开启binlog配置</p>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">log_bin</span>=mysql-bin</code></pre></div>
+</li>
+<li><p>切换Master主节点后，原Master节点会成废弃节点，需要重新手动配置change manager 变成slave 节点</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/31/微服务统⼀认证⽅案-Spring-Cloud-OAuth2-JWT/">
+                        <span class="hidden-mobile">微服务统⼀认证⽅案 Spring Cloud OAuth2 + JWT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+    
+  <!-- 备案信息 -->
+  <div class="beian">
+    <a href="http://beian.miit.gov.cn/" target="_blank"
+       rel="nofollow noopener">京ICP证123456号</a>
+    
+      <a
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+        rel="nofollow noopener"
+        class="beian-police"
+        target="_blank"
+      >
+        <span class="beian-police-sep">&nbsp;|&nbsp;</span>
+        
+          <img src="/img/police_beian.png" srcset="/img/loading.gif" alt="police-icon" />
+        
+        <span>京公网安备12345678号</span>
+      </a>
+     
+  </div>
+
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "MHA 搭建流程&&环境配置&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
