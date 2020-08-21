@@ -176,7 +176,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      18
        分钟
     </span>
   
@@ -482,7 +482,7 @@ yum <span class="hljs-keyword">install</span> perl-<span class="hljs-keyword">Lo
 <ul>
 <li>出现 app1 (pid:32734) is running(0:PING_OK), master:10.211.55.14,等相关关键字 证明启动成功</li>
 </ul>
-<h2 id="四、注意事项-amp-踩坑（仅代表本人搭建出现的问题）"><a href="#四、注意事项-amp-踩坑（仅代表本人搭建出现的问题）" class="headerlink" title="四、注意事项 &amp; 踩坑（仅代表本人搭建出现的问题）"></a>四、注意事项 &amp; 踩坑（仅代表本人搭建出现的问题）</h2><ul>
+<h2 id="四、注意事项-amp-踩坑"><a href="#四、注意事项-amp-踩坑" class="headerlink" title="四、注意事项 &amp; 踩坑"></a>四、注意事项 &amp; 踩坑</h2><ul>
 <li><p>修改配置文件切记重启mysql</p>
 </li>
 <li><p>修改 slave change mangager 注意 stop slave;</p>
@@ -493,6 +493,10 @@ yum <span class="hljs-keyword">install</span> perl-<span class="hljs-keyword">Lo
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">log_bin</span>=mysql-bin</code></pre></div>
 </li>
 <li><p>切换Master主节点后，原Master节点会成废弃节点，需要重新手动配置change manager 变成slave 节点</p>
+</li>
+<li><p>MHA切换主从后，如果再想切换 模拟测试 ，需要检查/usr/local/masterha/app1/app1.failover.complete文件是否存在，存在则删除。</p>
+</li>
+<li><p>MHA 切换失败的各种原因可以在 配置文件配置的manager_log中查看 如：  /var/log/masterha/app1/app1.log</p>
 </li>
 </ul>
 
@@ -517,6 +521,12 @@ yum <span class="hljs-keyword">install</span> perl-<span class="hljs-keyword">Lo
                 <div class="post-prevnext row">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2020/08/21/MySQL-事务-锁/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySQL 事务&锁</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
